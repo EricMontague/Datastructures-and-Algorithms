@@ -8,6 +8,12 @@ On my journey of learning CS Fundamentals, I decided to make this repo as a pers
 </details>
 
 ## Sorting Algorithms
+<details>
+  <summary>Sorting Algorithms</summary>
+</details>
 
 ## Searching Algorithms
+<details>
+  <summary>Searching Algorithms</summary>
+</details>
   
