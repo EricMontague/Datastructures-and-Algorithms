@@ -7,7 +7,7 @@ On my journey of learning CS Fundamentals, I decided to make this repo as a pers
 <summary>Data Structures</summary>
 
 - ### Union-Find/Disjoint Set
-    - #### See implementation [here](../master/data_structures/union_find.py)
+    - #### See implementation [here](../master/data_structures/union_find.py){:target="_blank"}
     - #### Description: 
         The Union Find is a data structure that keeps track of elements which are split into one or more sets that have no elements in common (disjoint sets).
     - #### Highlights:
