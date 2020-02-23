@@ -21,7 +21,7 @@ On my journey of learning CS Fundamentals, I decided to make this repo as a pers
         4. **get_num_components()** -- > Constant time
     - #### Applications of data structure:
         1. Kruskal's Minimum Spanning Tree algorithm
-        2. Detecting a cycle in an undirected graph(DFS is less space efficient but wins out in terms of time complexity by a factor of the inverse the Ackermann function).
+        2. Detecting a cycle in an undirected graph(DFS is less space efficient but wins out in terms of time complexity due to amortized cost of the union operation.).
         3. Network connectivity: Determining whether two vertices in a graph are connected to each other through a series of edges.
         4. Least Common Ancestor in Trees
     - #### Advantages:
