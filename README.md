@@ -20,8 +20,6 @@ On my journey of learning CS Fundamentals, I decided to make this repo as a pers
   <summary>Sorting Algorithms</summary>
 </details>
 
-## Union
-
 ## Searching Algorithms
 <details>
   <summary>Searching Algorithms</summary>
