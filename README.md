@@ -6,11 +6,23 @@ On my journey of learning CS Fundamentals, I decided to make this repo as a pers
   <summary>Data Structures</summary>
 </details>
 
+## Data Structures
+
+<details>
+<summary>Data Structures</summary>
+
+- ### Arrays
+    - Implement an automatically resizing vector.
+    - [ ] Description:
+</details>
+
 
 ## Sorting Algorithms
 <details>
   <summary>Sorting Algorithms</summary>
 </details>
+
+## Union
 
 ## Searching Algorithms
 <details>
