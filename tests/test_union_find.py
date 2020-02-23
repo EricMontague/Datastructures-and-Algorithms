@@ -33,6 +33,33 @@ class UnionFindTestCase(unittest.TestCase):
             union_find.make_set(element)
             self.assertEqual(union_find.rank[element], initial_rank)
 
+    def test_element_out_of_range(self):
+        """Test to ensure that the find and make set methods
+        throw an exception when an element that is out of
+        range of the Union Find is passed as an arguement.
+        """
+        elements = [0, 1, 2, 3]
+        union_find = UnionFind(4)
+        for element in elements:
+            union_find.make_set(element)
+        with self.assertRaises(ValueError):
+            union_find.find(5)
+
+        with self.assertRaises(ValueError):
+            union_find.find(-1)
+
+        with self.assertRaises(ValueError):
+            union_find.union(1, 6)
+
+        with self.assertRaises(ValueError):
+            union_find.union(-1, 3)
+
+        with self.assertRaises(ValueError):
+            union_find.is_connected(1, 78)
+
+        with self.assertRaises(ValueError):
+            union_find.is_connected(-10, 3)
+
     def test_root_points_to_itself(self):
         """Test to ensure that the root of the set
         points to itself when created.
