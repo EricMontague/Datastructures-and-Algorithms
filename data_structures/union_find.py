@@ -19,11 +19,11 @@ class UnionFind:
     def __validate(self, element):
         """Raise an exception if the given element is not in
         not within the valid range of elements that can be in
-        this UnionFind.
+        the UnionFind.
         """
         if element < 0 or element > self.size:
             raise ValueError(
-                f"{element} not within the valid range of elements in this Union Find."
+                f"{element} not within the valid range of elements in Union Find."
             )
 
     def make_set(self, element):
@@ -91,4 +91,3 @@ class UnionFind:
     def is_connected(self, element_one, element_two):
         """Return True if both elements are in the same set."""
         return self.find(element_one) == self.find(element_two)
-
