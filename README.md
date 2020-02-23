@@ -13,10 +13,10 @@ On my journey of learning CS Fundamentals, I decided to make this repo as a pers
         1. **Path compression**:
         2. **Union by rank**:
     - #### Operations Implemented:
-        1. find() with path compression -- > Amortized constant time
-        2. union() by rank -- > Amortized constant time
-        3. is_connected() -- > Amortized constant time
-        4. get_num_components() -- > Constant time
+        1. **find()** with path compression -- > Amortized constant time
+        2. **union()** by rank -- > Amortized constant time
+        3. **is_connected()** -- > Amortized constant time
+        4. **get_num_components()** -- > Constant time
     - #### Applications of data structure:
         1. Kruskal's Minimum Spanning Tree algorithm
         2. Detecting a cycle in an undirected graph
