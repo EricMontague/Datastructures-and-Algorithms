@@ -17,10 +17,10 @@ On my journey of prepping for technical interviews, I decided to make this repo 
         1. **Without union by rank or path compression**:
             - Union and find operations will both take O(n) time
             - The slowest implementation
-        2. **Union by rank without path compression**:
+        2. **With union by rank without path compression**:
             - Union and find operations will both take O(log n) time
             - You can also do union by size (a.k.a weighted union) or union by height and achieve the same time complexity for both operations
-        3. **Union by rank with path compression**:
+        3. **With union by rank with path compression**:
             - Union and find operations will both take O(alpha(n)) time
             - The combination of these two optimizations makes this the optimal implementation
             - You can also do union by size instead of union by rank along with path compression and get the same time complexity for both operations
