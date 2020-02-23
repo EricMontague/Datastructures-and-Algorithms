@@ -1,5 +1,5 @@
 # Datastructures-and-Algorithms
-On my journey of learning CS Fundamentals, I decided to make this repo as a personal study guide for basic data structures and algorithms. This repo contains my implementations of various data structures and algorithms as well as brief descriptions, time complexities of operations, as well ass advantages and disadvantages of certain implementations below.
+On my journey of prepping for technical interviews, I decided to make this repo as a personal study guide for basic data structures and algorithms. This repo contains my implementations of various data structures and algorithms as well as brief descriptions, time complexities of operations, as well as advantages and disadvantages of certain implementations below.
 
 ## Data Structures
 
@@ -9,11 +9,23 @@ On my journey of learning CS Fundamentals, I decided to make this repo as a pers
 - ### Union-Find/Disjoint Set
     - #### See implementation [here](../master/data_structures/union_find.py)
     - #### Description: 
-        The Union Find is a data structure that keeps track of elements which are split into one or more sets that have no elements in common (disjoint sets).
-    - #### Highlights:
-        1. **Path compression**:
-        2. **Union by rank**:
-        3. **Space complexity**: Linear in average and worst case
+        The Union-Find is a data structure that keeps track of a set of elements which are split into one or more subsets that have no elements in common (disjoint sets). Each subset can be visualized as a tree, where each node contains data as well as a pointer to its parent. The parent of a root node is itself.
+        <br>
+        
+        When an element is added to the Union-Find, its parent is itself, and it makes its own set. The two core operations are **find**, and **union**. Find returns the name or id of the set that an element belongs to (the root node) and union merges two sets together by pointing the root of one set to the root of another.
+    - #### Implementations And Tradeoffs:
+        1. **Without union by rank or path compression**:
+            - Union and find operations will both take O(n) time
+            - The slowest implementation
+        2. **Union by rank without path compression**:
+            - Union and find operations will both take O(log n) time
+            - You can also do union by size (a.k.a weighted union) or union by height and achieve the same time complexity for both operations
+        3. **Union by rank with path compression**:
+            - Union and find operations will both take O(alpha(n)) time
+            - The combination of these two optimizations makes this the optimal implementation
+            - You can also do union by size instead of union by rank along with path compression and get the same time complexity for both operations
+            - Rank is the same as the height of the tree if path compression had not been used
+        4. **Space complexity**: Linear time in average and worst case for all implementations
     - #### Operations Implemented:
         1. **find()** with path compression -- > Amortized constant time
         2. **union()** by rank -- > Amortized constant time
