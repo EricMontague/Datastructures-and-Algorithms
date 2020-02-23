@@ -4,6 +4,7 @@ path compression, which allow the time complexities
 of union and find to be amortized constant time.
 """
 
+
 class UnionFind:
     """Class to represent the Union Find data structure."""
 
@@ -15,26 +16,38 @@ class UnionFind:
         self.num_components = size
         self.size = size
 
+    def __validate(self, element):
+        """Raise an exception if the given element is not in
+        not within the valid range of elements that can be in
+        this UnionFind.
+        """
+        if element < 0 or element > self.size:
+            raise ValueError(
+                f"{element} not within the valid range of elements in this Union Find."
+            )
+
     def make_set(self, element):
         """Create a new disjoint set with that contains
         only the given element.
         """
-        #initially, element points to itself and rank is 0
+        self.__validate(element)
+        # initially, element points to itself and rank is 0
         self.parent[element] = element
         self.rank[element] = 0
-    
+
     def find(self, element):
         """Return the name of the set that the given element
         belongs to.
         """
-        #traverse up the tree until we hit the root
+        self.__validate(element)
+        # traverse up the tree until we hit the root
         root = element
         while root != self.parent[root]:
             root = self.parent[root]
 
-        #path compression
-        #traverse up the tree pointing each element
-        #to the root, until we hit the root itself
+        # path compression
+        # traverse up the tree pointing each element
+        # to the root, until we hit the root itself
 
         while element != self.parent[element]:
             parent = self.parent[element]
@@ -42,7 +55,7 @@ class UnionFind:
             element = parent
         return root
 
-    #recursive find operation with path compression
+    # recursive find operation with path compression
     # def find(self, element):
     #     """Return the name of the set that the given
     #     element belongs to.
@@ -57,19 +70,19 @@ class UnionFind:
         root_one = self.find(element_one)
         root_two = self.find(element_two)
 
-        #if both roots are the same, both elements are
-        #in the same set, so we don't merge anything
+        # if both roots are the same, both elements are
+        # in the same set, so we don't merge anything
 
         if root_one != root_two:
-            #merge set with lower rank into set with higher rank
+            # merge set with lower rank into set with higher rank
             if self.rank[root_one] > self.rank[root_two]:
                 self.parent[root_two] = root_one
             elif self.rank[root_one] < self.rank[root_two]:
                 self.parent[root_one] = root_two
-            else: #Tied rank. Merge arbitrarily and increase rank
+            else:  # Tied rank. Merge arbitrarily and increase rank
                 self.parent[root_one] = root_two
                 self.rank[root_two] += 1
-            self.num_components -= 1 #decrease num components
+            self.num_components -= 1  # decrease num components
 
     def get_num_components(self):
         """Return the number components in the UnionFind."""
@@ -78,3 +91,4 @@ class UnionFind:
     def is_connected(self, element_one, element_two):
         """Return True if both elements are in the same set."""
         return self.find(element_one) == self.find(element_two)
+
