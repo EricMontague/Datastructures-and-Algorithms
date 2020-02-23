@@ -13,7 +13,7 @@ On my journey of learning CS Fundamentals, I decided to make this repo as a pers
     - #### Highlights:
         1. **Path compression**:
         2. **Union by rank**:
-        3. **Space complexity**: O(n) in average and worst case
+        3. **Space complexity**: Linear in average and worst case
     - #### Operations Implemented:
         1. **find()** with path compression -- > Amortized constant time
         2. **union()** by rank -- > Amortized constant time
