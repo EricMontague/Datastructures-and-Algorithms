@@ -39,7 +39,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
     - #### Advantages:
         1. Near constant time complexity for all operations when implemented with union by rank (or size) and path compression.
     - #### Disadvantages:
-        1. None
+        1. Depends on what problem you are trying to solve.
     - ### Further Notes:
         1. The Union Find takes O(n) time to construct a set of "n" elements
         2. The size of the Union Find is determined when it is instantiated
