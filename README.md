@@ -58,5 +58,15 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 ## Searching Algorithms
 <details>
   <summary>Searching Algorithms</summary>
+  
+  - ### Binary Search
+    - #### See implementations [here](../master/search/binary_search/binary_search.py)
+    - #### Description:
+    - #### Implementations And Tradeoffs:
+    - #### Applications of Algorithm:
+    - #### Advantages:
+    - #### Disadvantages:
+    - #### Further Notes:
+    <br>
 </details>
   
