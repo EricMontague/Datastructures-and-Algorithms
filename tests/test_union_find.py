@@ -2,7 +2,7 @@
 of the Union Find data structure.
 """
 import unittest
-from data_structures.union_find import UnionFind
+from data_structures.union_find.union_find import UnionFind
 
 
 class UnionFindTestCase(unittest.TestCase):
