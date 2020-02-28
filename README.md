@@ -5,6 +5,28 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 
 <details>
 <summary>Data Structures</summary>
+    
+- ### Binary Search Tree
+    - #### See Recurive Implementation [here](../master/data_structures/binary_search_tree/binary_search_tree_recursive.py)
+    - #### See Iterative Implementation [here](../master/data_structures/binary_search_tree/binary_search_tree_iterative.py)
+    - #### Description: 
+        
+        <br>
+        
+     
+    - #### Implementations And Tradeoffs:
+  
+    - #### Operations Implemented:
+      
+    - #### Applications of data structure:
+       
+    - #### Advantages:
+        
+    - #### Disadvantages:
+
+    - ### Further Notes:
+        
+    <br>
 
 - ### Union-Find/Disjoint Set
     - #### See implementation [here](../master/data_structures/union_find.py)
@@ -47,6 +69,28 @@ On my journey of prepping for technical interviews, I decided to make this repo 
         4. The number of components is always equal to the number of roots remaining
         5. The number of root nodes never increases
     <br>
+    
+- ### LRU Cache
+    - #### See implementation [here](../master/data_structures/lru_cache/lru_cache.py)
+    - #### Description: 
+        
+        <br>
+        
+     
+    - #### Implementations And Tradeoffs:
+  
+    - #### Operations Implemented:
+      
+    - #### Applications of data structure:
+       
+    - #### Advantages:
+        
+    - #### Disadvantages:
+
+    - ### Further Notes:
+        
+    <br>
+    
 </details>
 
 
