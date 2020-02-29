@@ -41,7 +41,7 @@ class LRUCache:
 
         #move it to the front of the list since it is the
         #most recently accessed item
-        self.move_to_head(item)
+        self.__move_to_head(item)
         return item
 
     def put(self, key, value):
@@ -56,14 +56,14 @@ class LRUCache:
         if item is None:
             #if the cache is full, evict the last item
             if self.is_full():
-                self.evict()
+                self.__evict()
             item = CacheItem(key, value)
 
             #add it to the dictionary
             self.items[key] = item
 
             #insert it at the front on the linked list
-            self.push_front(item)
+            self.__push_front(item)
 
             #increment number of items by 1
             self.total_items += 1
@@ -72,9 +72,9 @@ class LRUCache:
             #move it to the front of the list since it is now
             #the most recently accessed item
             item.value = value
-            self.move_to_head(item)
+            self.__move_to_head(item)
 
-    def push_front(self, item):
+    def __push_front(self, item):
         """Insert the given item to the front of the linked list."""
         #point the item's previous pointer to head and its
         #next pointer to the item after the head
@@ -88,25 +88,25 @@ class LRUCache:
         self.head.next.prev = item
         self.head.next = item
 
-    def pop_tail(self):
+    def __pop_tail(self):
         """Remove the item that is at the end of the linked list."""
         #get item before the tail pointer
         previous_item = self.tail.prev
 
         #call to method to remove from linked list
-        self.remove_from_list(previous_item)
+        self.__remove_from_list(previous_item)
         return previous_item
 
-    def move_to_head(self, item):
+    def __move_to_head(self, item):
         """Remove the item from where it is in the list and 
         move it to the head of the list."""
         #call to method to remove item from the linked list
-        self.remove_from_list(item)
+        self.__remove_from_list(item)
 
         #insert item at the head of the list
-        self.push_front(item)
+        self.__push_front(item)
 
-    def remove_from_list(self, item):
+    def __remove_from_list(self, item):
         """Remove the given item from the linked list."""
         #get previous an next items in the list
         previous_item = item.prev
@@ -116,11 +116,11 @@ class LRUCache:
         previous_item.next = next_item
         next_item.prev = previous_item
 
-    def evict(self):
+    def __evict(self):
         """Remove the last item in the linked list and delete it from
         the self.items dictionary."""
         #call to method to remove the last item
-        tail = self.pop_tail()
+        tail = self.__pop_tail()
 
         #delete item from self.items dictionary
         self.items.pop(tail.key)
