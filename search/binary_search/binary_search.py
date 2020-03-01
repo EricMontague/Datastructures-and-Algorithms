@@ -12,7 +12,7 @@ def binary_search_iterative(input_list, target):
         mid = low + (high - low) // 2
         if input_list[mid] == target:
             return mid
-        elif input_list[mid] > target:
+        if input_list[mid] > target:
             high = mid - 1
         else:
             low = mid + 1
@@ -30,7 +30,7 @@ def binary_search_recursive(input_list, target, low, high):
     mid = low + (high - low) // 2
     if target == input_list[mid]:
         return mid
-    elif target < input_list[mid]:
+    if target < input_list[mid]:
         return binary_search_recursive(input_list, target, low, mid - 1)
     else: #target > input_list[mid]
         return binary_search_recursive(input_list, target, mid + 1, high)
