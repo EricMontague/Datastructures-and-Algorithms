@@ -67,17 +67,74 @@ class BinarySearchTree:
         return current
 
     def delete_node(self, data):
-        """Delete and return the first node with the given value from the 
+        """Delete the first node with the given value from the 
         tree. Returns True if the node was successfully located and deleted.
         and False if the node does not exist in the tree.
         """
-        if self.search(data) is None:
+        if self.root is None:
             return False
+        if self.root.data == data:
+            self.root = self.__delete(self.root)
+        else:
+            parent = self.__find_parent(self.root, data)
+            #node doesn't exist in the treee
+            if parent is None:
+                return False
+            else:
+                #figure out which child needs to be deleted
+                if parent.left is not None and parent.left.data == data:
+                    parent.left = self.__delete(parent.left)
+                else:
+                    parent.right = self.__delete(parent.right)
         self.size -= 1
         return True
+    
+    def __delete(self, node):
+        """Helper method to delete a node from the tree."""
+        #Case 1: Deleting a leaf node
+        if node.left is None and node.right is None:
+            return None
+        #Case 2: Has one child
+        elif node.left is None: #only has a right child
+            return node.right
+        elif node.right is None: #only has a left child
+            return node.left
+        #Case 3: Has two children
+        else:
+            #find inorder successor and parent of inorder successor
+            min_node = self.__find_min(node.right)
+            parent = self.__find_parent(node.right, min_node.data)
+
+            #if the inorder successor is the root of the right subtree,
+            #set the node to be deleted's right pointer to None
+            if node == parent:
+                node.right = None
+            else:
+                #an inorder successot has at most one child and it can only be a right child
+                parent.left = min_node.right
+            node.data = min_node.data
+            return node
+
+    def __find_parent(self, root, data):
+        """Return the parent node of the node with the given data in the tree."""
+        #edge case where root is the only node in the tree/subtree
+        if root.data == data:
+            return root
+        parent = None
+        current = root
+        while current is not None:
+            if data == current.data:
+                return parent
+            if data < current.data:
+                parent = current
+                current = current.left
+            elif data > current.data:
+                parent = current
+                current = current.right
+        return current
         
     def __find_min(self, root):
-        """Private method to return the minimum value in the given tree or
+        """Helper method to return the minimum value in the given tree or
         subtree.
         """
         if root is None:
@@ -85,17 +142,6 @@ class BinarySearchTree:
         current = root
         while current.left is not None:
             current = current.left
-        return current
-
-    def __find_max(self, root):
-        """Private method to return the maximum value in the given tree or
-        subtree.
-        """
-        if root is None:
-            return root
-        current = root
-        while current.right is not None:
-            current = current.right
         return current
 
     def is_empty(self):
@@ -140,11 +186,9 @@ class BinarySearchTree:
             yield None
 
     def __preorder_traversal(self, root):
-        """Return an iterator to traverse the tree in preorder.
-        Returns None if the root is None instead of an iterator.
-        """
+        """Return an iterator to traverse the tree in preorder."""
         if root is None:
-            return root
+            yield root
         stack = [root]
         while stack:            
             node = stack.pop()
@@ -155,11 +199,9 @@ class BinarySearchTree:
                 stack.append(node.left)
     
     def __inorder_traversal(self, root):
-        """Return an iterator to traverse the tree in inorder.
-        Returns None if the root is None instead of an iterator.
-        """
+        """Return an iterator to traverse the tree in inorder."""
         if root is None:
-            return root
+            yield root
         stack = []
 
         #loop as long as there are more nodes to process
@@ -167,7 +209,7 @@ class BinarySearchTree:
         #root of the BST before traversing the right subtree. At that time
         #there will be no more nodes in the stack
         while stack or root:
-            #go as far left as possible
+            #go as far left as possible, visiting the left subtree
             while root:
                 stack.append(root)
                 root = root.left
@@ -180,75 +222,66 @@ class BinarySearchTree:
 
             #move to right subtree
             root = root.right
-
+    
     def __postorder_traversal(self, root):
-        """Return an iterator to traverse the tree in postorder.
-        Returns None if the root is None instead of an iterator.
-        """
+        """Return an iterator to traverse the tree in postorder."""
         if root is None:
-            return root
-        stack = []
-        
+            yield root
+        #keep track of previously visited node
+        prev = None
+        stack = [root]
+
         while stack:
-            while root:
-                #push root's right child and then root onto the stack
-                if root.right is not None:
-                    stack.append(root.right)
-                stack.append(root)
-
-                #set root as root's left child
-                root = root.left
-
-            #pop a node from the stack and set it as root
-            root = stack.pop()
-
-            #if the popped node has a right child and the right child is not processed yet 
-            #(on top of the stack), then make sure the right child is processed before root
-            if root.right is not None and (stack[-1] == root.right or stack == []):
-                stack.pop()   #Remove right child from stack
-                stack.append(root)   #push root back to stack
-                root = root.right   #change root so that the right child is processed next
+            current = stack[-1]
+            #coming down the tree from a parent node
+            if prev is None or (prev.left == current or prev.right == current):
+                if current.left is not None:
+                    stack.append(current.left)
+                elif current.right is not None:
+                    stack.append(current.right)
+            #coming up the tree from the left, move to right subtree
+            elif prev == current.left:
+                if current.right is not None:
+                    stack.append(current.right)
+            #coming up the tree from the right, yield node
             else:
-                #yield root and set root to None
-                yield root
-                root = None
+                stack.pop()
+                yield current
+            prev = current
 
     #a less space efficient, but simpler way to do postorder traversal using two stacks
     #it builds up a reverse postordering of the nodes in the second stack
-    #and then you pop each node from the second stack one by one
-    #this is essentially a mirroring of preorder traversal
-    # def __postorder_traversal(self, root):
-    #     """Return an iterator to traverse the tree in postorder.
-    #     Returns None if the root is None instead of an iterator.
-    #     """
-    #     if root is not None:
-    #         return root
-    #     stack_one = [root]
-    #     stack_two = []
+    #and then you pop each node from the second stack one by one.
+    #This is essentially a mirroring of preorder traversal
+    def __postorder_traversal2(self, root):
+        """Return an iterator to traverse the tree in postorder."""
+        if root is None:
+            yield root
+        stack_one = [root]
+        stack_two = []
 
-    #     #loop while stack one isn't empty
-    #     while stack_one:
-    #         #pop node from stack one and push to stack 2
-    #         node = stack_one.pop()
-    #         stack_two.append(node)
+        #loop while stack one isn't empty
+        while stack_one:
+            #pop node from stack one and push to stack 2
+            node = stack_one.pop()
+            stack_two.append(node)
 
-    #         #push left and right children of
-    #         #removed item to stack one
-    #         if node.left is not None:
-    #             stack_one.append(node.left)
-    #         if node.right is not None:
-    #             stack_one.append(node.right)
+            #push left and right children of
+            #removed node to stack one
+            if node.left is not None:
+                stack_one.append(node.left)
+            if node.right is not None:
+                stack_one.append(node.right)
 
-    #     #yield all elements in the second stack
-
-    #     while stack_two:
-    #         node = stack_two.pop()
-    #         yield node
+        #yield all elements in the second stack
+        while stack_two:
+            node = stack_two.pop()
+            yield node
 
     def __level_order_traveral(self):
         """Return an iterator to traverse the tree in level order."""
         if self.root is None:
-            return self.root
+            yield self.root
         queue = deque()
         queue.append(self.root)
         while queue:

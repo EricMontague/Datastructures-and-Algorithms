@@ -36,7 +36,7 @@ class BinarySearchTree:
         return False
 
     def __insert(self, root, data):
-        """Private helper method to insert a node with the given data into the BST."""
+        """Helper method to insert a node with the given data into the BST."""
         if root is None:
             return TreeNode(data)
         if data < root.data:
@@ -50,7 +50,7 @@ class BinarySearchTree:
         return self.__search(self.root, data)
 
     def __search(self, root, data):
-        """Private helper method to return a node in the tree that contains the
+        """Helper method to return a node in the tree that contains the
         given data.
         """
         if root is None:
@@ -75,7 +75,7 @@ class BinarySearchTree:
         return False
 
     def __delete(self, root, data):
-        """Private helper method to delete and return the first node with the given value from the 
+        """Helper method to delete and return the first node with the given value from the 
         tree.
         """
         if data < root.data:  # node is in the left subtree
@@ -112,7 +112,7 @@ class BinarySearchTree:
         return self.__get_height(self.root)
 
     def __get_height(self, root):
-        """Private helper method to find the height of the tree."""
+        """Helper method to find the height of the tree."""
         if root is None:
             return -1
         return 1 + max(self.__get_height(root.left), self.__get_height(root.right))
@@ -122,13 +122,13 @@ class BinarySearchTree:
         return self.size == 0
 
     def __find_min(self, root):
-        """Private helper method to return the node with the minimum value in the tree or subtree."""
+        """Helper method to return the node with the minimum value in the tree or subtree."""
         if root.left is None:
             return root
         return self.__find_min(root.left)
 
     def __find_max(self, root):
-        """Private helper method to return the node with the maximum
+        """Helper method to return the node with the maximum
         value in the tree or subtree.
         """
         if root.right is None:
