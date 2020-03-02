@@ -66,7 +66,8 @@ class UnionFind:
 
     def union(self, element_one, element_two):
         """Merge the two sets that both of the given
-        elements belong to."""
+        elements belong to.
+        """
         root_one = self.find(element_one)
         root_two = self.find(element_two)
 
