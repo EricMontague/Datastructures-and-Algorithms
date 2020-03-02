@@ -94,25 +94,225 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         #add duplicate element
         self.assertFalse(bst.insert(3))
 
-    def test_delete_node(self):
-        """Test the delete method of the BST."""
+    def test_delete_node_from_empty_tree(self):
+        """Test to ensure the delete method returns False
+        when attemptign to delete from an empty tree.
+        """
         bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+        self.assertFalse(bst.delete_node(12))
+
+    def test_delete_node_not_in_tree(self):
+        """Test that the delete method returns False when trying
+        to delete a node that doesn't exist.
+        """
+        #Tree should look like this
+        #        23
+        #     12     34
+        #   9   15      45
+        #                 56
+
+        bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+
+        nodes = [23, 12, 34, 9, 15, 45, 56]
+        #add nodes
+        for node in nodes:
+            self.assertTrue(bst.insert(node))
+        self.assertEqual(bst.size, 7)
+        self.assertEqual(bst.get_height(), 3)
 
         #try deleting a node that doesn't exist
-        bst.insert(15)
-        self.assertEqual(bst.size, 1)
-        self.assertEqual(bst.get_height(), 0)
-        self.assertFalse(bst.delete_node(12))
+        self.assertEqual(bst.get_height(), 3)
+        self.assertFalse(bst.delete_node(145))
+        self.assertEqual(bst.size, 7)
+        self.assertEqual(bst.get_height(), 3)
+
+    def test_delete_leaf_node(self):
+        """Test that the delete method functions correctly
+        when deleting a leaf node.
+        """
+        #Tree should look like this
+        #        23
+        #     12     34
+        #   9   15      45
+        #                 56
+
+        bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+
+        nodes = [23, 12, 34, 9, 15, 45, 56]
+        #add nodes
+        for node in nodes:
+            self.assertTrue(bst.insert(node))
+        self.assertEqual(bst.size, 7)
+        self.assertEqual(bst.get_height(), 3)
+
+        #Case 1: Deleting a leaf node
+        self.assertTrue(bst.delete_node(56))
+        self.assertEqual(bst.size, 6)
+        self.assertEqual(bst.get_height(), 2)
+        self.assertIsNone(bst.search(7))
+
+    def test_delete_root_as_leaf(self):
+        """Test to ensure that the delete method works properly
+        when the root is the only node in the tree.
+        """
+        bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+
+        bst.insert(12)
         self.assertEqual(bst.size, 1)
         self.assertEqual(bst.get_height(), 0)
 
-        #try deleting an element that does exist.
-        bst.insert(20)
-        self.assertEqual(bst.size, 2)
-        self.assertEqual(bst.get_height(), 1)
-        self.assertTrue(bst.delete_node(15))
-        self.assertEqual(bst.size, 1)
-        self.assertEqual(bst.get_height(), 0)
+        root = bst.search(12)
+        self.assertEqual(root.data, 12)
+
+        self.assertTrue(bst.delete_node(12))
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+        self.assertIsNone(bst.root)
+
+    def test_delete_node_one_child(self):
+        """Test to delete a node that has only one child."""
+        #Tree should look like this
+        #        23
+        #     12     34
+        #   9   15      45
+        # 8                56
+
+        bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+        nodes = [23, 12, 34, 9, 15, 45, 56, 8]
+        #add nodes
+        for node in nodes:
+            self.assertTrue(bst.insert(node))
+        self.assertEqual(bst.size, 8)
+        self.assertEqual(bst.get_height(), 3)
+
+        #delete node that just has a left child
+        self.assertTrue(bst.delete_node(9))
+        self.assertEqual(bst.size, 7)
+        self.assertEqual(bst.get_height(), 3)
+        self.assertIsNone(bst.search(9))
+
+        #delete node that just has a right child
+        self.assertTrue(bst.delete_node(45))
+        self.assertEqual(bst.size, 6)
+        self.assertEqual(bst.get_height(), 2)
+        self.assertIsNone(bst.search(45))
+
+    def test_delete_root_node_right_child(self):
+        """Test to delete a root node with only one child
+        that is the right child.
+        """
+        #Tree should look like this
+        #        23
+        #          34
+        #            45
+        #              56
+
+        bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+
+        nodes = [23, 34, 45, 56]
+        #add nodes
+        for node in nodes:
+            self.assertTrue(bst.insert(node))
+        self.assertEqual(bst.size, 4)
+        self.assertEqual(bst.get_height(), 3)
+
+        #root has only a right child
+        self.assertTrue(bst.delete_node(23))
+        self.assertEqual(bst.size, 3)
+        self.assertEqual(bst.get_height(), 2)
+        self.assertIsNone(bst.search(23))
+        self.assertEqual(bst.root.data, 34)
+
+    def test_delete_root_node_left_child(self):
+        """Test to delete a root node with only one child
+        that is the left child.
+        """
+        #Tree should look like this
+        #           56
+        #          45
+        #         34
+        #       23
+
+        bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+
+        nodes = [56, 45, 34, 23]
+        #add nodes
+        for node in nodes:
+            self.assertTrue(bst.insert(node))
+        self.assertEqual(bst.size, 4)
+        self.assertEqual(bst.get_height(), 3)
+
+        #root has only a right child
+        self.assertTrue(bst.delete_node(56))
+        self.assertEqual(bst.size, 3)
+        self.assertEqual(bst.get_height(), 2)
+        self.assertIsNone(bst.search(56))
+        self.assertEqual(bst.root.data, 45)
+
+    def test_delete_node_two_children(self):
+        """Test to delete a node with two children."""
+        #Tree should look like this
+        #        23
+        #     12     34
+        #   9   15      45
+        # 8                56
+
+        bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+
+        nodes = [23, 12, 34, 9, 15, 45, 56, 8]
+        #add nodes
+        for node in nodes:
+            self.assertTrue(bst.insert(node))
+        self.assertEqual(bst.size, 8)
+        self.assertEqual(bst.get_height(), 3)
+
+        self.assertTrue(bst.delete_node(12))
+        self.assertEqual(bst.size, 7)
+        self.assertEqual(bst.get_height(), 3)
+        self.assertIsNone(bst.search(12))
+
+    def test_delete_root_node_two_children(self):
+        """Test to ensure the delete method correctly
+        deletes a root node that has two children.
+        """
+        #Tree should look like this
+        #        23
+        #     12     34
+        #   9   15      45
+        # 8                56
+
+        bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
+
+        nodes = [23, 12, 34, 9, 15, 45, 56, 8]
+        #add nodes
+        for node in nodes:
+            self.assertTrue(bst.insert(node))
+        self.assertEqual(bst.size, 8)
+        self.assertEqual(bst.get_height(), 3)
+
+        self.assertTrue(bst.delete_node(23))
+        self.assertEqual(bst.size, 7)
+        self.assertEqual(bst.get_height(), 3)
+        self.assertIsNone(bst.search(23))
+        self.assertEqual(bst.root.data, 34)
 
     def test_invalid_traversal(self):
         """Test to ensure that the traverse method
@@ -128,20 +328,10 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         bst = BinarySearchTree()
         self.assertEqual(bst.size, 0)
 
-        #add level 1
-        bst.insert(23)
-        
-        #add level 2
-        bst.insert(12)
-        bst.insert(34)
-        
-        #add level 3
-        bst.insert(9)
-        bst.insert(15)
-        bst.insert(45)
-        
-        #add level 4
-        bst.insert(56)
+        nodes = [23, 12, 34, 9, 15, 45, 56]
+        #add nodes
+        for node in nodes:
+            self.assertTrue(bst.insert(node))
 
         self.assertEqual(bst.size, 7)
 
