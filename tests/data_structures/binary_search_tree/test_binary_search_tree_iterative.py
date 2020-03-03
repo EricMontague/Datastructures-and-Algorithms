@@ -1,7 +1,7 @@
 """This module contains tests for the iterative implementation of the Binary Search Tree."""
 import unittest
 from data_structures.binary_search_tree.tree_traversal_order import TreeTraversalOrder
-from data_structures.binary_search_tree.binary_search_tree_iterative import TreeNode, BinarySearchTree
+from data_structures.binary_search_tree.binary_search_tree_iterative import BinarySearchTree
 
 
 class BinarySearchTreeTestCase(unittest.TestCase):

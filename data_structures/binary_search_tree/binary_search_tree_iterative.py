@@ -74,22 +74,22 @@ class BinarySearchTree:
         if self.root is None:
             return False
         if self.root.data == data:
-            self.root = self.__delete(self.root)
+            self.root = self._delete(self.root)
         else:
-            parent = self.__find_parent(self.root, data)
+            parent = self._find_parent(self.root, data)
             #node doesn't exist in the treee
             if parent is None:
                 return False
             else:
                 #figure out which child needs to be deleted
                 if parent.left is not None and parent.left.data == data:
-                    parent.left = self.__delete(parent.left)
+                    parent.left = self._delete(parent.left)
                 else:
-                    parent.right = self.__delete(parent.right)
+                    parent.right = self._delete(parent.right)
         self.size -= 1
         return True
     
-    def __delete(self, node):
+    def _delete(self, node):
         """Helper method to delete a node from the tree."""
         #Case 1: Deleting a leaf node
         if node.left is None and node.right is None:
@@ -102,8 +102,8 @@ class BinarySearchTree:
         #Case 3: Has two children
         else:
             #find inorder successor and parent of inorder successor
-            min_node = self.__find_min(node.right)
-            parent = self.__find_parent(node.right, min_node.data)
+            min_node = self._find_min(node.right)
+            parent = self._find_parent(node.right, min_node.data)
 
             #if the inorder successor is the root of the right subtree,
             #set the node to be deleted's right pointer to None
@@ -115,7 +115,7 @@ class BinarySearchTree:
             node.data = min_node.data
             return node
 
-    def __find_parent(self, root, data):
+    def _find_parent(self, root, data):
         """Return the parent node of the node with the given data in the tree."""
         #edge case where root is the only node in the tree/subtree
         if root.data == data:
@@ -133,7 +133,7 @@ class BinarySearchTree:
                 current = current.right
         return current
         
-    def __find_min(self, root):
+    def _find_min(self, root):
         """Helper method to return the minimum value in the given tree or
         subtree.
         """
@@ -175,17 +175,17 @@ class BinarySearchTree:
         postorder, and inorder.
         """
         if traversal_order == TreeTraversalOrder.PRE_ORDER:
-            return self.__preorder_traversal(self.root)
+            return self._preorder_traversal(self.root)
         elif traversal_order == TreeTraversalOrder.IN_ORDER:
-            return self.__inorder_traversal(self.root)
+            return self._inorder_traversal(self.root)
         elif traversal_order == TreeTraversalOrder.POST_ORDER:
-            return self.__postorder_traversal(self.root)
+            return self._postorder_traversal(self.root)
         elif traversal_order == TreeTraversalOrder.LEVEL_ORDER:
-            return self.__level_order_traveral()
+            return self._level_order_traveral()
         else:
             yield None
 
-    def __preorder_traversal(self, root):
+    def _preorder_traversal(self, root):
         """Return an iterator to traverse the tree in preorder."""
         if root is None:
             yield root
@@ -198,7 +198,7 @@ class BinarySearchTree:
             if node.left is not None:
                 stack.append(node.left)
     
-    def __inorder_traversal(self, root):
+    def _inorder_traversal(self, root):
         """Return an iterator to traverse the tree in inorder."""
         if root is None:
             yield root
@@ -223,7 +223,7 @@ class BinarySearchTree:
             #move to right subtree
             root = root.right
     
-    def __postorder_traversal(self, root):
+    def _postorder_traversal(self, root):
         """Return an iterator to traverse the tree in postorder."""
         if root is None:
             yield root
@@ -253,7 +253,7 @@ class BinarySearchTree:
     #it builds up a reverse postordering of the nodes in the second stack
     #and then you pop each node from the second stack one by one.
     #This is essentially a mirroring of preorder traversal
-    def __postorder_traversal2(self, root):
+    def _postorder_traversal2(self, root):
         """Return an iterator to traverse the tree in postorder."""
         if root is None:
             yield root
@@ -278,7 +278,7 @@ class BinarySearchTree:
             node = stack_two.pop()
             yield node
 
-    def __level_order_traveral(self):
+    def _level_order_traveral(self):
         """Return an iterator to traverse the tree in level order."""
         if self.root is None:
             yield self.root

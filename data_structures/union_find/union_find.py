@@ -16,7 +16,7 @@ class UnionFind:
         self.num_components = size
         self.size = size
 
-    def __validate(self, element):
+    def _validate(self, element):
         """Raise an exception if the given element is not in
         not within the valid range of elements that can be in
         the UnionFind.
@@ -30,7 +30,7 @@ class UnionFind:
         """Create a new disjoint set with that contains
         only the given element.
         """
-        self.__validate(element)
+        self._validate(element)
         # initially, element points to itself and rank is 0
         self.parent[element] = element
         self.rank[element] = 0
@@ -39,7 +39,7 @@ class UnionFind:
         """Return the name of the set that the given element
         belongs to.
         """
-        self.__validate(element)
+        self._validate(element)
         # traverse up the tree until we hit the root
         root = element
         while root != self.parent[root]:
