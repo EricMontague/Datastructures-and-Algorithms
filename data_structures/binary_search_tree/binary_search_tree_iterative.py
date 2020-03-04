@@ -234,7 +234,7 @@ class BinarySearchTree:
         while stack:
             current = stack[-1]
             #coming down the tree from a parent node
-            if prev is None or (prev.left == current or prev.right == current):
+            if prev is None or prev.left == current or prev.right == current:
                 if current.left is not None:
                     stack.append(current.left)
                 elif current.right is not None:
