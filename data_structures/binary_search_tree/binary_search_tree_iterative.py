@@ -243,7 +243,7 @@ class BinarySearchTree:
             elif prev == current.left:
                 if current.right is not None:
                     stack.append(current.right)
-            #coming up the tree from the right, yield node
+            #coming up the tree from the right or at a leaf node, yield node
             else:
                 stack.pop()
                 yield current
