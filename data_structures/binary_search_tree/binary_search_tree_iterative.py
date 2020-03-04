@@ -249,10 +249,11 @@ class BinarySearchTree:
                 yield current
             prev = current
 
-    #Alternative postorder traversal with two stacks
+    #Alternative postorder traversal with two stacks.
     #it builds up a reverse postordering of the nodes in the second stack
     #and then you pop each node from the second stack one by one.
     #This is essentially a mirroring of preorder traversal
+    #Less space efficient: O(n) space even if the tree is balanced
     def _postorder_traversal2(self, root):
         """Return an iterator to traverse the tree in postorder."""
         if root is None:
