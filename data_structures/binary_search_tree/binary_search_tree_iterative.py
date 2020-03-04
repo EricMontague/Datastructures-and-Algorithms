@@ -249,7 +249,7 @@ class BinarySearchTree:
                 yield current
             prev = current
 
-    #a less space efficient, but simpler way to do postorder traversal using two stacks
+    #Alternative postorder traversal with two stacks
     #it builds up a reverse postordering of the nodes in the second stack
     #and then you pop each node from the second stack one by one.
     #This is essentially a mirroring of preorder traversal
