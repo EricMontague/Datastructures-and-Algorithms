@@ -190,15 +190,15 @@ On my journey of prepping for technical interviews, I decided to make this repo 
             - Space complexity is O(1)
             - Better in terms of space complexity, but log n is pretty small anyways, so it's not really that huge of a difference
     - #### Applications of Algorithm:
-            - Finding if an element exists in a sorted array (you don't care about the position or number of occurences)
-            - Finding the number of occurences of an element in a sorted array
-            - Finding the first or last occurence of an element in a sorted array
-            - Finding out how many times a sorted array is rotated
-            - Finding an element in a circular array
+        - Finding if an element exists in a sorted array (you don't care about the position or number of occurences)
+        - Finding the number of occurences of an element in a sorted array
+        - Finding the first or last occurence of an element in a sorted array
+        - Finding out how many times a sorted array is rotated
+        - Finding an element in a circular array
     - #### Advantages:
-            - Fast runtime, O(log n)
+        - Fast runtime, O(log n)
     - #### Disadvantages:
-            - Requires that an array be sorted to work
+        - Requires that an array be sorted to work
     - #### Further Notes:
         - **Divide and conquer algorithms**: These are a set of algorithms that break a problem into two or more sub-problems at each step in the algorithm, until the problem becomes simple enough to solve directly. Two exampe other than binary search are merge sort and quicksort
         - Normally calculating the middle index for your search space is as simple as mid = (low + high) // 2, but to avoid integer overflow in some languages, it is better to do mid = low + (high - low) // 2 
