@@ -28,9 +28,9 @@ On my journey of prepping for technical interviews, I decided to make this repo 
             - Time complexities for all operations remain the same between iterative and recursive implementations
         2. **Implementing using all recursive methods**:
             - Intuitive to implement as BSTs are a recursive data structure
-            - Space inefficient compared to iterative implementations 
+            - Uses more space compared to iterative implementations 
                 - All recursive operations will take O(h) space, where h is the height of the tree, due to the space being taken up on the implicit call stack
-                - In a balanced BST, O(h) = O(logn), which isn't bad, but if the tree is skewed (looks more like a linked list), then this becomes O(n)
+                - In a balanced BST, O(h) = O(logn), which isn't that big of a deal, but if the tree is skewed (looks more like a linked list), then this becomes O(n)
     - ### Types of Binary Trees:
         1. Full Binary Tree: A binary tree where every node has exactly zero or two children
         2. Perfect Binary Tree: A binary tree where all interior nodes have two children and **all** leaf nodes are on the same level
@@ -171,18 +171,39 @@ On my journey of prepping for technical interviews, I decided to make this repo 
   - ### Binary Search
     - #### See implementations [here](../master/search/binary_search/binary_search.py)
     - #### Description:
-        - Binary search is a divide and conquer algorithm used for quickly finding an element in an array. One of the preconditions for binary search to work is that the input array must be sorted. Initially your search space is the entire array. The below three steps are to be performed until you've exhausted your search. At that time, the loop should break:
+        - Binary search is a divide and conquer algorithm used for quickly finding an element in an array that runs in O(log n) time. One of the preconditions for binary search to work is that the input array must be sorted. This precondition is what allows you to halve your search space at each step of the algorithm and achieve the logarithmic time complexity. 
+        - Initially your search space is the entire array. The below three steps are to be performed until you've exhausted your search. At that time, the loop should break:
             - **Step 1** - Search: Look at the element in the middle of your search space. 
             - **Step 2** - Comparisons: 
                 - **2a** - Target element found: If the current element equals the target element you are looking for, return the index of the current element (or return True or whatever your algorithm is required to return), else proceed to step 2b or 2c
                 - **2b** - Target element > current element: If the current element is less your target element, then your target must lie in the right half of your array. Reset your search space to be the upper half of the array and go back to step 1. If not, proceed to step 2c
                 - **2c** - Target element < current element: Since the other two conditions weren't True, this means that the current element is greater than your target element, so your target must lie in the left half of your array. Reset your search space to be the lower half of the array and go back to step 1
-            - **Step 3** - Target element not found: If you've looped through the above sequence, and haven't found your target element, it must not exist in the array. Return -1 (or False, or whatever you want)
+            - **Step 3** - Target element not found: If you've looped through the above sequence, and haven't found your target element, it must not exist in the array. Return -1 (or False, or whatever your algorithm is required to return)
     - #### Implementations And Tradeoffs:
+        1. **Recursive implementation**:
+            - Intuitive to implement
+            - Time complexity is O(log n)
+            - Space complexity is O(log n)
+            - Same time complexity as the iterative implementation, but uses more space (not much more)
+        2. **Iterative implementation**:
+            - Time complexity is O(log n)
+            - Space complexity is O(1)
+            - Better in terms of space complexity, but log n is pretty small anyways, so it's not really that huge of a difference
     - #### Applications of Algorithm:
+            - Finding if an element exists in a sorted array (you don't care about the position or number of occurences)
+            - Finding the number of occurences of an element in a sorted array
+            - Finding the first or last occurence of an element in a sorted array
+            - Finding out how many times a sorted array is rotated
+            - Finding an element in a circular array
     - #### Advantages:
+            - Fast runtime, O(log n)
     - #### Disadvantages:
+            - Requires that an array be sorted to work
     - #### Further Notes:
+        - **Divide and conquer algorithms**: These are a set of algorithms that break a problem into two or more sub-problems at each step in the algorithm, until the problem becomes simple enough to solve directly. Two exampe other than binary search are merge sort and quicksort
+        - Normally calculating the middle index for your search space is as simple as mid = (low + high) // 2, but to avoid integer overflow in some languages, it is better to do mid = low + (high - low) // 2 
+        
+       
     <br>
 </details>
   
