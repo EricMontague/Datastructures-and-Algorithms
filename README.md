@@ -10,13 +10,14 @@ On my journey of prepping for technical interviews, I decided to make this repo 
     - #### See Recurive Implementation [here](../master/data_structures/binary_search_tree/binary_search_tree_recursive.py)
     - #### See Iterative Implementation [here](../master/data_structures/binary_search_tree/binary_search_tree_iterative.py)
     - #### Description: 
-        A Binary Search Tree(BST) is a tree data structure that has the following properties:
+        - A Binary Search Tree(BST) is a tree data structure that has the following properties:
             1. At any given node, all nodes in the left subtree contain keys that are less than the node's key
             2. At any given node, all nodes in the right subtree contain keys that are greater than the node's key
             3. Both the left and right subtrees must also be BSTs
             4. Each node has at most two child nodes
-        Translation: Given a parent node, the value of the left child node is always less than the value of the parent, and the value of the right child node is always greater than the parent
-        This invariant for a BST allows it to keep its keys in sorted order, so that operations can follow the principle (Divide and Conquer) of binary search. All nodes in a BST are usually distinct, but you can implement one that accomodates for duplicate keys
+        - **Translation**: Given a parent node, the value of the left child node is always less than the value of the parent, and the value of the right child node is always greater than the parent
+        - This invariant for a BST allows it to keep its keys in sorted order, so that operations can follow the principle (Divide and Conquer) of binary search. 
+        - All nodes in a BST are usually distinct, but you can implement one that accomodates for duplicate keys
         <br>
         
      
@@ -57,11 +58,15 @@ On my journey of prepping for technical interviews, I decided to make this repo 
         - **Traversal**: The process of visiting each node in the tree exactly once, it some order
         - **Breadth-first search**: Visiting all nodes in the BST level by level
             - Good for finding the shortest path from one node to another
-            - Generally requires more memory than a DFS traversal
+            - Generally requires more memory than a DFS traversal (assuming the tree is not skewed)
+            - O(1) space for a skewed BST
+            - O(n) space for a balanced BST
             - List of BFS algorithms:
                 1. Level Order Traversal: Same as the definition of breadth-first search above
         - **Depth-first search**: Start at a root node and walk down a path in the BST as far as possible before backtracking
-            - Generally requires less memory than BFS
+            - Generally requires less memory than BFS (assuming the tree is not skewed)
+            - O(n) space for a skewed BST
+            - O(log n) space for a balanced BST
             - Easy to implement with recursion
             - Will not necessarily find the shortest path between two nodes
             - List of DFS algorithms:
@@ -166,6 +171,13 @@ On my journey of prepping for technical interviews, I decided to make this repo 
   - ### Binary Search
     - #### See implementations [here](../master/search/binary_search/binary_search.py)
     - #### Description:
+        - Binary search is a divide and conquer algorithm used for quickly finding an element in an array. One of the preconditions for binary search to work is that the input array must be sorted. Initially your search space is the entire array. The below three steps are to be performed until you've exhausted your search. At that time, the loop should break:
+            - **Step 1** - Search: Look at the element in the middle of your search space. 
+            - **Step 2** - Comparisons: 
+                - **2a** - Target element found: If the current element equals the target element you are looking for, return the index of the current element (or return True or whatever your algorithm is required to return), else proceed to step 2b or 2c
+                - **2b** - Target element > current element: If the current element is less your target element, then your target must lie in the right half of your array. Reset your search space to be the upper half of the array and go back to step 1. If not, proceed to step 2c
+                - **2c** - Target element < current element: Since the other two conditions weren't True, this means that the current element is greater than your target element, so your target must lie in the left half of your array. Reset your search space to be the lower half of the array and go back to step 1
+            - **Step 3** - Target element not found: If you've looped through the above sequence, and haven't found your target element, it must not exist in the array. Return -1 (or False, or whatever you want)
     - #### Implementations And Tradeoffs:
     - #### Applications of Algorithm:
     - #### Advantages:
