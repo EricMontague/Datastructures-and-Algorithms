@@ -137,23 +137,52 @@ On my journey of prepping for technical interviews, I decided to make this repo 
     
 - ### LRU Cache
     - #### See implementation [here](../master/data_structures/lru_cache/lru_cache.py)
-    - #### Description: 
-        
+    - #### Description:
+        - #### What is a Cache? (a simplistic view)
+            - A cache is hardware or software that stores the result of an operation so that future requests return faster.
+            - **Example**: Storing the results of a database query in a cache so that you don't have to do the computation again and again. 
+            - When a request comes in, you look in the cache to see if the request information is in there.
+            - If it is, then you simply return the response to the client. This is called a **cache hit**.
+            - If it isn't(**cache miss**), then you query the database, store the result of this query in the cache, and then return the response to the client
+        - #### What is LRU?
+            - LRU stands for least recently used, and it is a type of **cache policy**
+            - A cache policy is the set of rules that determines when you insert and remove data from a cache
+            - Under the LRU policy, you create a cache of some predetermined size, where the most recently requested data sits on top of the cache, and the least recently requested data sits on the bottom
+            - Whenever a request comes in and you successfully hit the cache, either to retrieve data, or update some data, you move that data to the top of the cache, since it is now the most recently requested item
+            - Similarly, when a request comes in and the data isn't in the cache, you hit the database, and insert this new data at the top of the cache, since it is now the most recently requested item
+            - Where the cache policy comes into play is if the cache has reached max capacity. In this case, you remove, or evict, the least recently used item in the cache, which should be the item at the very bottom
         <br>
         
      
     - #### Implementations And Tradeoffs:
-  
-    - #### Operations Implemented:
-      
+        - **Requirements** - An LRU Cache must support the following operations in constant time:
+            - **get(key)**: Return an item from the cache with the corresponding key and move that item to the top of the cache.
+            - **put(key, value)**: Insert a new item into the cache. If an item with the given key already exists, update it and move it to the top of the cache. If the cache is full, remove the least recently used entry.
+            
+        <br>
+        
+        - **Thinking through a possible implementation** (skip to the last bullet if you just care about an optimal solution):
+            - O(1) time operations usually leads me to think of a hash table, so let's look at that first
+            - Hash Table: Has O(1) time lookups, inserts, updates, and deletes, which is perfect. You can make an object that represents an item in the cache, and store each item at some key in the hash table. But, we need something to maintain a kind of ordering of our items with a notion of a head and tail in our data structure. Maybe this can be combined with something else?
+            - Hash Table + List: O(1) lookups, O(1) updates, and O(1) removals from the end, all of which are optimal. However, we may need to remove items from the middle when they are requested/ updated and then insert them at the front of the list. Removals from the middle of a list take O(n) time and insertions at the front also take O(n) time which is too slow
+            - Hash Table  + BST: With this combination you could maybe have each item maintain a timestamp as to when it was last accessed, and keep an instance variable that holds least recently used item to speed up deletions (nodes will have parents pointers as well). O(1) lookups, O(1) updates, O(1) removals from the end. However, moving items from the interior of the BST due to updates and requests to the top of the BST will take O(log n) time for each operation(deletions included), which is too slow.
+            - Hash Table + Heap: Same problems as with a BST. Too slow
+            - Hash Table + Singly Linked List with a tail pointer: O(1) lookups, O(1) updates, O(1) for insertions at the head, and O(1) removals from the end. This is much better, but still lacking in one area. Deletions from the middle of the list are O(n). After you update an item or get it from the hash table, you will need to delete this node from the linked list and then insert it at the head. The insertion is O(1) time, but you can't traverse backwards in a singly linked list to reconfigure the pointers necessaru to delink the node. This requires that you traverse the list up until that point to perform a deletion which is O(n) time. Once again, too slow.
+            - **Hash Table** + **Doubly Linked List with a tail pointer**: O(1) lookups, O(1) updates, O(1) insertions at the head, O(1) deletions regradless of where they occur. The fact that nodes in a doubly linked list maintain a pointer to their next and previous nodes allows us to overcome the inefficiency of the delete operation using singly linked lists. This is an optimal solution and is the one I have implemented. 
+    - #### Operations Implemented(all other methods in the cache are weak internals):
+        1. **get()** - > O(1) time, O(1) space
+        2. **put()** - > O(1) time, O(1) space
+        3. **is_full()** -> O(1) time. Not necessary, but I added it because I wanted the convenience of it.
     - #### Applications of data structure:
-       
+        - See the section on What is a Cache? above
     - #### Advantages:
-        
+        - All operations are very fast: O(1) time
     - #### Disadvantages:
-
-    - ### Further Notes:
-        
+        - Space heavy. Implementing the LRU cache with a hash table and a doubly linked list takes O(n) space for the hash table, O(n) space for the doubly linked list, plus some extra space for the pointers. This is still O(n) space overall, but it's still two data structures as opposed to one.
+    - #### Some Reasons to Use a Cache:
+        1. Reducing networks calls to a database. Particularly useful if you are querying for commonly used data
+        2. Avoiding computations. This is especially true if the computations are slow
+        3. Avoiding load on a database
     <br>
     
 </details>
