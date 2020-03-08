@@ -230,7 +230,8 @@ On my journey of prepping for technical interviews, I decided to make this repo 
         - Requires that an array be sorted to work
     - #### Further Notes:
         - **Divide and conquer algorithms**: These are a set of algorithms that break a problem into two or more sub-problems at each step in the algorithm, until the problem becomes simple enough to solve directly. Two exampe other than binary search are merge sort and quicksort
-        - Normally calculating the middle index for your search space is as simple as mid = (low + high) // 2, but to avoid integer overflow in some languages, it is better to do mid = low + (high - low) // 2 
+        - Normally calculating the middle index for your search space is as simple as mid = (low + high) // 2, but to avoid integer overflow in some languages, it is better to do mid = low + (high - low) // 2
+        - The basic implementation of binary search will only tell you if an element exists in the array or return the first index it finds. It does not guarantee that this is either the first or last element in the array
         
        
     <br>
