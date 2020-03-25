@@ -110,7 +110,7 @@ class SinglyLinkedList:
         """Helper method to reverse a linked list."""
         if head is None or head.next is None:
             return head
-        previous = self.reverseList(head.next)
+        previous = self._reverse2(head.next)
         head.next.next = head
         head.next = None
         return previous
