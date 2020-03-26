@@ -114,3 +114,4 @@ class SinglyLinkedList:
         head.next.next = head
         head.next = None
         return previous
+        
