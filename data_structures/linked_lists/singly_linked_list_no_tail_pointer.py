@@ -8,6 +8,10 @@ class Node:
         self.data = data
         self.next = None
 
+    def __repr__(self):
+        """Return a representation of a node."""
+        return "<Node(%r)>" %self.data
+
 
 class SinglyLinkedList:
     """Class to represent a singly linked list."""
@@ -72,17 +76,11 @@ class SinglyLinkedList:
         """Return the value of the node at the given index in the linked list.
         The list starts at index 0.
         """
-        if index >= self.size or index < self.size:
+        if index >= self.size:
             raise IndexError("List index out of range")
-
         current = self.head
-        if index >= 0: #index is positive
-            for _ in range(index):
-                current = current.next
-        else: #index is negative
-            index = self.size - abs(index)
-            for _ in range(index):
-                current = current.next
+        for num in range(index):
+            current = current.next
         return current
     
     def is_empty(self):
@@ -114,4 +112,81 @@ class SinglyLinkedList:
         head.next.next = head
         head.next = None
         return previous
-        
+
+    def insert(index, data):
+        """Insert a node with the given data at the given index
+        in the linked list. If the list is empty, the node
+        will become the head of the list.
+        """
+        if index >= self.size:
+            raise IndexError("Index out of range.")
+        if index == 0:
+            self.push_front(data)
+        else:
+            node = Node(data)
+            if self.is_empty():
+                self.head = node
+            else:
+                target_index = 0
+                previous = self.head
+                current = self.head.next
+                while target_index != index:
+                    target_index += 1
+                    previous = previous.next
+                    current = current.next
+                node.next = current
+                previous.next = node
+                self.size += 1
+    
+    def remove_at_index(index):
+        """Remove the node from the linked list at the given index."""
+        if self.is_empty():
+            raise IndexError("List is empty.")
+        if index >= self.size:
+            raise IndexError("Index out of range.")
+        if index == 0:
+            self.pop_front()
+        else:
+            target_index = 0
+            previous = self.head
+            current = self.head.next
+            while target_index != index:
+                target_index += 1
+                previous = previous.next
+                current = current.next
+            previous.next = current.next
+
+    def remove_value(data):
+        """Remove the first node in the linked list with the given data."""
+        if self.is_empty():
+            raise ValueError("Linked list is empty.")
+        dummy = Node(data)
+        dummy.next = self.head
+        previous = dummy
+        current = self.head
+        while current.data != data:
+            if current is None:
+                raise ValueError("Data not in linked list.")
+            previous = previous.next
+            current = current.next
+        if current.data == self.head.data:
+            self.pop_front()
+        else:
+            previous.next = current.next
+    
+    def search(self, data):
+        """Return the first node in the linked list with the given data."""
+        current = self.head
+        while current is not None:
+            if current.data == data:
+                return current
+            current = current.next
+        return current
+    
+    def __len__(self):
+        """Return the number of nodes in the linked list."""
+        return self.size
+
+    def __contains__(self, data):
+        """Return True if the given data is in the linked list."""
+        return self.search(data) is not None
