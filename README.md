@@ -7,7 +7,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 3. Hash Table
 4. [Singly Linked List](../master/data_structures/linked_lists)
 5. Doubly Linked List
-6. [Binary Search Tree](../data_structures/binary_search_tree)
+6. [Binary Search Tree](../master/data_structures/binary_search_tree)
 7. Heap/Priority Queue
 8. [Trie](../master/data_structures/trie)
 9. Graphs
