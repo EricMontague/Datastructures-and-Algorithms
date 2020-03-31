@@ -1,6 +1,29 @@
 # Datastructures-and-Algorithms
 On my journey of prepping for technical interviews, I decided to make this repo as a personal study guide for basic data structures and algorithms. This repo contains my implementations of various data structures and algorithms as well as brief descriptions, time complexities of operations, as well as advantages and disadvantages of certain implementations below. Hopefully it can help others who are in a similar boat.
 
+## Table of Contents:
+1. Stack
+2. Queues/Deque
+3. Hash Table
+4. [Singly Linked List](../master/data_structures/linked_lists)
+5. Doubly Linked List
+6. [Binary Search Tree](../data_structures/binary_search_tree)
+7. Heap/Priority Queue
+8. [Trie](../master/data_structures/trie)
+9. Graphs
+10. [Union Find](../master/data_structures/union_find)
+11. [LRU Cache](../master/data_structures/lru_cache)
+12. [Binary Search](../master/search/binary_search)
+13. Bubble Sort 
+14. Selection Sort
+15. Insertion Sort
+16. Merge Sort 
+17. Quicksort
+18. Heapsort
+19. Radix Sort
+20. Count Sort
+
+
 ## Data Structures
 
 <details>
