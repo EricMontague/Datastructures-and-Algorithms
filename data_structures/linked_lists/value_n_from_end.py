@@ -18,5 +18,5 @@ def value_n_from_end(head, n):
     while second.next is not None:
         first = first.next
         second = second.next
-    return first
+    return first.data
     
