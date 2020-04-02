@@ -1,7 +1,7 @@
 """This module contains my implementation of a singly linked list with no tail pointer."""
 
 
-class Node:
+class SinglyLinkedListNode:
     """Class to represent a node in a singly linked list."""
 
     def __init__(self, data):
@@ -10,7 +10,7 @@ class Node:
 
     def __repr__(self):
         """Return a representation of a node."""
-        return "<Node(%r)>" %self.data
+        return "<SinglyLinkedListNode(%r)>" %self.data
 
 
 class SinglyLinkedList:
@@ -20,25 +20,40 @@ class SinglyLinkedList:
         self.head = None
         self.size = 0
 
+    def peek_front(self):
+        """Return the value of the first node in the linked list."""
+        if self.is_empty():
+            return self.head
+        return self.head.data
+
+    def peek_back(self):
+        """Return the value of the last node in the linked list."""
+        if self.is_empty():
+            return self.head
+        current = self.head
+        while current.next is not None:
+            current = current.next
+        return current.data
+
     def push_front(self, data):
         """Insert a new node at the front of the linked list."""
-        node = Node(data)
+        node = SinglyLinkedListNode(data)
         node.next = self.head
         self.head = node
         self.size += 1
 
     def pop_front(self):
-        """Remove and return the first node in the linked list."""
+        """Remove the node at the head of the linked list and return its value."""
         if self.is_empty():
             raise IndexError("Linked list is empty")
         node = self.head
         self.head = self.head.next
         self.size -= 1
-        return node
+        return node.data
 
     def push_back(self, data):
         """Insert a new node at the tail of the linked list."""
-        node = Node(data)
+        node = SinglyLinkedListNode(data)
         if self.is_empty():
             self.head = node
         current = self.head
@@ -48,10 +63,10 @@ class SinglyLinkedList:
         self.size += 1
 
     def pop_back(self):
-        """Remove and return the last item in the linked list."""
+        """Remove the node at the tail of the linked list and return its value."""
         if self.is_empty():
             raise IndexError("Linked list is empty")
-        dummy_node = Node(None)
+        dummy_node = SinglyLinkedListNode(None)
         first = dummy_node
         second = dummy_node.next
         while second.next is not None:
@@ -60,7 +75,7 @@ class SinglyLinkedList:
         first.next = second.next
         self.head = dummy_node.next
         self.size -= 1
-        return second
+        return second.data
 
     def count(self, data):
         """Return the number of nodes in the linked list that contains the given data."""
@@ -81,7 +96,7 @@ class SinglyLinkedList:
         current = self.head
         for num in range(index):
             current = current.next
-        return current
+        return current.data
     
     def is_empty(self):
         """Return True if the linked list is empty."""
@@ -113,7 +128,7 @@ class SinglyLinkedList:
         head.next = None
         return previous
 
-    def insert(index, data):
+    def insert(self, index, data):
         """Insert a node with the given data at the given index
         in the linked list. If the list is empty, the node
         will become the head of the list.
@@ -123,7 +138,7 @@ class SinglyLinkedList:
         if index == 0:
             self.push_front(data)
         else:
-            node = Node(data)
+            node = SinglyLinkedListNode(data)
             if self.is_empty():
                 self.head = node
             else:
@@ -138,7 +153,7 @@ class SinglyLinkedList:
                 previous.next = node
                 self.size += 1
     
-    def remove_at_index(index):
+    def remove_at_index(self, index):
         """Remove the node from the linked list at the given index."""
         if self.is_empty():
             raise IndexError("List is empty.")
@@ -156,11 +171,11 @@ class SinglyLinkedList:
                 current = current.next
             previous.next = current.next
 
-    def remove_value(data):
+    def remove_value(self, data):
         """Remove the first node in the linked list with the given data."""
         if self.is_empty():
             raise ValueError("Linked list is empty.")
-        dummy = Node(data)
+        dummy = SinglyLinkedListNode(data)
         dummy.next = self.head
         previous = dummy
         current = self.head
@@ -175,13 +190,15 @@ class SinglyLinkedList:
             previous.next = current.next
     
     def search(self, data):
-        """Return the first node in the linked list with the given data."""
+        """Return the value of the first node in the linked list with the given data."""
+        if self.is_empty():
+            raise ValueError("Linked list is empty.")
         current = self.head
         while current is not None:
             if current.data == data:
                 return current
             current = current.next
-        return current
+        return current.data
     
     def __len__(self):
         """Return the number of nodes in the linked list."""
