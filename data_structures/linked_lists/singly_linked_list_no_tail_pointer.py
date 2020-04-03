@@ -107,7 +107,7 @@ class SinglyLinkedList:
         self.head = self._reverse(self.head)
 
     def _reverse(self, head):
-        """Helper method to reverse the linked list."""
+        """Iterative helper method to reverse the linked list."""
         previous = None
         current = head
         while current is not None:
@@ -120,7 +120,7 @@ class SinglyLinkedList:
 
     #a recursive way to reverse a linked list
     def _reverse2(self, head):
-        """Helper method to reverse a linked list."""
+        """Recursive helper method to reverse a linked list."""
         if head is None or head.next is None:
             return head
         previous = self._reverse2(head.next)
