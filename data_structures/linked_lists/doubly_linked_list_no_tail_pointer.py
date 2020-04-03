@@ -90,6 +90,44 @@ class DoublyLinkedList:
         self.size -= 1
         return data
 
+    def count(self, data):
+        """Return the number of nodes in the linked list that contains the given data."""
+        count = 0
+        current = self.head
+        while current is not None:
+            if current.data == data:
+                count += 1
+            current = current.next
+        return count
+
+    def value_at(self, index):
+        """Return the value of the node at the given index in the linked list.
+        The list starts at index 0.
+        """
+        if index >= self.size:
+            raise IndexError("List index out of range")
+        current = self.head
+        for num in range(index):
+            current = current.next
+        return current.data
+
+    def reverse(self):
+        """Reverse the linked list."""
+        self.head = self._reverse(self.head)
+
+    def _reverse(self, head):
+        """Helper method to reverse the linked list."""
+        previous = None
+        current = head
+        while current is not None:
+            next_ = current.next
+            current.next = previous
+            current.prev = next_
+            previous = current
+            current = next_
+        head = previous
+        return head
+
     def is_empty(self):
         """Return True if the linked list is empty."""
         return self.head is None
