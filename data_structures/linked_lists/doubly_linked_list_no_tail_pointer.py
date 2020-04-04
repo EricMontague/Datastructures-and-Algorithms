@@ -116,7 +116,7 @@ class DoublyLinkedList:
         self.head = self._reverse(self.head)
 
     def _reverse(self, head):
-        """Helper method to reverse the linked list."""
+        """Iterative helper method to reverse the linked list."""
         previous = None
         current = head
         while current is not None:
@@ -127,6 +127,28 @@ class DoublyLinkedList:
             current = next_
         head = previous
         return head
+
+    #alternate iterative method to reversing a linked list
+    def _reverse2(self, head):
+        """Iterative helper method to reverse the linked list."""
+        if head is None:
+            return head
+        stack = []
+        current = head
+        while current is not None:
+            stack.append(current)
+            current = current.next
+        head = stack.pop()
+        head.prev = None
+        current = head
+        while stack:
+            node = stack.pop()
+            current.next = node
+            node.prev = current
+            node.next = None
+            current = node
+        return head    
+        
 
     def is_empty(self):
         """Return True if the linked list is empty."""
