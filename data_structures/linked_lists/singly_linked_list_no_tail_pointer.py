@@ -9,7 +9,7 @@ class SinglyLinkedListNode:
         self.next = None
 
     def __repr__(self):
-        """Return a representation of a node."""
+        """Return a representation of the singly linked list node."""
         return "<SinglyLinkedListNode(%r)>" %self.data
 
 
@@ -189,6 +189,7 @@ class SinglyLinkedList:
                 previous = previous.next
                 current = current.next
             previous.next = current.next
+            self.size -= 1
 
     def remove_value(self, data):
         """Remove the first node in the linked list with the given data."""
@@ -198,15 +199,17 @@ class SinglyLinkedList:
         dummy.next = self.head
         previous = dummy
         current = self.head
-        while current.data != data:
-            if current is None:
-                raise ValueError("Data not in linked list.")
+        while current is not None:
+            if current.data == data:
+                if current.data == self.head.data: #at head of list
+                    self.head = self.head.next
+                else: #at tail or middle of list
+                    previous.next = current.next
+                self.size -= 1
+                break
             previous = previous.next
             current = current.next
-        if current.data == self.head.data:
-            self.pop_front()
-        else:
-            previous.next = current.next
+        raise ValueError("Data not in linked list.")
     
     def search(self, data):
         """Return the value of the first node in the linked list with the given data."""
