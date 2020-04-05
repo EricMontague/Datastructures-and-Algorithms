@@ -10,8 +10,8 @@ class DoublyLinkedListNode:
         self.prev = None
 
     def __repr__(self):
-        """Return a representation of a node."""
-        return "<Node(%r)>" %self.data
+        """Return a representation of the doubly linked list node."""
+        return "<SinglyLinkedListNode(%r)>" %self.data
 
 
 class DoublyLinkedList:
@@ -148,11 +148,77 @@ class DoublyLinkedList:
             node.next = None
             current = node
         return head    
+    
+    def _reverse3(self, head):
+        """Recursive helper method to reverse the linked list."""
+        if head is None:
+            return head
+        if head.next is None:
+            head.prev = None
+            return head
+        new_head = self._reverse3(head.next)
+        head.next.next = head
+        head.prev = head.next
+        head.next = None
+        return new_head
         
-
     def is_empty(self):
         """Return True if the linked list is empty."""
         return self.head is None
+
+    def insert(self, index, data):
+        """Insert a node with the given data at the given index
+        in the linked list. If the list is empty, the node
+        will become the head of the list.
+        """
+        if index >= self.size:
+            raise IndexError("Index out of range.")
+        node = DoublyLinkedListNode(data)
+        if self.is_empty():
+            self.head = node
+        else:
+            current = self.head
+            for num in range(index):
+                current = current.next
+            current.prev.next = node
+            node.prev = current.prev
+            current.prev = node
+            node.next = current
+        self.size += 1
+
+    def remove_at_index(self, index):
+        """Remove the node from the linked list at the given index."""
+        if self.is_empty():
+            raise IndexError("List is empty.")
+        if index >= self.size:
+            raise IndexError("Index out of range.")
+        if index == 0:
+            self.pop_front()
+        else:
+            current = self.head
+            for num in range(index):
+                current = current.next
+            current.prev.next = current.next
+            current.next.prev = current.prev
+            self.size -= 1
+
+    def remove_value(self, data):
+        """Remove the first node in the linked list with the given data."""
+        if self.is_empty():
+            raise ValueError("Linked list is empty.")
+        current = self.head
+        while current is not None:
+            if current.data == data:
+                if current.prev is None: #at the head of the list
+                    self.pop_front()
+                elif current.next is None: #at the tail of the list
+                    self.pop_back()
+                else: #middle of list
+                    current.prev.next = current.next
+                    current.next.prev = current.prev
+                    self.size -= 1
+            current = current.next
+        raise ValueError("Data not in linked list.")
 
     def search(self, data):
         """Return the value of the first node in the linked list with the given data."""
