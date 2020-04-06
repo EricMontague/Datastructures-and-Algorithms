@@ -229,3 +229,10 @@ class SinglyLinkedList:
     def __contains__(self, data):
         """Return True if the given data is in the linked list."""
         return self.search(data) is not None
+
+    def __iter__(self):
+        """Return an iterator of nodes' values."""
+        current = self.head
+        while current is not None:
+            yield current.data
+
