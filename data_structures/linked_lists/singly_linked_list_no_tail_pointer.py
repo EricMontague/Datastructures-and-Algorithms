@@ -67,6 +67,7 @@ class SinglyLinkedList:
         if self.is_empty():
             raise IndexError("Linked list is empty")
         dummy_node = SinglyLinkedListNode(None)
+        dummy_node.next = self.head
         first = dummy_node
         second = dummy_node.next
         while second.next is not None:
@@ -89,7 +90,7 @@ class SinglyLinkedList:
 
     def value_at(self, index):
         """Return the value of the node at the given index in the linked list.
-        The list starts at index 0.
+        The list starts at index 0. Only handles positive indices.
         """
         if index >= self.size:
             raise IndexError("List index out of range")
