@@ -102,7 +102,7 @@ class DoublyLinkedList:
 
     def value_at(self, index):
         """Return the value of the node at the given index in the linked list.
-        The list starts at index 0.
+        The list starts at index 0. Only handles positive indices.
         """
         if index >= self.size:
             raise IndexError("List index out of range")
