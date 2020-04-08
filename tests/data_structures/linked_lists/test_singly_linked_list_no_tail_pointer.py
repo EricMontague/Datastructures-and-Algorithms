@@ -251,6 +251,209 @@ class SinglyLinkedListTestCase(unittest.TestCase):
         """
         self.assertFalse(self.non_empty_list.is_empty())
 
+    def test_reverse_on_empty_list(self):
+        """Test that when the reverse method is called on an empty list,
+        the head node is still None.
+        """
+        self.assertIsNone(self.empty_list.head)
+        self.empty_list.reverse()
+        self.assertIsNone(self.empty_list.head)
+
+    def test_reverse_on_non_empty_list(self):
+        """Test that when the reverse method is called on a non empty list,
+        that the list is properly reversed.
+        """
+        #the head of the fixture is 0 and the tail is 6
+        self.assertEqual(0, self.non_empty_list.head.data)
+        self.assertEqual(6, self.non_empty_list.peek_back())
+
+        #reverse list
+        self.non_empty_list.reverse()
+
+        #check that head and tail are flipped
+        self.assertEqual(6, self.non_empty_list.head.data)
+        self.assertEqual(0, self.non_empty_list.peek_back())
+
+        #check that the list is completely reversed
+        value = 6
+        for node in self.non_empty_list:
+            self.assertEqual(value, node)
+            value -= 1
+    
+    def test_insert_at_index_out_of_range_raises_error(self):
+        """Test that when the insert method is called with an
+        index that is out of range for the list, that an IndexError
+        is raised.
+        """
+        with self.assertRaises(IndexError):
+            self.empty_list.insert(0, 234)
+
+        #fixture list indices go from 0 to 6
+        with self.assertRaises(IndexError):
+            self.non_empty_list.insert(8, 67)
+
+        #negative indicies aren't allowed
+        with self.assertRaises(IndexError):
+            self.non_empty_list.insert(-1, 67)
+
+    def test_insert_at_head(self):
+        """Test that the insert method inserts at the head
+        of the list when an index of 0 is passed in.
+        """
+        data = 798
+        #fixture list indices go from 0 to 6
+        self.assertEqual(7, self.non_empty_list.size)
+        
+        #insert at the head
+        index = 0
+        self.assertEqual(0, self.non_empty_list.head.data)
+        self.non_empty_list.insert(index, data)
+        self.assertEqual(data, self.non_empty_list.head.data)
+        self.assertEqual(8, self.non_empty_list.size)
+
+    def test_insert_not_at_head(self):
+        """Test that a new node is correctly inserted at the
+        given index if it is not the head.
+        """
+        index = 5
+        data = 798
+        self.assertEqual(5, self.non_empty_list.value_at(index))
+        self.non_empty_list.insert(index, data)
+        self.assertEqual(8, self.non_empty_list.size)
+        self.assertEqual(data, self.non_empty_list.value_at(index))
+
+    def test_remove_at_index_on_empty_list(self):
+        """Test that if the remove at index method is called on
+        an empty list, that an index error is raised.
+        """
+        with self.assertRaises(IndexError):
+            self.empty_list.remove_at_index(4)
+
+    def test_remove_at_index_out_of_range(self):
+        """Test that when the remove at index method is called
+        with an index that is out of range, an IndexError is raised.
+        """
+        #fixture list indices go from 0 to 6
+        with self.assertRaises(IndexError):
+            self.empty_list.remove_at_index(8)
+        
+        #negative indices aren't valid
+        with self.assertRaises(IndexError):
+            self.empty_list.remove_at_index(-1)
+
+    def test_remove_at_index_head_node(self):
+        """Test that when the remove at index method
+        is called and the index is 0, that the head node
+        is removed.
+        """
+        #fixture list indices go from 0 to 6 and
+        #the values at each index is the same as the index itself
+        self.assertEqual(7, self.non_empty_list.size)
+        self.assertEqual(0, self.non_empty_list.head.data)
+
+        #remove from head
+        self.non_empty_list.remove_at_index(0)
+        self.assertEqual(6, self.non_empty_list.size)
+        self.assertEqual(1, self.non_empty_list.head.data)
+
+    def test_remove_at_index_within_range(self):
+        """Test that when the remove at index method
+        is called on a list with an index that is in range,
+        that the appropriate node is removed.
+        """
+        #fixture list indices go from 0 to 6 and
+        #the values at each index is the same as the index itself
+        
+        #remove 5 from index 5
+        self.assertEqual(5, self.non_empty_list.value_at(5))
+        self.non_empty_list.remove_at_index(5)
+        self.assertEqual(6, self.non_empty_list.size)
+
+        #confirm that 5 is still not in the list
+        self.assertFalse(5 in self.non_empty_list)
+
+    def test_remove_value_from_empty_list_raises_error(self):
+        """Test that trying to remove a value from an empty
+        list raises a ValueError.
+        """
+        with self.assertRaises(ValueError):
+            self.empty_list.remove_value(9)
+
+    def test_remove_value_not_in_list_raises_error(self):
+        """Test the trying to remove a value that doesn't exist
+        in the list raises and error.
+        """
+        #fixture contains values from 0 to 6
+        with self.assertRaises(ValueError):
+            self.non_empty_list.remove_value(100)
+
+    def test_remove_value_from_head_of_list(self):
+        """Test that when the value to be removed exists at the head
+        of the list, it is properly removed.
+        """
+        #fixture list indices go from 0 to 6 and
+        #the values at each index is the same as the index itself
+        self.assertEqual(0, self.non_empty_list.head.data)
+        self.assertEqual(7, self.non_empty_list.size)
+        
+        #remove value
+        self.non_empty_list.remove_value(0)
+        self.assertEqual(6, self.non_empty_list.size)
+
+        #head should now be 1
+        self.assertEqual(1, self.non_empty_list.head.data)
+
+        #confirm that 0 is not in the list anymore
+        self.assertFalse(0 in self.non_empty_list)
+
+    def test_remove_value_not_from_head_of_list(self):
+        """Test that when the value to be removed is not at the head of
+        the list, that it is propertly removed.
+        """
+        #fixture list indices go from 0 to 6 and
+        #the values at each index is the same as the index itself
+        self.assertEqual(7, self.non_empty_list.size)
+
+        #remove value
+        self.non_empty_list.remove_value(5)
+        self.assertEqual(6, self.non_empty_list.size)
+
+        #confirm that 5 is not in the list anymore
+        self.assertFalse(5 in self.non_empty_list)
+
+    def test_remove_value_removes_first_occurrence(self):
+        """Test that if a value appears more that once in a list,
+        that only the first occurrence of that value is removed.
+        """
+        #fixture list indices go from 0 to 6 and
+        #the values at each index is the same as the index itself
+        self.assertEqual(7, self.non_empty_list.size)
+
+        #insert duplicate valuesinto list
+        self.non_empty_list.insert(2, 4)
+        self.assertEqual(8, self.non_empty_list.size)
+        
+        #now there should be a four at indices 2 and 5
+        self.assertEqual(4, self.non_empty_list.value_at(2))
+        self.assertEqual(4, self.non_empty_list.value_at(5))
+
+        #remove value
+        #the value at index 2 should be the one to be removed
+        self.non_empty_list.remove_value(4)
+        self.assertEqual(7, self.non_empty_list.size)
+
+        #confirm that at least one 4 still exists in the list
+        self.assertTrue(4 in self.non_empty_list)
+        self.assertTrue(1, self.non_empty_list.count(4))
+
+        #the 4 at index five should now be at index 4
+        self.assertEqual(4, self.non_empty_list.value_at(4))
+
+
+    
+
+
+        
 
 
 
