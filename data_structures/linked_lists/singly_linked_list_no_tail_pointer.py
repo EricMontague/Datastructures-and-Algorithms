@@ -150,43 +150,35 @@ class SinglyLinkedList:
 
     def insert(self, index, data):
         """Insert a node with the given data at the given index
-        in the linked list. If the list is empty, the node
-        will become the head of the list.
+        in the linked list. 
         """
-        if index >= self.size:
+        if index >= self.size or index < 0:
             raise IndexError("Index out of range.")
         if index == 0:
             self.push_front(data)
         else:
             node = SinglyLinkedListNode(data)
-            if self.is_empty():
-                self.head = node
-            else:
-                target_index = 0
-                previous = self.head
-                current = self.head.next
-                while target_index != index:
-                    target_index += 1
-                    previous = previous.next
-                    current = current.next
-                node.next = current
-                previous.next = node
-                self.size += 1
+            previous = self.head
+            current = self.head.next
+            for num in range(index - 1):
+                previous = previous.next
+                current = current.next 
+            node.next = current
+            previous.next = node
+            self.size += 1
     
     def remove_at_index(self, index):
         """Remove the node from the linked list at the given index."""
         if self.is_empty():
             raise IndexError("List is empty.")
-        if index >= self.size:
+        if index >= self.size or index < 0:
             raise IndexError("Index out of range.")
         if index == 0:
             self.pop_front()
         else:
-            target_index = 0
             previous = self.head
             current = self.head.next
-            while target_index != index:
-                target_index += 1
+            for num in range(index - 1):
                 previous = previous.next
                 current = current.next
             previous.next = current.next
@@ -207,7 +199,7 @@ class SinglyLinkedList:
                 else: #at tail or middle of list
                     previous.next = current.next
                 self.size -= 1
-                break
+                return
             previous = previous.next
             current = current.next
         raise ValueError("Data not in linked list.")
@@ -215,13 +207,13 @@ class SinglyLinkedList:
     def search(self, data):
         """Return the value of the first node in the linked list with the given data."""
         if self.is_empty():
-            raise ValueError("Linked list is empty.")
+            return self.head
         current = self.head
         while current is not None:
             if current.data == data:
-                return current
+                return current.data
             current = current.next
-        return current.data
+        return current
     
     def __len__(self):
         """Return the number of nodes in the linked list."""
@@ -232,8 +224,9 @@ class SinglyLinkedList:
         return self.search(data) is not None
 
     def __iter__(self):
-        """Return an iterator of nodes' values."""
+        """Return an iterator of nodes' values in the list."""
         current = self.head
         while current is not None:
             yield current.data
+            current = current.next
 

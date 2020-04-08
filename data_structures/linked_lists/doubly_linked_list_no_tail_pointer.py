@@ -168,15 +168,14 @@ class DoublyLinkedList:
 
     def insert(self, index, data):
         """Insert a node with the given data at the given index
-        in the linked list. If the list is empty, the node
-        will become the head of the list.
+        in the linked list.
         """
-        if index >= self.size:
+        if index >= self.size or index < 0:
             raise IndexError("Index out of range.")
-        node = DoublyLinkedListNode(data)
-        if self.is_empty():
-            self.head = node
+        if index == 0:
+            self.push_front(data)
         else:
+            node = DoublyLinkedListNode(data)
             current = self.head
             for num in range(index):
                 current = current.next
@@ -184,7 +183,7 @@ class DoublyLinkedList:
             node.prev = current.prev
             current.prev = node
             node.next = current
-        self.size += 1
+            self.size += 1
 
     def remove_at_index(self, index):
         """Remove the node from the linked list at the given index."""
@@ -217,19 +216,20 @@ class DoublyLinkedList:
                     current.prev.next = current.next
                     current.next.prev = current.prev
                     self.size -= 1
+                return
             current = current.next
         raise ValueError("Data not in linked list.")
 
     def search(self, data):
         """Return the value of the first node in the linked list with the given data."""
         if self.is_empty():
-            raise ValueError("Linked list is empty.")
+            return self.head
         current = self.head
         while current is not None:
             if current.data == data:
-                return current
+                return current.data
             current = current.next
-        return current.data
+        return current
     
     def __len__(self):
         """Return the number of nodes in the linked list."""
@@ -244,4 +244,5 @@ class DoublyLinkedList:
         current = self.head
         while current is not None:
             yield current.data
+            current = current.next
         
