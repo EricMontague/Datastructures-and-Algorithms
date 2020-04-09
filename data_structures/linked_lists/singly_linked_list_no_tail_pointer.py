@@ -204,7 +204,7 @@ class SinglyLinkedList:
             current = current.next
         raise ValueError("Data not in linked list.")
     
-    def search(self, data):
+    def _search(self, data):
         """Return the value of the first node in the linked list with the given data."""
         if self.is_empty():
             return self.head
@@ -213,7 +213,9 @@ class SinglyLinkedList:
             if current.data == data:
                 return current.data
             current = current.next
-        return current
+        if current is None:
+            return current
+        return current.data
     
     def __len__(self):
         """Return the number of nodes in the linked list."""
@@ -221,10 +223,10 @@ class SinglyLinkedList:
 
     def __contains__(self, data):
         """Return True if the given data is in the linked list."""
-        return self.search(data) is not None
+        return self._search(data) is not None
 
     def __iter__(self):
-        """Return an iterator of nodes' values in the list."""
+        """Return an generator of nodes' values in the list."""
         current = self.head
         while current is not None:
             yield current.data
