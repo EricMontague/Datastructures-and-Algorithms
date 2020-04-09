@@ -448,13 +448,71 @@ class SinglyLinkedListTestCase(unittest.TestCase):
 
         #the 4 at index five should now be at index 4
         self.assertEqual(4, self.non_empty_list.value_at(4))
-
-
     
+    def test_len_magic_method_on_empty_list(self):
+        """Test that if the len magic method is invoked on an empty
+        list, that 0 is returned.
+        """
+        self.assertEqual(0, len(self.empty_list))
+
+    def test_len_magic_method_on_non_empty_list(self):
+        """Test that if the len magic method is invoked on a non-empty
+        list, that the correct length of the list is returned.
+        """
+        #length of the fixture is 7
+        self.assertEqual(7, len(self.non_empty_list))
+
+        #remove node
+        self.non_empty_list.pop_front()
+
+        #check length again
+        self.assertEqual(6, len(self.non_empty_list))
+
+    def test_contains_magic_method_on_empty_list(self):
+        """Test that if the contains magic method is invoked
+        on an empty list, that it always returns False.
+        """
+        self.assertFalse(0 in self.empty_list)
+        self.assertFalse(100 in self.empty_list)
+        self.assertFalse(3 in self.empty_list)
+
+    def test_contains_magic_method_on_non_empty_list_value_not_in_list(self):
+        """Test that if the contains magic method is invoked on
+        a non-empty list that doesn't contain the value, that
+        it returns False.
+        """
+        #fixture contains nodes that have values from 0 to 6 in that order
+        self.assertFalse(50 in self.non_empty_list)
+        self.assertFalse(100 in self.non_empty_list)
+        self.assertFalse(30 in self.non_empty_list)
+
+    def test_contains_magic_methods_on_non_empty_list_value_in_list(self):
+        """Test that if the contains magic method is invoked on
+        a non-empty list that does contain the value, that
+        it returns True.
+        """
+        #fixture contains nodes that have values from 0 to 6 in that order
+        self.assertTrue(5 in self.non_empty_list)
+        self.assertTrue(0 in self.non_empty_list)
+        self.assertTrue(3 in self.non_empty_list)
 
 
-        
+    def test_loop_through_empty_list(self):
+        """Test that if an attempt is made to loop through an empty list,
+        that the loop doesn't execute.
+        """
+        nodes = [node for node in self.empty_list]
+        self.assertEqual([], nodes)
 
+    def test_loop_through_non_empty_list(self):
+        """Test that if an attempt is made to loop through a non-empty list,
+        that the nodes' values are returned in the proper order.
+        """
+        #fixture contains nodes that have values from 0 to 6 in that order
+        value = 0
+        for node in self.non_empty_list:
+            self.assertEqual(value, node)
+            value += 1
 
 
 if __name__ == "__main__":
