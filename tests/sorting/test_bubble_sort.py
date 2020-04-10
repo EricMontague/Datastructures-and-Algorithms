@@ -6,7 +6,7 @@ from sorting.bubble_sort import bubble_sort
 
 
 class TestProduct:
-    """Class created to test the stability property of bubble sort."""
+    """Dummy class created to test the stability property of bubble sort."""
 
     def __init__(self, name, quantity):
         self.name = name
@@ -25,8 +25,12 @@ class BubbleSortTestCase(unittest.TestCase):
         self.sorted_list_of_integers = [0, 1, 2, 3, 4, 5]
         self.unsorted_list_of_integers = [4, -7, 1, 10, 0, -1, -2]
         self.list_of_objects = [
-            TestProduct("bread", 2), TestProduct("eggs", 10), TestProduct("milk", 10),
-            TestProduct("cereal", 3), TestProduct("apples", 0), TestProduct("cheese", 1)
+            TestProduct("bread", 2),
+            TestProduct("eggs", 10),
+            TestProduct("milk", 10),
+            TestProduct("cereal", 3),
+            TestProduct("apples", 0),
+            TestProduct("cheese", 1),
         ]
 
     def tearDown(self):
@@ -62,8 +66,8 @@ class BubbleSortTestCase(unittest.TestCase):
         list is sorted.
         """
         bubble_sort(self.list_of_objects)
-        
-        #eggs should still come before milk in the list
+
+        # eggs should still come before milk in the list
         products = {}
         for index, obj in enumerate(self.list_of_objects):
             products[obj.name] = index
