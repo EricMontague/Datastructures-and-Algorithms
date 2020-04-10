@@ -14,7 +14,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 10. [Union Find](../master/data_structures/union_find)
 11. [LRU Cache](../master/data_structures/lru_cache)
 12. [Binary Search](../master/search/binary_search)
-13. Bubble Sort 
+13. [Bubble Sort](../master/sorting/bubble_sort.py)
 14. Selection Sort
 15. Insertion Sort
 16. Merge Sort 
