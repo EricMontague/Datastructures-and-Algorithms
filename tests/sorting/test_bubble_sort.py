@@ -3,18 +3,7 @@
 
 import unittest
 from sorting.bubble_sort import bubble_sort
-
-
-class TestProduct:
-    """Dummy class created to test the stability property of bubble sort."""
-
-    def __init__(self, name, quantity):
-        self.name = name
-        self.quantity = quantity
-
-    def __lt__(self, other):
-        return self.quantity < other.quantity
-
+from tests.sorting.stable import TestProduct
 
 class BubbleSortTestCase(unittest.TestCase):
     """Class to run tests on my bubble sort implementation."""
@@ -73,3 +62,7 @@ class BubbleSortTestCase(unittest.TestCase):
             products[obj.name] = index
         self.assertTrue(products["eggs"] < products["milk"])
 
+
+if __name__ == "__main__":
+    unittest.main()
+    
