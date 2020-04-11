@@ -214,6 +214,46 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 ## Sorting Algorithms
 <details>
   <summary>Sorting Algorithms</summary>
+  
+  - ### Bubble Sort
+    - #### See implementations [here](../master/sorting/bubble_sort.py)
+    - #### Description:
+        - Bubble Sort is an in-place sorting algorithm that...
+        
+    - #### Advantages:
+        - In-place, takes constant space
+        - Is a stable sorting algorithm
+    - #### Disadvantages:
+        - Slow, really bad for large datasets
+    - #### Further Notes:
+        - Best case time complexity: O(n). The algorithm runs in O(n) time if the input array is already sorted.
+        - Average case time complexity: O(n^2)
+        - Worst case time complexity: O(n^2). You can imagine the worst case being if the input array is completely reversed.
+        - One of the comparison sorting algorithms
+        - Non-recursive
+        - Internal sorting algorithm
+       
+    <br>
+    
+  - ### Selection Sort
+    - #### See implementations [here](../master/sorting/selection_sort.py)
+    - #### Description:
+        - Selection Sort is an in-place sorting algorithm that...
+        
+    - #### Advantages:
+        - In-place, takes constant space
+    - #### Disadvantages:
+        - Slow, really bad for large datasets
+        - Not a stable sorting algorithm
+    - #### Further Notes:
+        - Best case time complexity: O(n^2)
+        - Average case time complexity: O(n^2)
+        - Worst case time complexity: O(n^2)
+        - One of the comparison sorting algorithms
+        - Non-recursive
+        - Internal sorting algorithm
+       
+    <br>
 </details>
 
 ## Searching Algorithms
