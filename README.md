@@ -254,6 +254,25 @@ On my journey of prepping for technical interviews, I decided to make this repo 
         - Internal sorting algorithm
        
     <br>
+    
+  - ### Insertion Sort
+    - #### See implementations [here](../master/sorting/insertion_sort.py)
+    - #### Description:
+        - Insertion Sort is an in-place sorting algorithm that...
+        
+    - #### Advantages:
+        - In-place, takes constant space
+    - #### Disadvantages:
+        - Slow, really bad for large datasets
+    - #### Further Notes:
+        - Best case time complexity: O(n^2)
+        - Average case time complexity: O(n^2)
+        - Worst case time complexity: O(n^2)
+        - One of the comparison sorting algorithms
+        - Non-recursive
+        - Internal sorting algorithm
+       
+    <br>
 </details>
 
 ## Searching Algorithms
