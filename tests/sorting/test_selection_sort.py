@@ -50,7 +50,7 @@ class SelectionSortTestCase(unittest.TestCase):
         selection_sort(self.sorted_list_of_integers)
         self.assertEqual([0, 1, 2, 3, 4, 5], self.sorted_list_of_integers)
 
-    def test_sort_is_stable_must_fail(self):
+    def test_selection_sort_is_stable_must_fail(self):
         """Test that if two elements in a list have the same key,
         that their relative ordering is not preserved after the
         list is sorted. Selection sort is not a stable sorting algorithm.

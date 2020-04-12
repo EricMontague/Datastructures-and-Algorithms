@@ -49,7 +49,7 @@ class BubbleSortTestCase(unittest.TestCase):
         bubble_sort(self.sorted_list_of_integers)
         self.assertEqual([0, 1, 2, 3, 4, 5], self.sorted_list_of_integers)
 
-    def test_sort_is_stable(self):
+    def test_bubble_sort_is_stable(self):
         """Test that if two elements in a list have the same key,
         that their relative ordering is still preserved after the
         list is sorted.
