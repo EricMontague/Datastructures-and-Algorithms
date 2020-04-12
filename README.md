@@ -16,7 +16,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 12. [Binary Search](../master/search/binary_search)
 13. [Bubble Sort](../master/sorting/bubble_sort.py)
 14. [Selection Sort](../master/sorting/selection_sort.py)
-15. Insertion Sort
+15. [Insertion Sort](../master/sorting/insertion_sort.py)
 16. Merge Sort 
 17. Quicksort
 18. Heapsort
