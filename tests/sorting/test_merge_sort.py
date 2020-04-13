@@ -1,13 +1,13 @@
-"""This module contains tests for my selection sort implementation."""
+"""This module contains tests for my merge sort implementation."""
 
 
 import unittest
-from sorting.selection_sort import selection_sort
+from sorting.merge_sort import merge_sort, merge
 from tests.sorting.stable import TestProduct
 
 
-class SelectionSortTestCase(unittest.TestCase):
-    """Class to run tests on my selection sort implementation."""
+class MergeSortTestCase(unittest.TestCase):
+    """Class to run tests on my merge sort implementation."""
 
     def setUp(self):
         """Create fixtures."""
@@ -48,34 +48,56 @@ class SelectionSortTestCase(unittest.TestCase):
         del self.sorted_list_of_products_stable
         del self.sorted_list_of_products_unstable
 
+    def test_merge_sorted_list(self):
+        """Test that the merge function will properly merge two child
+        lists into their parent when given a sorted parent list.
+        """
+        left = [1, 2]
+        right = [4, 5]
+        parent = [1, 2, 4, 5]
+        merge(parent, left, right)
+        # parent list should remain sorted
+        assert parent == [1, 2, 4, 5]
+
+    def test_merge_unsorted_list(self):
+        """Test that the merge function will properly merge two child
+        lists into their parent when given an unsorted parent list.
+        """
+        left = [1, 2]
+        right = [4, 5]
+        parent = [5, 2, 1, 4]
+        merge(parent, left, right)
+        # parent list should be sorted
+        assert parent == [1, 2, 4, 5]
+
     def test_sort_empty_list(self):
-        """Test that when selection sort is passed an empty list,
+        """Test that when merge sort is passed an empty list,
         that nothing happens."""
-        selection_sort(self.empty_list)
+        merge_sort(self.empty_list)
         self.assertEqual(self.empty_list, [])
 
     def test_sort_unsorted_list_of_integers(self):
-        """Test that when selection sort is passed an unsorted list
+        """Test that when merge sort is passed an unsorted list
         of integers that the list is properly sorted.
         """
-        selection_sort(self.unsorted_list_of_integers)
+        merge_sort(self.unsorted_list_of_integers)
         self.assertEqual(self.unsorted_list_of_integers, self.sorted_list_of_integers)
 
     def test_sort_sorted_list_of_integers(self):
-        """Test that when selection sort is passed a sorted list
+        """Test that when merge sort is passed a sorted list
         of integers that the list remains sorted.
         """
-        selection_sort(self.sorted_list_of_integers)
+        merge_sort(self.sorted_list_of_integers)
         self.assertEqual(self.sorted_list_of_integers, [-7, -2, -1, 0, 1, 4, 10])
 
-    def test_selection_sort_is_unstable(self):
+    def test_merge_sort_is_stable(self):
         """Test that if two elements in a list have the same key,
         that their relative ordering is still preserved after the
         list is sorted.
         """
-        selection_sort(self.unsorted_list_of_products)
+        merge_sort(self.unsorted_list_of_products)
         self.assertEqual(
-            self.unsorted_list_of_products,self.sorted_list_of_products_unstable
+            self.unsorted_list_of_products,self.sorted_list_of_products_stable
         )
 
 
