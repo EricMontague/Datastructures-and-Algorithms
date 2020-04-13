@@ -4,7 +4,9 @@ whether a sorting algorithm is stable or not.
 
 
 class TestProduct:
-    """Dummy class created to test the stability property of sorting algorithms."""
+    """Dummy class created to test the stability 
+    property of sorting algorithms.
+    """
 
     def __init__(self, name, quantity):
         self.name = name
@@ -12,4 +14,11 @@ class TestProduct:
 
     def __lt__(self, other):
         return self.quantity < other.quantity
+
+    def __le__(self, other):
+        return self.quantity <= other.quantity
+
+    def __eq__(self, other):
+        return self.quantity == other.quantity
+
         
