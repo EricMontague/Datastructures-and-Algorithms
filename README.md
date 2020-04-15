@@ -17,7 +17,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 13. [Bubble Sort](../master/sorting/bubble_sort.py)
 14. [Selection Sort](../master/sorting/selection_sort.py)
 15. [Insertion Sort](../master/sorting/insertion_sort.py)
-16. Merge Sort 
+16. [Merge Sort](../master/sorting/merge_sort.py) 
 17. Quicksort
 18. Heapsort
 19. Radix Sort
@@ -265,7 +265,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
     - #### Disadvantages:
         - Slow, really bad for large datasets
     - #### Further Notes:
-        - Best case time complexity: O(n^2)
+        - Best case time complexity: O(n). The algorithm runs in linear time if the input array is already sorted
         - Average case time complexity: O(n^2)
         - Worst case time complexity: O(n^2)
         - One of the comparison sorting algorithms
