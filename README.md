@@ -18,7 +18,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 14. [Selection Sort](../master/sorting/selection_sort.py)
 15. [Insertion Sort](../master/sorting/insertion_sort.py)
 16. [Merge Sort](../master/sorting/merge_sort.py) 
-17. Quicksort
+17. [Quicksort](../master/sorting/quicksort.py)
 18. Heapsort
 19. Radix Sort
 20. Count Sort
