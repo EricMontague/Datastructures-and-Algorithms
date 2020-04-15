@@ -216,7 +216,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
   <summary>Sorting Algorithms</summary>
   
   - ### Bubble Sort
-    - #### See implementations [here](../master/sorting/bubble_sort.py)
+    - #### See implementation [here](../master/sorting/bubble_sort.py)
     - #### Description:
         - Bubble Sort is an in-place sorting algorithm that...
         
@@ -236,7 +236,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
     <br>
     
   - ### Selection Sort
-    - #### See implementations [here](../master/sorting/selection_sort.py)
+    - #### See implementation [here](../master/sorting/selection_sort.py)
     - #### Description:
         - Selection Sort is an in-place sorting algorithm that...
         
@@ -256,7 +256,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
     <br>
     
   - ### Insertion Sort
-    - #### See implementations [here](../master/sorting/insertion_sort.py)
+    - #### See implementation [here](../master/sorting/insertion_sort.py)
     - #### Description:
         - Insertion Sort is an in-place sorting algorithm that...
         
@@ -272,6 +272,48 @@ On my journey of prepping for technical interviews, I decided to make this repo 
         - Non-recursive
         - Internal sorting algorithm
        
+    <br>
+    
+  - ### Merge Sort
+    - #### See implementation [here](../master/sorting/merge_sort.py)
+    - #### Description:
+        - Merge Sort is a sorting algorithm that...
+        
+    - #### Advantages:
+        - Runs in O(nlogn) time
+    - #### Disadvantages:
+        - Uses O(n) space
+    - #### Further Notes:
+        - Best case time complexity: O(nlogn)
+        - Average case time complexity: O(nlogn)
+        - Worst case time complexity: O(nlogn)
+        - One of the comparison sorting algorithms
+        - Recursive
+        - External sorting algorithm
+        - Falls in the class of divide and conquer algorithms
+        - Stable
+       
+    <br>
+  - ### Quicksort
+    - #### See implementation [here](../master/sorting/quicksort.py)
+    - #### Description:
+        - QuickSort is a sorting algorithm that...
+        
+    - #### Advantages:
+        - Runs in O(nlogn) time
+        - Uses constant space
+    - #### Disadvantages:
+        - Worst case runtime is O(n ^2)
+        - Unstable
+    - #### Further Notes:
+        - Best case time complexity: O(nlogn)
+        - Average case time complexity: O(nlogn)
+        - Worst case time complexity: O(n ^ 2). The worst case comes about if the array is already sorted
+        - One of the comparison sorting algorithms
+        - Recursive
+        - Internal sorting algorithm
+        - Falls in the class of divide and conquer algorithms
+  
     <br>
 </details>
 
