@@ -297,11 +297,11 @@ On my journey of prepping for technical interviews, I decided to make this repo 
   - ### Quicksort
     - #### See implementation [here](../master/sorting/quicksort.py)
     - #### Description:
-        - QuickSort is a sorting algorithm that...
+        - QuickSort is an in-place sorting algorithm that...
         
     - #### Advantages:
         - Runs in O(nlogn) time
-        - Uses constant space
+        - In-place sorting algorithm
     - #### Disadvantages:
         - Worst case runtime is O(n ^2)
         - Unstable
@@ -313,6 +313,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
         - Recursive
         - Internal sorting algorithm
         - Falls in the class of divide and conquer algorithms
+        - Uses O(logn) space because of the function calls that build up on the implicit call stack
   
     <br>
 </details>
