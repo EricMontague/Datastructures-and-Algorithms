@@ -8,7 +8,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 4. [Singly Linked List](../master/data_structures/linked_lists)
 5. [Doubly Linked List](../master/data_structures/linked_lists)
 6. [Binary Search Tree](../master/data_structures/binary_search_tree)
-7. Heap/Priority Queue
+7. [Heaps/Priority Queues](../master/data_structures/heaps)
 8. [Trie](../master/data_structures/trie)
 9. Graphs
 10. [Union Find](../master/data_structures/union_find)
@@ -19,7 +19,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 15. [Insertion Sort](../master/sorting/insertion_sort.py)
 16. [Merge Sort](../master/sorting/merge_sort.py) 
 17. [Quicksort](../master/sorting/quicksort.py)
-18. Heapsort
+18. [Heapsort](../master/sorting/heapsort.py)
 19. Radix Sort
 20. Count Sort
 
@@ -315,6 +315,26 @@ On my journey of prepping for technical interviews, I decided to make this repo 
         - Falls in the class of divide and conquer algorithms
         - Uses O(logn) space because of the function calls that build up on the implicit call stack
   
+    <br>
+    
+  - ### Heapsort
+    - #### See implementation [here](../master/sorting/heapsort.py)
+    - #### Description:
+        - Heapsort is an in-place sorting algorithm that...
+        
+    - #### Advantages:
+        - Runs in O(nlogn) time
+        - In-place sorting algorithm
+    - #### Disadvantages:
+        - Constant space
+        - Unstable
+    - #### Further Notes:
+        - Best case time complexity: O(nlogn)
+        - Average case time complexity: O(nlogn)
+        - Worst case time complexity: O(nlogn_
+        - One of the comparison sorting algorithms
+        - Internal sorting algorithm
+      
     <br>
 </details>
 
