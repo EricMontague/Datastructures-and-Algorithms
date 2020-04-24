@@ -21,7 +21,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 17. [Quicksort](../master/sorting/quicksort.py)
 18. [Heapsort](../master/sorting/heapsort.py)
 19. Radix Sort
-20. Count Sort
+20. [Counting Sort](../master/sorting/counting_sort.py)
 
 
 ## Data Structures
