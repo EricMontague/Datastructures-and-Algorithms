@@ -331,10 +331,29 @@ On my journey of prepping for technical interviews, I decided to make this repo 
     - #### Further Notes:
         - Best case time complexity: O(nlogn)
         - Average case time complexity: O(nlogn)
-        - Worst case time complexity: O(nlogn_
+        - Worst case time complexity: O(nlogn)
         - One of the comparison sorting algorithms
         - Internal sorting algorithm
       
+    <br>
+    
+  - ### Counting Sort
+    - #### See implementations [here](../master/sorting/counting_sort.py)
+    - #### Description:
+        - Counting sort is a linear-time sorting algorithm that...
+        
+    - #### Advantages:
+        - Runs in linear time. More specifically O(n + k) time, where "n" is the number of elements in the unsorted list and "k" is the range of possible values in the list.
+        - Stable
+    - #### Disadvantages:
+        - Requires you to know the range of your values up front
+        - If the range of values is much greater than the number of elements in the array, then the time and space complexity can become undesirable.
+    - #### Further Notes:
+        - Best case time complexity: O(n)
+        - Average case time complexity: O(n)
+        - Worst case time complexity: O(n)
+        - Space complexity: O(n)
+        - Non-comparison sorting algorithm      
     <br>
 </details>
 
