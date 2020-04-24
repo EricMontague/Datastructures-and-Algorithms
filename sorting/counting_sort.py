@@ -1,4 +1,4 @@
-"""This module contains my implementation of counting sort."""
+"""This module contains my implementations of counting sort."""
 
 
 #Naive version of counting sort that can only handle positive integers
