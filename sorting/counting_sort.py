@@ -1,8 +1,6 @@
 """This module contains my implementations of counting sort."""
 
-
-#Naive version of counting sort that can only handle positive integers
-#This implementation is unstable.
+#unstable
 def naive_counting_sort(unsorted_list, min_value, max_value):
     """Implementation of Counting sort. Sorts a given list
     of elements where each element is within the given range.
@@ -19,9 +17,7 @@ def naive_counting_sort(unsorted_list, min_value, max_value):
             position += 1
 
 
-#The more textbook implementation of counting sort
-#Can be used to sort objects or other things, by some particular key.
-#This implementation is stable
+#A more textbook implementation of counting sort
 def actual_counting_sort(unsorted_list, min_value, max_value):
     """Implementation of Counting sort (stable). Sorts a given list
     of elements where each element is within the given range.
@@ -51,8 +47,6 @@ def actual_counting_sort(unsorted_list, min_value, max_value):
 
 
 #A less verbose and easier way to write counting sort
-#Takes advantage of python lists to achieve the same result as above.
-#This implementation is stable as well
 def actual_counting_sort2(unsorted_list, min_value, max_value):
     """Implementation of Counting sort (stable). Sorts a given list
     of elements where each element is within the given range.
