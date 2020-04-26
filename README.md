@@ -20,7 +20,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 16. [Merge Sort](../master/sorting/merge_sort.py) 
 17. [Quicksort](../master/sorting/quicksort.py)
 18. [Heapsort](../master/sorting/heapsort.py)
-19. Radix Sort
+19. [Radix Sort](../master/sorting/radix_sort.py)
 20. [Counting Sort](../master/sorting/counting_sort.py)
 
 
@@ -348,6 +348,25 @@ On my journey of prepping for technical interviews, I decided to make this repo 
     - #### Disadvantages:
         - Requires you to know the range of your values up front
         - If the range of values is much greater than the number of elements in the array, then the time and space complexity can become undesirable.
+    - #### Further Notes:
+        - Best case time complexity: O(n)
+        - Average case time complexity: O(n)
+        - Worst case time complexity: O(n)
+        - Space complexity: O(n)
+        - Non-comparison sorting algorithm      
+    <br>
+    
+  - ### Radix Sort
+    - #### See implementations [here](../master/sorting/radix_sort.py)
+    - #### Description:
+        - Radix sort is a linear-time sorting algorithm that...
+        
+    - #### Advantages:
+        - Runs in linear time.
+        - Stable
+    - #### Disadvantages:
+        - Requires you to know the number of digits in your input up front
+        - If the number of digits in your input is too large, then the time and space complexity may become undesirable.
     - #### Further Notes:
         - Best case time complexity: O(n)
         - Average case time complexity: O(n)
