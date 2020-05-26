@@ -2,7 +2,7 @@
 On my journey of prepping for technical interviews, I decided to make this repo as a personal study guide for basic data structures and algorithms. This repo contains my implementations of various data structures and algorithms as well as brief descriptions, time complexities of operations, as well as advantages and disadvantages of certain implementations below. Hopefully it can help others who are in a similar boat.
 
 ## Table of Contents:
-1. Stack
+1. Stack(../master/data_structures/stacks)
 2. Queues/Deque
 3. Hash Table
 4. [Singly Linked List](../master/data_structures/linked_lists)
