@@ -1,4 +1,6 @@
-"""This module contains my implementation of quicksort."""
+"""This module contains my implementation of quicksort. This implementation
+uses Lomuto's partitioning algorithm.
+"""
 
 
 import random
