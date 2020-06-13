@@ -3,7 +3,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 
 ## Table of Contents:
 1. [Stack](../master/data_structures/stacks)
-2. Queues/Deque
+2. [Queues/Deque](../master/data_structures/queues)
 3. Hash Table
 4. [Singly Linked List](../master/data_structures/linked_lists)
 5. [Doubly Linked List](../master/data_structures/linked_lists)
