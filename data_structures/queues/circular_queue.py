@@ -49,7 +49,7 @@ class CircularQueue:
     def peek(self):
         """Return the value of the item located at the front of the queue."""
         if self.is_empty():
-            raise ValueError("Queue is empty.")
+            return None
         return self._items[self._front]
 
     @property
