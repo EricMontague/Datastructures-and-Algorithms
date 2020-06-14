@@ -112,7 +112,4 @@ class BinaryMaxHeap:
         """Return the parent index of the given child index in the heap."""
         return child // 2
 
-    def __contains__(self, value):
-        """Return True if the given value is in the heap."""
-        return value in self._heap
-
+    
