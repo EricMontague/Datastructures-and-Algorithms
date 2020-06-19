@@ -28,14 +28,14 @@ class CircularQueue:
     def dequeue(self):
         """Remove and return item located at the front of the queue."""
         if self.is_empty():
-            raise ValueError("Queue is empty.")
+            return None
         item = self._items[self._front]
         if self._size == 1:
             self._front = -1
             self._rear = -1
         else:
             self._front = (self._front + 1) % self._max_capacity
-        self.size -= 1
+        self._size -= 1
         return item
 
     def is_full(self):
@@ -44,7 +44,7 @@ class CircularQueue:
 
     def is_empty(self):
         """Return True if the queue is empty, else return False."""
-        return self.size == 0
+        return self._size == 0
 
     def peek(self):
         """Return the value of the item located at the front of the queue."""

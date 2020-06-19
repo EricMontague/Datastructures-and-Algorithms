@@ -64,7 +64,7 @@ class CircularDeque:
     def pop_front(self):
         """Remove and return the item at the front of the deque."""
         if self.is_empty():
-            raise ValueError("Deque is empty.")
+            return None
         item = self._items[self._front]
         if self._size == 1:
             self._front = -1
@@ -77,9 +77,9 @@ class CircularDeque:
     def pop_back(self):
         """Remove and return the item at the back of the deque."""
         if self.is_empty():
-            raise ValueError("Deque is empty.")
+            return None
         item = self._items[self._back]
-        if self.size == 1:
+        if self._size == 1:
             self._front = -1
             self._back = -1
         else:
