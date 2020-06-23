@@ -101,3 +101,7 @@ class CircularQueueTestCase(unittest.TestCase):
         self.assertEqual(self.empty_queue.size, 0)
         self.assertEqual(self.full_queue.size, 5)
 
+    
+if __name__ == "__main__":
+    unittest.main()
+
