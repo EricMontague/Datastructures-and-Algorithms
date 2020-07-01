@@ -9,10 +9,12 @@ class BinaryMaxHeap:
 
     def __init__(self):
         self._heap = [None]
-        self.size = 0
+        self._size = 0
 
     def get_max(self):
         """Return the largest value in the max heap."""
+        if self.is_empty():
+            return None
         return self._heap[1]
 
     def extract_max(self):
@@ -21,8 +23,10 @@ class BinaryMaxHeap:
             return None
         max_value = self._heap[1]
         last_value = self._heap.pop()
-        self.size -= 1
+        self._size -= 1
         # Check for the edge case of removing the last element from the heap
+        # This check is necessary because if only one element was left, then
+        # the code below the if statement would just reinsert this element into the heap
         if not self.is_empty():
             self._heap[1] = last_value
             self._sift_down(1)
@@ -31,47 +35,54 @@ class BinaryMaxHeap:
     def insert(self, value):
         """Insert the given value into the heap."""
         self._heap.append(value)
-        self.size += 1
-        self._sift_up(self.size)
+        self._size += 1
+        self._sift_up(self._size)
 
     def heapify(self, input_list):
         """Given a list, turn it into a max heap."""
-        self._heap += input_list
-        self.size = len(input_list)
-        for index in range(self.size // 2, 0, -1):
+        self._heap = [None] + input_list
+        self._size = len(input_list)
+        for index in range(self._size // 2, 0, -1):
             self._sift_down(index)
 
     def remove_at(self, index):
         """Given an index in the heap, remove that element from the heap."""
         if self.is_empty():
             raise IndexError("Max heap is empty.")
-        if index < 1 or index > self.size:
+        if index < 1 or index > self._size:
             raise IndexError("Index out of range.")
         last_value = self._heap.pop()
-        self.size -= 1
+        self._size -= 1
         # Check for the edge case of removing the last element from the heap
+        # This check is necessary because if only one element was left, then
+        # the code below the if statement would just reinsert this element into the heap
         if not self.is_empty():
             self._heap[1] = last_value
             self._sift_down(index)
 
     def is_empty(self):
         """Return True if the heap is empty."""
-        return self.size == 0
+        return self._size == 0
+
+    @property
+    def size(self):
+        """Return the number of elements in the heap."""
+        return self._size
 
     def _sift_down(self, parent):
         """Continuously swap the parent node with its children until it's in its proper
         location in the max heap.
         """
-        while parent <= self.size:
+        while parent <= self._size:
             left_child = self._get_left_child(parent)
             right_child = self._get_right_child(parent)
             # check if parent is a leaf node
-            if left_child > self.size:
+            if left_child > self._size:
                 break
             # find largest child node
             largest_child = left_child
             if (
-                right_child <= self.size
+                right_child <= self._size
                 and self._heap[right_child] > self._heap[largest_child]
             ):
                 largest_child = right_child
