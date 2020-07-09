@@ -87,12 +87,12 @@ class HashTable:
     def _should_double(self):
         """Return True if the table size should be doubled."""
         # double table size if half of the slots are occupied
-        return self._num_items == len(self._buckets) // 2:
+        return self._num_items == len(self._buckets) // 2
 
     def _should_halve(self):
         """Return True if the table size should be halved."""
         # halve table size if only a quarter of the slots are occupied
-        return self._num_items == len(self._buckets) // 4:
+        return self._num_items == len(self._buckets) // 4
          
     def _rehash(self, factor):
         """Rehash the contents of the current hash table into a new
