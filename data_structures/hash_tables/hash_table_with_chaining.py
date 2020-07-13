@@ -60,12 +60,12 @@ class HashTable:
         head = self._table[bucket_index]
         if head is None:
             raise ValueError("Key not in hash table.")
-        self._delete_item(head)
+        self._delete_item(key, head, bucket_index)
         self._num_items -= 1
         if self._should_halve():
             self._resize_table(0.5)
 
-    def _delete_item(self, item):
+    def _delete_item(self, key, item, bucket_index):
         """Delete the given item from its linked list in the hash table."""
         # Remove from head of linked list
         if item.key == key:
