@@ -13,13 +13,28 @@ class HashItem:
         self.value = value
         self.next = None
 
+    def __repr__(self):
+        """Return a string representation of a HashItem."""
+        return "HashItem(%r, %r)" %(self.key, self.value)
+
 
 class HashTable:
     """Class to represent a hash table."""
 
-    def __init__(self, capacity=8, load_factor=0.75):
+    def __init__(self, capacity=8, max_load_factor=0.75, min_load_factor=0.25):
+        if capacity < 1:
+            raise ValueError("Capacity cannot be less than 1.")
+        if max_load_factor <= 0 or max_load_factor > 1:
+            raise ValueError(
+                "Max load factor must be between greater than 0, but than or equal to 1."
+            )
+        if min_load_factor <= 0 or min_load_factor > 1:
+            raise ValueError(
+                "Min load factor must be between greater than 0, but than or equal to 1."
+            )
         self._capacity = capacity
-        self._load_factor = load_factor
+        self._max_load_factor = max_load_factor
+        self._min_load_factor = min_load_factor
         self._table = [None] * self._capacity
         self._num_items = 0
 
@@ -27,11 +42,23 @@ class HashTable:
         """Return the item associated with the given key."""
         if key is not None:
             bucket_index = self._hash(key)
+            print(f"Index of {key} should be {bucket_index}")
             head = self._table[bucket_index]
-            while head:
-                if head.key == key:
-                    return head.value
-                head = head.next
+            value = self._find_item(key, head)
+            print(f"Returned value from the get method is: {value}")
+            return value
+
+    def _find_item(self, key, head):
+        """Traverse the linked list of HashItems and return the value of the item
+        with the given key.
+        """
+        while head:
+            print(f"Head is {head}")
+            if head.key == key:
+                print(f"Key match the value {head.value}")
+                return head.value
+            head = head.next
+        print("Returned None")
         return None
 
     def put(self, key, value):
@@ -40,26 +67,40 @@ class HashTable:
         value will be overwritten.
         """
         # check whether key exists in hash table already
-        item = self.get(key)
-        if item is not None:
-            item.value = value
+        existing_value = self.get(key)
+        bucket_index = self._hash(key)
+        head = self._table[bucket_index]
+        if existing_value is not None:
+            self._update_item(key, value, head)
         else:
-            bucket_index = self._hash(key)
-            head = self._table[bucket_index]
             new_item = HashItem(key, value)
-            if head is not None:
-                new_item.next = head
-            self._table[bucket_index] = new_item
+            self._insert_item(new_item, bucket_index, head)
             self._num_items += 1
             if self._should_double():
                 self._resize_table(2)
+
+    def _update_item(self, key, value, head):
+        """Traverse the linked list of HashItems and update the item's value whose
+        key matches the given key.
+        """
+        while head:
+            if head.key == key:
+                head.value = value
+                break
+            head = head.next
+
+    def _insert_item(self, new_item, bucket_index, head):
+        """Insert a new HashItem at the given index in the hash table."""
+        if head is not None:
+            new_item.next = head
+        self._table[bucket_index] = new_item
 
     def delete(self, key):
         """Delete an item in the hash table with the given key."""
         bucket_index = self._hash(key)
         head = self._table[bucket_index]
         if head is None:
-            raise ValueError("Key not in hash table.")
+            raise KeyError("Key not in hash table.")
         self._delete_item(key, head, bucket_index)
         self._num_items -= 1
         if self._should_halve():
@@ -74,7 +115,7 @@ class HashTable:
             target = item.next
             while True:
                 if target is None:
-                    raise ValueError("Key not in hash table.")
+                    raise KeyError("Key not in hash table.")
                 if target.key == key:
                     item.next = target.next
                     break
@@ -116,7 +157,7 @@ class HashTable:
         pairs = []
         for item in self._table:
             while item:
-                pairs.append((item.key, item.value)) 
+                pairs.append((item.key, item.value))
                 item = item.next
         return pairs
 
@@ -137,12 +178,12 @@ class HashTable:
     def _should_double(self):
         """Return True if the table size should be doubled."""
         # double table size if half of the slots are occupied
-        return self._num_items == self._capacity * self._load_factor
+        return self._num_items == self._capacity * self._max_load_factor
 
     def _should_halve(self):
         """Return True if the table size should be halved."""
         # halve table size if only a quarter of the slots are occupied
-        return self._num_items == (self._capacity * self._load_factor) // 2
+        return self._num_items == self._capacity * self._min_load_factor
 
     def _resize_table(self, multiple):
         """Rehash the contents of the current hash table into a new
