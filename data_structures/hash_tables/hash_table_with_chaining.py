@@ -191,8 +191,9 @@ class HashTable:
         that is passed in.
         """
         old_table = self._table.copy()
-        self._table = [None] * self._capacity * multiple
         self._num_items = 0
+        self._capacity = int(self._capacity * multiple)
+        self._table = [None] * self._capacity
         for item in old_table:
             while item:
                 self.put(item.key, item.value)
