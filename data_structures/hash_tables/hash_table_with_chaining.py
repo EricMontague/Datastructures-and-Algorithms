@@ -23,14 +23,14 @@ class HashTable:
 
     def __init__(self, capacity=8, max_load_factor=0.75, min_load_factor=0.25):
         if capacity < 1:
-            raise ValueError("Capacity cannot be less than 1.")
+            raise ValueError("Capacity must be greater than 1.")
         if max_load_factor <= 0 or max_load_factor > 1:
             raise ValueError(
-                "Max load factor must be between greater than 0, but than or equal to 1."
+                "Max load factor must be greater than 0, but less than or equal to 1."
             )
         if min_load_factor <= 0 or min_load_factor > 1:
             raise ValueError(
-                "Min load factor must be between greater than 0, but than or equal to 1."
+                "Min load factor must be greater than 0, but less than or equal to 1."
             )
         self._capacity = capacity
         self._max_load_factor = max_load_factor
@@ -177,12 +177,10 @@ class HashTable:
 
     def _should_double(self):
         """Return True if the table size should be doubled."""
-        # double table size if half of the slots are occupied
         return self._num_items >= self._capacity * self._max_load_factor
 
     def _should_halve(self):
         """Return True if the table size should be halved."""
-        # halve table size if only a quarter of the slots are occupied
         return self._num_items <= self._capacity * self._min_load_factor
 
     def _resize_table(self, multiple):
