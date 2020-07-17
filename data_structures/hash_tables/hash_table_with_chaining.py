@@ -178,12 +178,12 @@ class HashTable:
     def _should_double(self):
         """Return True if the table size should be doubled."""
         # double table size if half of the slots are occupied
-        return self._num_items == self._capacity * self._max_load_factor
+        return self._num_items >= self._capacity * self._max_load_factor
 
     def _should_halve(self):
         """Return True if the table size should be halved."""
         # halve table size if only a quarter of the slots are occupied
-        return self._num_items == self._capacity * self._min_load_factor
+        return self._num_items <= self._capacity * self._min_load_factor
 
     def _resize_table(self, multiple):
         """Rehash the contents of the current hash table into a new
