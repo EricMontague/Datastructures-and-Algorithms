@@ -1,13 +1,13 @@
-"""This module contains tests for my hash table implementation that
-uses chaining to deal with key collisions.
+"""This module contains tests for my implementation of a hash
+table that uses linear probing to handle collisions.
 """
 
 import unittest
-from data_structures.hash_tables.hash_table_with_chaining import HashTable
+from data_structures.hash_tables.hash_table_with_linear_probing import HashTable
 
 
 class HashTableTestCase(unittest.TestCase):
-    """Class for running tests on the hash table with chaining
+    """Class for running tests on the hash table with linear probing
     implementation.
     """
 
@@ -16,7 +16,7 @@ class HashTableTestCase(unittest.TestCase):
         self.empty_table = HashTable()
         self.non_empty_table = HashTable()
         keys = ["Apple", "Orange", "Banana", "Avocado", "Peach"]
-        for value in range(5):
+        for value in range(len(keys)):
             self.non_empty_table.put(keys[value], value)
 
     def tearDown(self):
@@ -53,6 +53,13 @@ class HashTableTestCase(unittest.TestCase):
         self.assertIsNone(self.empty_table["Bread"])
         self.assertIsNone(self.non_empty_table["Bread"])
 
+    def test_get_null_key(self):
+        """Test that if the get method is called with a key that is
+        None, that None is returned
+        """
+        self.assertIsNone(self.non_empty_table.get(None))
+        self.assertIsNone(self.non_empty_table[None])
+
     def test_get_key_does_exist(self):
         """Test that when the get method is called on the hash table and
         the key exists in the table, that the correct value is returned
@@ -65,13 +72,6 @@ class HashTableTestCase(unittest.TestCase):
         # test __getiem__
         self.assertEqual(0, self.non_empty_table["Apple"])
         self.assertEqual(3, self.non_empty_table["Avocado"])
-
-    def test_get_null_key(self):
-        """Test that if the get method is called with a key that is
-        None, that None is returned
-        """
-        self.assertIsNone(self.non_empty_table.get(None))
-        self.assertIsNone(self.non_empty_table[None])
 
     def test_insert_new_item_into_table(self):
         """Test that if you are inserting a new key-value pair into the hash
@@ -102,16 +102,6 @@ class HashTableTestCase(unittest.TestCase):
         self.assertTrue(self.non_empty_table.exists("Mango"))
         self.assertEqual(100, self.non_empty_table.get("Mango"))
 
-    def test_insert_with_null_key_raises_error(self):
-        """Test that if an attempt is made to set a key-value pair
-        with the key being None, that an error is raised.
-        """
-        with self.assertRaises(KeyError):
-            self.non_empty_table.put(None, 199)
-
-        with self.assertRaises(KeyError):
-            self.non_empty_table[None] = 200
-
     def test_update_item(self):
         """Test that if you are inserting a key-value pair into the hash table
         and the key already exists in the table, that the value associated
@@ -139,6 +129,16 @@ class HashTableTestCase(unittest.TestCase):
 
         self.assertEqual(5, self.non_empty_table.num_items)
         self.assertEqual(1500, self.non_empty_table.get("Avocado"))
+
+    def test_insert_with_null_key_raises_error(self):
+        """Test that if an attempt is made to set a key-value pair
+        with the key being None, that an error is raised.
+        """
+        with self.assertRaises(KeyError):
+            self.non_empty_table.put(None, 199)
+
+        with self.assertRaises(KeyError):
+            self.non_empty_table[None] = 200
 
     def test_delete_key_does_not_exist_raises_error(self):
         """Test that when the delete method is called on the hash table and
