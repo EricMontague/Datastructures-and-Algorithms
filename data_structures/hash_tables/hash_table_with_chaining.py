@@ -66,6 +66,8 @@ class HashTable:
         already a value associated with the given key, then the
         value will be overwritten.
         """
+        if key is None:
+            raise KeyError("None is not a valid key")
         # check whether key exists in hash table already
         existing_value = self.get(key)
         bucket_index = self._hash(key)
@@ -97,6 +99,8 @@ class HashTable:
 
     def delete(self, key):
         """Delete an item in the hash table with the given key."""
+        if key is None:
+            raise KeyError("None is not a valid key")
         bucket_index = self._hash(key)
         head = self._table[bucket_index]
         if head is None:
