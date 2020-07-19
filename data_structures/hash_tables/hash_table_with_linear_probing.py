@@ -3,12 +3,14 @@ linear probing (open addressing) to handle key collisions.
 """
 
 
-class DeletedItem:
+class Tombstone:
     """Class to act as a placeholder for a deleted item in a hash
     table that uses linear probing to handle collisions.
     """
 
-    pass
+    def __repr__(self):
+        """Return a string representation of a Tombstone."""
+        return "Tombstone"
 
 
 class HashItem:
@@ -45,24 +47,25 @@ class HashTable:
 
     def get(self, key):
         """Return the item associated with the given key."""
-        bucket_index = self._hash(key)
-        count = 0
-        while count < self._capacity:
-            current_item = self._table[bucket_index]
-            # no key has ever been inserted at this slot
-            if current_item is None:
-                return current_item
-            # could have been and item with this exact key or a key collision
-            # need to continue to be sure
-            if isinstance(current_item, DeletedItem):
+        if key is not None:
+            bucket_index = self._hash(key)
+            count = 0
+            while count < self._capacity:
+                current_item = self._table[bucket_index]
+                # no key has ever been inserted at this slot
+                if current_item is None:
+                    return current_item
+                # could have been and item with this exact key or a key collision
+                # need to continue to be sure
+                if isinstance(current_item, Tombstone):
+                    count += 1
+                    bucket_index = (bucket_index + 1) % self._capacity
+                    continue
+                # check if this is the item you are looking for
+                if current_item.key == key:
+                    return current_item.value
                 count += 1
                 bucket_index = (bucket_index + 1) % self._capacity
-                continue
-            # check if this is the item you are looking for
-            if current_item.key == key:
-                return current_item.value
-            count += 1
-            bucket_index = (bucket_index + 1) % self._capacity
         return None
 
     def put(self, key, value):
@@ -70,24 +73,33 @@ class HashTable:
         already a value associated with the given key, then the
         value will be overwritten.
         """
+        if key is None:
+            raise KeyError("None is not a valid key.")
         bucket_index = self._hash(key)
-        existing_item = self._table[bucket_index]
-
-        # update value of existing_item
-        if isinstance(self._table[bucket_index], HashItem):
-            existing_item.value = value
-        # insert new item
-        else:
-            # loop until you find a slot that doesn't contain a hash_item
-            while isinstance(self._table[bucket_index + 1], HashItem):
+        while True:
+            current_item = self._table[bucket_index]
+            # perform an insertion
+            if current_item is None:
+                self._table[bucket_index] = HashItem(key, value)
+                self._num_items += 1
+                if self._should_double():
+                    self._resize_table(2)
+                break
+            # continue looping as this index could have been the location
+            # of a key collision
+            if isinstance(current_item, Tombstone):
                 bucket_index = (bucket_index + 1) % self._capacity
-            self._table[bucket_index] = HashItem(key, value)
-            self._num_items += 1
-            if self._should_double():
-                self._resize_table(2)
+                continue
+            # perform an update
+            if current_item.key == key:
+                current_item.value = value
+                break
+            bucket_index = (bucket_index + 1) % self._capacity
 
     def delete(self, key):
         """Delete an item in the hash table with the given key."""
+        if key is None:
+            raise KeyError("None is not a valid key")
         bucket_index = self._hash(key)
         count = 0
         while count < self._capacity:
@@ -97,13 +109,16 @@ class HashTable:
                 raise KeyError("Key not in hash table.")
             # could have been and item with this exact key or a key collision
             # need to continue to be sure
-            if isinstance(current_item, DeletedItem):
+            if isinstance(current_item, Tombstone):
                 count += 1
                 bucket_index = (bucket_index + 1) % self._capacity
                 continue
             # check if this is the item you are looking for
             if current_item.key == key:
-                self._table[bucket_index] = DeletedItem()
+                self._table[bucket_index] = Tombstone()
+                self._num_items -= 1
+                if self._should_halve():
+                    self._resize_table(0.5)
                 return
             count += 1
             bucket_index = (bucket_index + 1) % self._capacity
@@ -191,5 +206,6 @@ class HashTable:
         self._table = [None] * self._capacity
         self._num_items = 0
         for item in old_table:
-            self.put(item.key, item.value)
+            if item is not None and not isinstance(item, Tombstone):
+                self.put(item.key, item.value)
 
