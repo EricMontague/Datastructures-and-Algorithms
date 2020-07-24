@@ -9,9 +9,11 @@ class UnweightedDiGraph:
     an adjacency list.
     """
 
-    def __init__(self):
-        self._num_vertices = 0
-        self._adjacency_list = {}
+    def __init__(self, num_vertices):
+        if num_vertices < 0:
+            raise ValueError("num_vertices cannot be less than 0")
+        self._num_vertices = num_vertices
+        self._adjacency_list = {vertex: set() for vertex in range(num_vertices)}
 
     def add_vertex(self, vertex):
         """Add a new vertex to the graph."""
@@ -32,6 +34,7 @@ class UnweightedDiGraph:
         for neighbors in self._adjacency_list.values():
             if vertex in neighbors:
                 neighbors.remove(vertex)
+        print(self._adjacency_list)
 
     def set_edge(self, source, destination):
         """Add an edge to the graph. If either of the vertices don't exist, they
@@ -87,5 +90,6 @@ class UnweightedDiGraph:
         edges = 0
         for neighbors in self._adjacency_list.values():
             edges += len(neighbors)
+        print(self._adjacency_list)
         return edges
 
