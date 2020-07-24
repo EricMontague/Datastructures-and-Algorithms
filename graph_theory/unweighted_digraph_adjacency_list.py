@@ -4,7 +4,6 @@ are positive integers.
 """
 
 
-
 class UnweightedDiGraph:
     """Class to represent an unweighted directed graph using
     an adjacency list.
@@ -26,8 +25,6 @@ class UnweightedDiGraph:
         """Remove a vertex from the graph, along with its
         outgoing and incoming edges.
         """
-        if self._num_vertices == 0:
-            raise ValueError("Graph has no vertices")
         if not self.has_vertex(vertex):
             raise ValueError("The given vertex doesn't exist within the graph")
         self._adjacency_list.pop(vertex)
@@ -35,13 +32,15 @@ class UnweightedDiGraph:
         for neighbors in self._adjacency_list.values():
             if vertex in neighbors:
                 neighbors.remove(vertex)
-    
-    def add_edge(self, source, destination):
-        """Add an edge to the graph."""
+
+    def set_edge(self, source, destination):
+        """Add an edge to the graph. If either of the vertices don't exist, they
+        will be created and then the edge with be formed.
+        """
         # Add both vertices to graph first if they don't exist
         if not self.has_vertex(source) and not self.has_vertex(destination):
             self.add_vertex(source)
-            self.add_vertex(destination)    
+            self.add_vertex(destination)
         # Add destination vertex to graph first if it doesn't exist
         elif self.has_vertex(source) and not self.has_vertex(destination):
             self.add_vertex(destination)
@@ -52,13 +51,12 @@ class UnweightedDiGraph:
 
     def remove_edge(self, source, destination):
         """Remove an edge from the graph."""
-        if self._num_vertices == 0:
-            raise ValueError("Graph has no vertices")
         if not self.has_vertex(source):
             raise ValueError(f"Vertex {source} doesn't exist in the graph")
+        if not self.has_vertex(destination):
+            raise ValueError(f"Vertex {destination} doesn't exist in the graph")
         neighbors = self._adjacency_list[source]
-        if destination in neighbors:
-            neighbors.remove(destination)
+        neighbors.remove(destination)
 
     def has_vertex(self, vertex):
         """Return True if the given vertex exists in the graph."""
@@ -72,6 +70,12 @@ class UnweightedDiGraph:
             return destination in self._adjacency_list[source]
         return False
 
+    def get_neighbors(self, vertex):
+        """Return the neighboring vertices of the given vertex as a list."""
+        if not self.has_vertex(vertex):
+            return []
+        return list(self._adjacency_list[vertex])
+
     @property
     def num_vertices(self):
         """Return the number of vertices in the graph."""
@@ -84,18 +88,4 @@ class UnweightedDiGraph:
         for neighbors in self._adjacency_list.values():
             edges += len(neighbors)
         return edges
-
-    def traverse(self, algorithm):
-        pass
-
-    def _dfs(self):
-        pass
-
-    def _dfs_visit(self, source, visited):
-        pass
-
-    def _bfs(self, source):
-        pass
-
-
 

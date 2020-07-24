@@ -13,7 +13,7 @@ class UnWeightedDiGraph2:
             raise ValueError("num_vertices cannot be less than 1")
         self._num_vertices = num_vertices
         self._adjacency_matrix = [[0] * num_vertices for vertex in range(num_vertices)]
-    
+
     def add_vertex(self):
         """Add a new vertex to the graph."""
         self._num_vertices += 1
@@ -23,14 +23,12 @@ class UnWeightedDiGraph2:
 
     def remove_vertex(self, vertex):
         """Remove the given vertex from the graph."""
-        if vertex < 0 or vertex >= self._num_vertices:
-            raise ValueError(f"Vertices must be between 0 and {self._num_vertices - 1}")
         if not self.has_vertex(vertex):
             raise ValueError("Vertex does not exist in the graph")
         # Shift all rows after the vertex (index) that you are trying to remove back one
         for row in range(vertex + 1, self._num_vertices):
             self._adjacency_matrix[row - 1] = self._adjacency_matrix[row]
-        self._adjacency_matrix[-1].pop() # remove last row as it is now a duplicate
+        self._adjacency_matrix[-1].pop()  # remove last row as it is now a duplicate
 
         # Shift all columns after the vertex (index) that you are trying to remove back one
         for row in range(self._num_vertices):
@@ -39,13 +37,15 @@ class UnWeightedDiGraph2:
             self._adjacency_matrix[row].pop()
         self._num_vertices -= 1
 
-    def add_edge(self, source, destination):
-        """Add an edge to the graph."""
+    def set_edge(self, source, destination):
+        """Add an edge to the graph. If either of the vertices don't exist, they
+        will be created and then the edge with be formed.
+        """
         if self.has_vertex(source) and self.has_vertex(destination):
             self._adjacency_matrix[source][destination] = 1
         elif not self.has_vertex(source) and not self.has_vertex(destination):
-            self.add_vertex() # add source
-            self.add_vertex() # add destintation
+            self.add_vertex()  # add source
+            self.add_vertex()  # add destintation
             self._adjacency_matrix[-2][-1] = 1
         elif self.has_vertex(source) and not self.has_vertex(destination):
             self.add_vertex()
@@ -56,8 +56,6 @@ class UnWeightedDiGraph2:
 
     def remove_edge(self, source, destination):
         """Remove an edge from the graph."""
-        if self._num_vertices == 0:
-            raise ValueError("Graph is empty")
         if not self.has_vertex(source):
             raise ValueError(f"Vertex {source} not in graph")
         if not self.has_vertex(destination):
@@ -95,16 +93,14 @@ class UnWeightedDiGraph2:
         except IndexError:
             return False
 
-    def traverse(self, algorithm):
-        pass
-
-    def _dfs(self):
-        pass
-
-    def _dfs_visit(self, source, visited):
-        pass
-
-    def _bfs(self, source):
-        pass
-
+    def get_neighbors(self, vertex):
+        """Return the neighboring vertices of the given vertex as a list."""
+        if not self.has_vertex(vertex):
+            return []
+        neighbors = [
+            index
+            for index, value in enumerate(self._adjacency_matrix[vertex])
+            if value == 1
+        ]
+        return neighbors
 
