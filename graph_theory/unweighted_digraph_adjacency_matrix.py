@@ -9,8 +9,8 @@ class UnWeightedDiGraph2:
     using an adjacency matrix."""
 
     def __init__(self, num_vertices):
-        if num_vertices < 1:
-            raise ValueError("num_vertices cannot be less than 1")
+        if num_vertices < 0:
+            raise ValueError("num_vertices cannot be less than 0")
         self._num_vertices = num_vertices
         self._adjacency_matrix = [[0] * num_vertices for vertex in range(num_vertices)]
 
