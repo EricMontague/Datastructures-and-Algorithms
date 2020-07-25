@@ -3,7 +3,7 @@ directed graph represented as an adjacency matrix.
 """
 
 import unittest
-from graph_theory.unweighted_digraph_adjacency_matrix import UnweightedDiGraph
+from graph_theory.directed_graphs.unweighted_digraph_adjacency_matrix import UnweightedDiGraph
 
 
 class UnweightedDiGraphTestCase(unittest.TestCase):

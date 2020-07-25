@@ -5,7 +5,7 @@ are positive integers.
 
 
 import unittest
-from graph_theory.unweighted_digraph_adjacency_list import UnweightedDiGraph
+from graph_theory.directed_graphs.unweighted_digraph_adjacency_list import UnweightedDiGraph
 
 
 class UnweightedDiGraphTestCase(unittest.TestCase):
