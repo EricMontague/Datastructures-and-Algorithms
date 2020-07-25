@@ -4,7 +4,7 @@ are positive integers.
 """
 
 
-class UnWeightedDiGraph2:
+class UnweightedDiGraph:
     """Class to represent an unweighted, directed graph
     using an adjacency matrix."""
 
@@ -28,10 +28,10 @@ class UnWeightedDiGraph2:
         # Shift all rows after the vertex (index) that you are trying to remove back one
         for row in range(vertex + 1, self._num_vertices):
             self._adjacency_matrix[row - 1] = self._adjacency_matrix[row]
-        self._adjacency_matrix[-1].pop()  # remove last row as it is now a duplicate
+        self._adjacency_matrix.pop()  # remove last row as it is now a duplicate
 
         # Shift all columns after the vertex (index) that you are trying to remove back one
-        for row in range(self._num_vertices):
+        for row in range(self._num_vertices - 1):
             for col in range(vertex + 1, self._num_vertices):
                 self._adjacency_matrix[row][col - 1] = self._adjacency_matrix[row][col]
             self._adjacency_matrix[row].pop()
