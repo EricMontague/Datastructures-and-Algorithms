@@ -186,7 +186,8 @@ class UnweightedDiGraphTestCase(unittest.TestCase):
         self.assertEqual(self.non_empty_graph.num_edges, 8)
         self.assertTrue(self.non_empty_graph.has_vertex(20))
         self.assertTrue(self.non_empty_graph.has_edge(4, 20))
-        self.assertEqual(self.non_empty_graph.get_neighbors(4), [0, 20])
+        self.assertTrue(0 in self.non_empty_graph.get_neighbors(4))
+        self.assertTrue(20 in self.non_empty_graph.get_neighbors(4))
 
     def test_set_edge_when_both_vertices_exist_but_no_edge(self):
         """Test that an edge can be created when both vertices exist
@@ -208,7 +209,8 @@ class UnweightedDiGraphTestCase(unittest.TestCase):
         self.assertEqual(self.non_empty_graph.num_vertices, 6)
         self.assertEqual(self.non_empty_graph.num_edges, 8)
         self.assertTrue(self.non_empty_graph.has_edge(4, 2))
-        self.assertEqual(self.non_empty_graph.get_neighbors(4), [0, 2])
+        self.assertTrue(0 in self.non_empty_graph.get_neighbors(4))
+        self.assertTrue(2 in self.non_empty_graph.get_neighbors(4))
 
     def test_set_edge_when_both_vertices_exist_with_existing_edge(self):
         """Test that an edge can be created when both vertices exist
@@ -221,7 +223,10 @@ class UnweightedDiGraphTestCase(unittest.TestCase):
         self.assertTrue(self.non_empty_graph.has_vertex(0))
         self.assertTrue(self.non_empty_graph.has_vertex(5))
         self.assertTrue(self.non_empty_graph.has_edge(0, 5))
-        self.assertEqual(self.non_empty_graph.get_neighbors(0), [1, 2, 5])
+        self.assertTrue(1 in self.non_empty_graph.get_neighbors(0))
+        self.assertTrue(2 in self.non_empty_graph.get_neighbors(0))
+        self.assertTrue(5 in self.non_empty_graph.get_neighbors(0))
+        
 
         # set edge
         self.non_empty_graph.set_edge(0, 5)
@@ -229,7 +234,9 @@ class UnweightedDiGraphTestCase(unittest.TestCase):
         # confirm that nothing changed
         self.assertEqual(self.non_empty_graph.num_vertices, 6)
         self.assertEqual(self.non_empty_graph.num_edges, 7)
-        self.assertEqual(self.non_empty_graph.get_neighbors(0), [1, 2, 5])
+        self.assertTrue(1 in self.non_empty_graph.get_neighbors(0))
+        self.assertTrue(2 in self.non_empty_graph.get_neighbors(0))
+        self.assertTrue(5 in self.non_empty_graph.get_neighbors(0))
 
     def test_remove_edge_when_both_vertices_dont_exist_raises_error(self):
         """Test that if an attempt is made to remove an edge from the graph
