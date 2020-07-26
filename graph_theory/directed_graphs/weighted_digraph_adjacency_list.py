@@ -13,14 +13,14 @@ class WeightedDiGraph:
         if num_vertices < 0:
             raise ValueError("num_vertices cannot be less than 0")
         self._num_vertices = num_vertices
-        self._adjacency_list = {vertex: set() for vertex in range(num_vertices)}
+        self._adjacency_list = {vertex: [] for vertex in range(num_vertices)}
 
     def add_vertex(self, vertex):
         """Add a new vertex to the graph."""
         if vertex < 0:
             raise ValueError("A vertex can't be less than 0")
         if not self.has_vertex(vertex):
-            self._adjacency_list[vertex] = set()
+            self._adjacency_list[vertex] = []
             self._num_vertices += 1
 
     def remove_vertex(self, vertex):
@@ -31,10 +31,13 @@ class WeightedDiGraph:
             raise ValueError("The given vertex doesn't exist within the graph")
         self._adjacency_list.pop(vertex)
         self._num_vertices -= 1
-        for neighbors in self._adjacency_list.values():
-            if vertex in neighbors:
-                neighbors.remove(vertex)
-
+        for source in self._adjacency_list:
+            self._adjacency_list[source] = {
+                (neighbor, weight) 
+                for neighbor, weight in self._adjacency_list[source] 
+                if neighbor!= vertex
+            }
+            
     def set_edge(self, source, destination, weight):
         """Add an edge to the graph. If either of the vertices don't exist, they
         will be created and then the edge with be formed. If the edge already exists,
@@ -52,6 +55,11 @@ class WeightedDiGraph:
         # Add source vertex to graph first if it doesn't exists
         elif not self.has_vertex(source) and self.has_vertex(destination):
             self.add_vertex(source)
+        self._adjacency_list[source] = {
+            (neighbor, weight)
+            for neighbor, weight in self._adjacency_list[source]
+            if neighbor != destination
+        }
         self._adjacency_list[source].add(edge)
 
     def remove_edge(self, source, destination):
@@ -74,7 +82,7 @@ class WeightedDiGraph:
         to the destination vertex.
         """
         if self._adjacency_list.get(source) is not None:
-            for neighbor, weight in enumerate(self._adjacency_list[source]):
+            for neighbor, weight in self._adjacency_list[source]:
                 if neighbor == destination:
                     return True
         return False
