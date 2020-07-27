@@ -110,7 +110,7 @@ class WeightedDiGraphTestCase(unittest.TestCase):
 
         # confirm 2nd removal
         self.assertEqual(self.non_empty_graph.num_vertices, 4)
-        self.assertEqual(self.non_empty_graph.num_edges, 4)
+        self.assertEqual(self.non_empty_graph.num_edges, 3)
 
     def test_set_edge_when_both_vertices_dont_exist(self):
         """Test that an edge can be created even when both vertices
@@ -123,12 +123,12 @@ class WeightedDiGraphTestCase(unittest.TestCase):
         self.assertFalse(self.non_empty_graph.has_vertex(7))
         self.assertFalse(self.non_empty_graph.has_edge(6, 7))
 
-        # add edge from 6 -> 7
+        # add edge from 6 -> 700
         self.non_empty_graph.set_edge(6, 7, 2)
 
         # confirm
-        self.assertEqual(self.non_empty_graph.num_vertices, 2)
-        self.assertEqual(self.non_empty_graph.num_edges, 1)
+        self.assertEqual(self.non_empty_graph.num_vertices, 8)
+        self.assertEqual(self.non_empty_graph.num_edges, 8)
         self.assertTrue(self.non_empty_graph.has_vertex(6))
         self.assertTrue(self.non_empty_graph.has_vertex(7))
         self.assertTrue(self.non_empty_graph.has_edge(6, 7))
