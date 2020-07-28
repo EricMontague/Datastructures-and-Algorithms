@@ -93,6 +93,10 @@ class UnweightedDiGraph:
         except IndexError:
             return False
 
+    def get_vertices(self):
+        """Return a list containing all of the vertices in the graph."""
+        return [vertex for vertex in range(self._num_vertices)]
+
     def get_neighbors(self, vertex):
         """Return the neighboring vertices of the given vertex as a list."""
         if not self.has_vertex(vertex):

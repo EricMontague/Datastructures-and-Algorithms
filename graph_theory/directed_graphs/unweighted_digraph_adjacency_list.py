@@ -78,6 +78,10 @@ class UnweightedDiGraph:
             return []
         return list(self._adjacency_list[vertex])
 
+    def get_vertices(self):
+        """Return a list containing all of the vertices in the graph."""
+        return list(self._adjacency_list.keys())
+
     @property
     def num_vertices(self):
         """Return the number of vertices in the graph."""
