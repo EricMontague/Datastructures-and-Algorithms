@@ -268,6 +268,16 @@ class UnweightedDiGraphTestCase(unittest.TestCase):
 
         with self.assertRaises(AttributeError):
             self.non_empty_graph.num_edges = 120
+    
+    def test_get_vertices(self):
+        """Test that the get_vertices method returns the correct results."""
+        self.assertEqual(self.empty_graph.get_vertices(), [])
+        self.assertTrue(0 in self.non_empty_graph.get_vertices())
+        self.assertTrue(1 in self.non_empty_graph.get_vertices())
+        self.assertTrue(2 in self.non_empty_graph.get_vertices())
+        self.assertTrue(3 in self.non_empty_graph.get_vertices())
+        self.assertTrue(4 in self.non_empty_graph.get_vertices())
+        self.assertTrue(5 in self.non_empty_graph.get_vertices())
 
 
 if __name__ == "__main__":
