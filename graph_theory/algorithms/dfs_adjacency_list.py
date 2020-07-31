@@ -5,11 +5,11 @@ where the graph is represented as an adjacency list.
 
 # assumes all inputs are valid and that
 # the values in the adjacency list are python lists
-def dfs(adjacency_list, source):
-    visited = {}
-    for node in adjacency_list.keys():
+def dfs(adjacency_list):
+    visited = set()
+    for node in adjacency_list:
         if node not in visited:
-            dfs_visit(node, adjacency_list, visited)
+            yield from dfs_visit(node, adjacency_list, visited)
 
 
 def dfs_visit(node, adjacency_list, visited):
@@ -17,15 +17,17 @@ def dfs_visit(node, adjacency_list, visited):
     yield node
     for neighbor in adjacency_list[node]:
         if neighbor not in visited:
-            dfs_visit(neighbor, adjacency_list, visited)
+            yield from dfs_visit(neighbor, adjacency_list, visited)
 
 
+# iterative implementation of dfs_visit
+# will produce a different ordering than the recursive version
 def dfs_visit_iterative(node, adjacency_list, visited):
     visited.add(node)
     stack = [node]
     while stack:
         current_node = stack.pop()
-        yield node
+        yield current_node
         for neighbor in adjacency_list[current_node]:
             if neighbor not in visited:
                 visited.add(neighbor)
