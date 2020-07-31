@@ -60,7 +60,7 @@ def find_shortest_path_adj_list(adjacency_list, source, destination):
 def build_shortest_path(destination, predecessor):
     path = []
     current_node = destination
-    while current_node:
+    while current_node is not None:
         path.append(current_node)
         current_node = predecessor[current_node]
     path.reverse()
