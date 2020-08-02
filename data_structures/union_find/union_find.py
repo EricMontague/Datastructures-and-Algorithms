@@ -17,23 +17,16 @@ class UnionFind:
         self.size = size
         for num in range(size):
             self.parent[num] = num
-            self.rank[num] = 0
-
-    def _validate(self, element):
-        """Raise an exception if the given element is
-        not within the valid range of elements that can be in
-        the UnionFind.
-        """
-        if element < 0 or element > self.size:
-            raise ValueError(
-                f"{element} not within the valid range of elements in Union Find."
-            )
+            self.rank[num] = 0        
 
     def find(self, element):
         """Return the name of the set that the given element
         belongs to.
         """
-        self._validate(element)
+        if element < 0 or element > self.size:
+            raise ValueError(
+                f"{element} not within the valid range of elements in Union Find."
+            )
         # traverse up the tree until we hit the root
         root = element
         while root != self.parent[root]:
