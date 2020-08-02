@@ -15,9 +15,12 @@ class UnionFind:
         self.rank = [None] * size
         self.num_components = size
         self.size = size
+        for num in range(size):
+            self.parent[num] = num
+            self.rank[num] = 0
 
     def _validate(self, element):
-        """Raise an exception if the given element is not in
+        """Raise an exception if the given element is
         not within the valid range of elements that can be in
         the UnionFind.
         """
@@ -25,15 +28,6 @@ class UnionFind:
             raise ValueError(
                 f"{element} not within the valid range of elements in Union Find."
             )
-
-    def make_set(self, element):
-        """Create a new disjoint set with that contains
-        only the given element.
-        """
-        self._validate(element)
-        # initially, element points to itself and rank is 0
-        self.parent[element] = element
-        self.rank[element] = 0
 
     def find(self, element):
         """Return the name of the set that the given element
@@ -48,11 +42,11 @@ class UnionFind:
         # path compression
         # traverse up the tree pointing each element
         # to the root, until we hit the root itself
-
-        while element != self.parent[element]:
-            parent = self.parent[element]
-            self.parent[element] = root
-            element = parent
+        current = element
+        while current != self.parent[current]:
+            parent = self.parent[current]
+            self.parent[current] = root
+            current = parent
         return root
 
     # recursive find operation with path compression
