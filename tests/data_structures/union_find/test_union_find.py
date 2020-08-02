@@ -21,27 +21,13 @@ class UnionFindTestCase(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             union_find = UnionFind(-2349)
-
-    def test_initial_rank_zero(self):
-        """Test that a set's initial rank is 0
-        when created.
-        """
-        initial_rank = 0
-        elements = [0, 1, 2, 3]
-        union_find = UnionFind(4)
-        for element in elements:
-            union_find.make_set(element)
-            self.assertEqual(union_find.rank[element], initial_rank)
-
     def test_element_out_of_range(self):
-        """Test to ensure that the find and make set methods
-        throw an exception when an element that is out of
+        """Test to ensure that the find method
+        throws an exception when an element that is out of
         range of the Union Find is passed as an arguement.
         """
         elements = [0, 1, 2, 3]
-        union_find = UnionFind(4)
-        for element in elements:
-            union_find.make_set(element)
+        union_find = UnionFind(len(elements))
         with self.assertRaises(ValueError):
             union_find.find(5)
 
@@ -65,9 +51,8 @@ class UnionFindTestCase(unittest.TestCase):
         points to itself when created.
         """
         elements = [0, 1, 2, 3]
-        union_find = UnionFind(4)
+        union_find = UnionFind(len(elements))
         for element in elements:
-            union_find.make_set(element)
             self.assertEqual(union_find.find(element), element)
 
     def test_is_connected(self):
@@ -76,9 +61,8 @@ class UnionFindTestCase(unittest.TestCase):
         is performed.
         """
         elements = [0, 1, 2, 3]
-        union_find = UnionFind(4)
+        union_find = UnionFind(len(elements))
         for element in elements:
-            union_find.make_set(element)
             #element should be connected to itself
             self.assertTrue(union_find.is_connected(element, element))
         
@@ -97,9 +81,8 @@ class UnionFindTestCase(unittest.TestCase):
         operation.
         """
         elements = [0, 1, 2, 3]
-        union_find = UnionFind(4)
-        for element in elements:
-            union_find.make_set(element)
+        union_find = UnionFind(len(elements))
+       
         self.assertEqual(union_find.get_num_components(), 4)
 
         union_find.union(0, 1)
