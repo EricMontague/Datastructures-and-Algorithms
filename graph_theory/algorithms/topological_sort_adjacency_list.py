@@ -3,6 +3,7 @@ of a graph represented as an adjacency list.
 """
 
 
+# assumes that the graph's edges don't have weights
 def topological_sort(adjacency_list):
     visited = set()
     nodes = []
