@@ -5,6 +5,13 @@ uses Lomuto's partitioning algorithm.
 
 import random
 
+def swap(unsorted_list, index_one, index_two):
+    """Swap the elements at the given indices in the list."""
+    unsorted_list[index_one], unsorted_list[index_two] = (
+        unsorted_list[index_two],
+        unsorted_list[index_one]
+    )
+
 
 def partition(unsorted_list, start, end):
     """Given an unsorted list and indices that mark the start
@@ -15,15 +22,9 @@ def partition(unsorted_list, start, end):
     pivot_index = start
     for index in range(start, end):
         if unsorted_list[index] <= pivot_value:
-            unsorted_list[index], unsorted_list[pivot_index] = (
-                unsorted_list[pivot_index],
-                unsorted_list[index],
-            )
+            swap(unsorted_list, index, pivot_index)
             pivot_index += 1
-    unsorted_list[pivot_index], unsorted_list[end] = (
-        unsorted_list[end],
-        unsorted_list[pivot_index],
-    )
+    swap(unsorted_list, pivot_index, end)
     return pivot_index
 
 
@@ -34,10 +35,7 @@ def randomized_partition(unsorted_list, start, end):
     of encountering the worst case runtime of quicksort, which is O(n ^2).
     """
     random_pivot_index = random.randint(start, end)
-    unsorted_list[random_pivot_index], unsorted_list[end] = (
-        unsorted_list[end],
-        unsorted_list[random_pivot_index],
-    )
+    swap(unsorted_list, random_pivot_index, end)
     return partition(unsorted_list, start, end)
 
 
