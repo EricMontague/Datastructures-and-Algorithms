@@ -10,7 +10,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 6. [Binary Search Tree](../master/data_structures/binary_search_tree)
 7. [Heaps/Priority Queues](../master/data_structures/heaps)
 8. [Trie](../master/data_structures/trie)
-9. Graphs
+9. [Graphs](../master/graph_theory)
 10. [Union Find](../master/data_structures/union_find)
 11. [LRU Cache](../master/data_structures/lru_cache)
 12. [Binary Search](../master/search/binary_search)
@@ -22,6 +22,7 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 18. [Heapsort](../master/sorting/heapsort.py)
 19. [Radix Sort](../master/sorting/radix_sort.py)
 20. [Counting Sort](../master/sorting/counting_sort.py)
+21. [Quickselect](../master/search)
 
 
 ## Data Structures
