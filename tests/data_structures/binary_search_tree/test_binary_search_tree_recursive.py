@@ -86,27 +86,37 @@ class BinarySearchTreeTestCase(unittest.TestCase):
     def test_insert(self):
         """Test that the insert operation works properly."""
         bst = BinarySearchTree()
+        self.assertEqual(bst.size, 0)
+
         #add unique elements
-        self.assertTrue(bst.insert(5))
-        self.assertTrue(bst.insert(15))
-        self.assertTrue(bst.insert(3))
+        bst.insert(5)
+        self.assertEqual(bst.size, 1)
+
+        bst.insert(15)
+        self.assertEqual(bst.size, 2)
+
+        bst.insert(3)
+        self.assertEqual(bst.size, 3)
 
         #add duplicate element
-        self.assertFalse(bst.insert(3))
+        bst.insert(3)
+        self.assertEqual(bst.size, 3)
 
     def test_delete_node_from_empty_tree(self):
-        """Test to ensure the delete method returns False
-        when attemptign to delete from an empty tree.
+        """Test to ensure that the tree isn't altered if the 
+        delete method is called when the tree is empty.
         """
         bst = BinarySearchTree()
         self.assertEqual(bst.size, 0)
         self.assertEqual(bst.get_height(), -1)
-        self.assertFalse(bst.delete_node(12))
+        bst.delete(12)
+        self.assertEqual(bst.size, 0)
 
     def test_delete_node_not_in_tree(self):
-        """Test that the delete method returns False when trying
-        to delete a node that doesn't exist.
+        """Test to ensure that the tree isn't altered if the 
+        delete method is called and the node doesn't exist
         """
+        
         #Tree should look like this
         #        23
         #     12     34
@@ -120,13 +130,13 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         nodes = [23, 12, 34, 9, 15, 45, 56]
         #add nodes
         for node in nodes:
-            self.assertTrue(bst.insert(node))
+            bst.insert(node)
         self.assertEqual(bst.size, 7)
         self.assertEqual(bst.get_height(), 3)
 
         #try deleting a node that doesn't exist
         self.assertEqual(bst.get_height(), 3)
-        self.assertFalse(bst.delete_node(145))
+        bst.delete(145)
         self.assertEqual(bst.size, 7)
         self.assertEqual(bst.get_height(), 3)
 
@@ -147,12 +157,12 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         nodes = [23, 12, 34, 9, 15, 45, 56]
         #add nodes
         for node in nodes:
-            self.assertTrue(bst.insert(node))
+            bst.insert(node)
         self.assertEqual(bst.size, 7)
         self.assertEqual(bst.get_height(), 3)
 
         #Case 1: Deleting a leaf node
-        self.assertTrue(bst.delete_node(56))
+        bst.delete(56)
         self.assertEqual(bst.size, 6)
         self.assertEqual(bst.get_height(), 2)
         self.assertIsNone(bst.search(7))
@@ -172,7 +182,7 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         root = bst.search(12)
         self.assertEqual(root.data, 12)
 
-        self.assertTrue(bst.delete_node(12))
+        bst.delete(12)
         self.assertEqual(bst.size, 0)
         self.assertEqual(bst.get_height(), -1)
         self.assertIsNone(bst.root)
@@ -191,18 +201,18 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         nodes = [23, 12, 34, 9, 15, 45, 56, 8]
         #add nodes
         for node in nodes:
-            self.assertTrue(bst.insert(node))
+            bst.insert(node)
         self.assertEqual(bst.size, 8)
         self.assertEqual(bst.get_height(), 3)
 
         #delete node that just has a left child
-        self.assertTrue(bst.delete_node(9))
+        bst.delete(9)
         self.assertEqual(bst.size, 7)
         self.assertEqual(bst.get_height(), 3)
         self.assertIsNone(bst.search(9))
 
         #delete node that just has a right child
-        self.assertTrue(bst.delete_node(45))
+        bst.delete(45)
         self.assertEqual(bst.size, 6)
         self.assertEqual(bst.get_height(), 2)
         self.assertIsNone(bst.search(45))
@@ -224,12 +234,12 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         nodes = [23, 34, 45, 56]
         #add nodes
         for node in nodes:
-            self.assertTrue(bst.insert(node))
+            bst.insert(node)
         self.assertEqual(bst.size, 4)
         self.assertEqual(bst.get_height(), 3)
 
         #root has only a right child
-        self.assertTrue(bst.delete_node(23))
+        bst.delete(23)
         self.assertEqual(bst.size, 3)
         self.assertEqual(bst.get_height(), 2)
         self.assertIsNone(bst.search(23))
@@ -252,12 +262,12 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         nodes = [56, 45, 34, 23]
         #add nodes
         for node in nodes:
-            self.assertTrue(bst.insert(node))
+            bst.insert(node)
         self.assertEqual(bst.size, 4)
         self.assertEqual(bst.get_height(), 3)
 
         #root has only a right child
-        self.assertTrue(bst.delete_node(56))
+        bst.delete(56)
         self.assertEqual(bst.size, 3)
         self.assertEqual(bst.get_height(), 2)
         self.assertIsNone(bst.search(56))
@@ -278,11 +288,11 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         nodes = [23, 12, 34, 9, 15, 45, 56, 8]
         #add nodes
         for node in nodes:
-            self.assertTrue(bst.insert(node))
+            bst.insert(node)
         self.assertEqual(bst.size, 8)
         self.assertEqual(bst.get_height(), 3)
 
-        self.assertTrue(bst.delete_node(12))
+        bst.delete(12)
         self.assertEqual(bst.size, 7)
         self.assertEqual(bst.get_height(), 3)
         self.assertIsNone(bst.search(12))
@@ -304,11 +314,11 @@ class BinarySearchTreeTestCase(unittest.TestCase):
         nodes = [23, 12, 34, 9, 15, 45, 56, 8]
         #add nodes
         for node in nodes:
-            self.assertTrue(bst.insert(node))
+            bst.insert(node)
         self.assertEqual(bst.size, 8)
         self.assertEqual(bst.get_height(), 3)
 
-        self.assertTrue(bst.delete_node(23))
+        bst.delete(23)
         self.assertEqual(bst.size, 7)
         self.assertEqual(bst.get_height(), 3)
         self.assertIsNone(bst.search(23))
@@ -327,11 +337,12 @@ class BinarySearchTreeTestCase(unittest.TestCase):
 
         bst = BinarySearchTree()
         self.assertEqual(bst.size, 0)
+        self.assertEqual(bst.get_height(), -1)
 
         nodes = [23, 12, 34, 9, 15, 45, 56]
         #add nodes
         for node in nodes:
-            self.assertTrue(bst.insert(node))
+            bst.insert(node)
 
         self.assertEqual(bst.size, 7)
 
