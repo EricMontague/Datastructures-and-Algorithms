@@ -5,6 +5,7 @@ recursive.
 from .tree_traversal_order import TreeTraversalOrder
 from collections import deque
 
+
 class TreeNode:
     """Class to represent a node in a binary search tree."""
 
@@ -24,16 +25,11 @@ class BinarySearchTree:
         self.size = 0
 
     def insert(self, data):
-        """Insert the a node with the given data into the tree.
-        Returns True if the node was successfully inserted,
-        and False if it already exists in the BST.
-        """
-        #check if node exists in the tree already
+        """Insert the a node with the given data into the tree."""
+        # check if node exists in the tree already
         if self.search(data) is None:
             self.root = self._insert(self.root, data)
             self.size += 1
-            return True
-        return False
 
     def _insert(self, root, data):
         """Helper method to insert a node with the given data into the BST."""
@@ -62,22 +58,16 @@ class BinarySearchTree:
         else:
             return self._search(root.right, data)
 
-    def delete_node(self, data):
-        """Delete the first node with the given value from the 
-        tree. Return True if the node was successfully deleted,
-        False if it doesn't exist in the tree.
-        """
-        #check if node in tree
-        if self.search(data) is not None:
-            self.root = self._delete(self.root, data)
-            self.size -= 1
-            return True
-        return False
+    def delete(self, data):
+        """Delete the first node with the given value from the tree."""
+        self.root = self._delete(self.root, data)
 
     def _delete(self, root, data):
         """Helper method to delete and return the first node with the given value from the 
         tree.
         """
+        if root is None:
+            return root
         if data < root.data:  # node is in the left subtree
             root.left = self._delete(root.left, data)
         elif data > root.data:  # node is in right subtree
@@ -86,11 +76,14 @@ class BinarySearchTree:
             # Case 1: No children
             if root.left is None and root.right is None:
                 root = None
+                self.size -= 1
             # Case 2: Has one child
             elif root.left is None:  # has only a right child
                 root = root.right
+                self.size -= 1
             elif root.right is None:  # has only a left child
                 root = root.left
+                self.size -= 1
             # Case 3: Two children
             else:
                 # get minimum value from right subtree
@@ -103,8 +96,9 @@ class BinarySearchTree:
                 # max_node = self._find_max(root.left)
                 # root.data = max_node.data
                 # root.left = self._delete(root.left, max_node.data)
-        return root #the root might change, so you need to return it
-        
+
+        return root  # the root might change, so you need to return it
+
     def get_height(self):
         """Return the height of the BST. A height of -1, means that
         the BST is empty.
@@ -159,21 +153,21 @@ class BinarySearchTree:
             node_list.append(root)
             self._preorder_traversal(node_list, root.left)
             self._preorder_traversal(node_list, root.right)
-    
+
     def _inorder_traversal(self, node_list, root):
         """Append the nodes in the tree in inorder to node_list."""
         if root is not None:
             self._inorder_traversal(node_list, root.left)
             node_list.append(root)
             self._inorder_traversal(node_list, root.right)
-       
+
     def _postorder_traversal(self, node_list, root):
         """Append the nodes in the tree in postorder to node_list."""
         if root is not None:
             self._postorder_traversal(node_list, root.left)
             self._postorder_traversal(node_list, root.right)
             node_list.append(root)
-        
+
     def _level_order_traveral(self, node_list, root):
         """Return an iterator to traverse the tree in level order."""
         if root is not None:
