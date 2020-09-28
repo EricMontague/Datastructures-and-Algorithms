@@ -15,7 +15,7 @@ class HashItem:
 
     def __repr__(self):
         """Return a string representation of a HashItem."""
-        return "HashItem(%r, %r)" %(self.key, self.value)
+        return "HashItem(%r, %r)" % (self.key, self.value)
 
 
 class HashTable:
@@ -42,23 +42,20 @@ class HashTable:
         """Return the item associated with the given key."""
         if key is not None:
             bucket_index = self._hash(key)
-            print(f"Index of {key} should be {bucket_index}")
             head = self._table[bucket_index]
-            value = self._find_item(key, head)
-            print(f"Returned value from the get method is: {value}")
-            return value
+            item = self._find_item(key, head)
+            if item is None:
+                return item
+            return item.value
 
     def _find_item(self, key, head):
-        """Traverse the linked list of HashItems and return the value of the item
+        """Traverse the linked list of HashItems and return an item
         with the given key.
         """
         while head:
-            print(f"Head is {head}")
             if head.key == key:
-                print(f"Key match the value {head.value}")
-                return head.value
+                return head
             head = head.next
-        print("Returned None")
         return None
 
     def put(self, key, value):
@@ -69,27 +66,18 @@ class HashTable:
         if key is None:
             raise KeyError("None is not a valid key")
         # check whether key exists in hash table already
-        existing_value = self.get(key)
+
         bucket_index = self._hash(key)
         head = self._table[bucket_index]
-        if existing_value is not None:
-            self._update_item(key, value, head)
-        else:
+        existing_item = self._find_item(key, head)
+        if existing_item is None:
             new_item = HashItem(key, value)
             self._insert_item(new_item, bucket_index, head)
             self._num_items += 1
             if self._should_double():
                 self._resize_table(2)
-
-    def _update_item(self, key, value, head):
-        """Traverse the linked list of HashItems and update the item's value whose
-        key matches the given key.
-        """
-        while head:
-            if head.key == key:
-                head.value = value
-                break
-            head = head.next
+        else:
+            existing_item.value = value
 
     def _insert_item(self, new_item, bucket_index, head):
         """Insert a new HashItem at the given index in the hash table."""
