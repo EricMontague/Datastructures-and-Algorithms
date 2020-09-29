@@ -49,23 +49,9 @@ class HashTable:
         """Return the item associated with the given key."""
         if key is not None:
             bucket_index = self._hash(key)
-            count = 0
-            while count < self._capacity:
-                current_item = self._table[bucket_index]
-                # no key has ever been inserted at this slot
-                if current_item is None:
-                    return current_item
-                # could have been and item with this exact key or a key collision
-                # need to continue to be sure
-                if isinstance(current_item, Tombstone):
-                    count += 1
-                    bucket_index = (bucket_index + 1) % self._capacity
-                    continue
-                # check if this is the item you are looking for
-                if current_item.key == key:
-                    return current_item.value
-                count += 1
-                bucket_index = (bucket_index + 1) % self._capacity
+            item_index = self._find_item_index(key, bucket_index)
+            if self._table[item_index] is not None:
+                return self._table[item_index].value
         return None
 
     def put(self, key, value):
@@ -76,53 +62,34 @@ class HashTable:
         if key is None:
             raise KeyError("None is not a valid key.")
         bucket_index = self._hash(key)
-        while True:
-            current_item = self._table[bucket_index]
-            # perform an insertion
-            if current_item is None:
-                self._table[bucket_index] = HashItem(key, value)
-                self._num_items += 1
-                if self._should_double():
-                    self._resize_table(2)
-                break
-            # continue looping as this index could have been the location
-            # of a key collision
-            if isinstance(current_item, Tombstone):
-                bucket_index = (bucket_index + 1) % self._capacity
-                continue
-            # perform an update
-            if current_item.key == key:
-                current_item.value = value
-                break
-            bucket_index = (bucket_index + 1) % self._capacity
+        item_index = self._find_item_index(key, bucket_index)
+        if self._table[item_index] is None:
+            self._table[item_index] = HashItem(key, value)
+            self._num_items += 1
+            if self._should_double():
+                self._resize_table(2)
+        else:
+            self._table[item_index].value = value
 
     def delete(self, key):
         """Delete an item in the hash table with the given key."""
         if key is None:
             raise KeyError("None is not a valid key")
         bucket_index = self._hash(key)
-        count = 0
-        while count < self._capacity:
-            current_item = self._table[bucket_index]
-            # no key has ever been inserted at this slot
-            if current_item is None:
-                raise KeyError("Key not in hash table.")
-            # could have been and item with this exact key or a key collision
-            # need to continue to be sure
-            if isinstance(current_item, Tombstone):
-                count += 1
-                bucket_index = (bucket_index + 1) % self._capacity
-                continue
-            # check if this is the item you are looking for
-            if current_item.key == key:
-                self._table[bucket_index] = Tombstone()
-                self._num_items -= 1
-                if self._should_halve():
-                    self._resize_table(0.5)
-                return
-            count += 1
+        item_index = self._find_item_index(key, bucket_index)
+        if self._table[item_index] is None:
+            raise KeyError("Key not in hash table.")
+        self._table[item_index] = Tombstone()
+        self._num_items -= 1
+        if self._should_halve():
+            self._resize_table(0.5)
+
+    def _find_item_index(self, key, bucket_index):
+        while True:
+            item = self._table[bucket_index]
+            if item is None or (isinstance(item, HashItem) and item.key == key):
+                return bucket_index
             bucket_index = (bucket_index + 1) % self._capacity
-        raise KeyError("Key not in hash table.")
 
     def exists(self, key):
         """Return True if there is a value associated with the given key 
@@ -201,7 +168,7 @@ class HashTable:
         table by growing or shrinking the table, depending on the multiple
         that is passed in.
         """
-        old_table = self._table.copy()
+        old_table = self._table[:]
         self._capacity = int(self._capacity * multiple)
         self._table = [None] * self._capacity
         self._num_items = 0
