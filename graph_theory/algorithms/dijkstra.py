@@ -8,6 +8,10 @@ Node = namedtuple("Node", ["value", "weight"])
 PriorityQueueItem = namedtuple("PriorityQueueItem", ["key", "value"])
 
 
+############
+# Adjacency List
+##############
+
 # O(VlogV + ElogV)
 def dijkstra_adjacency_list(source, graph):
     """Finds the shortest paths from some node in the graph to all other nodes.
@@ -16,19 +20,10 @@ def dijkstra_adjacency_list(source, graph):
     the predeccesor relationshops during the algorithm's exploration. 
     Assumes the graph is represented as an adjacency list
     """
-    distances = {}
     predecessors = {source: None}
     visited = set()
-    priority_queue = []
-    for node in graph:
-        if node == source:
-            distance = 0
-        else:
-            distance = float("inf")
-        distances[node] = distance
-        node_item = PriorityQueueItem(distances[node], node)
-        priority_queue.append(node_item)
-    heapq.heapify(priority_queue)
+    distances, priority_queue = initialize_distances_and_queue(source, graph)
+
     while priority_queue:
         node = heapq.heappop(priority_queue)
         if node.value in visited:
@@ -40,13 +35,31 @@ def dijkstra_adjacency_list(source, graph):
                 if new_distance < distances[neighbor.value]:
                     distances[neighbor.value] = new_distance
                     predecessors[neighbor.value] = node.value
-                    node_item = PriorityQueueItem(distances[neighbor.value], neighbor.value)
+                    node_item = PriorityQueueItem(new_distance, neighbor.value)
                     heapq.heappush(priority_queue, node_item)
     return distances, predecessors
         
-            
+
+def initialize_distances_and_queue(source, graph):
+    distances = {}
+    priority_queue = []
+    for node in range(len(graph)):
+        if node == source:
+            initial_distance = 0
+        else:
+            initial_distance = float("inf")
+        distances[node] = initial_distance
+        node_item = PriorityQueueItem(initial_distance, node)
+        priority_queue.append(node_item)
+    heapq.heapify(priority_queue)
+    return distances, priority_queue            
         
 
+
+################
+# Adjacency Matrix
+################
+# O(V^2)
 def dijkstra_adjacency_matrix(source, graph):
     """Finds the shortest paths from some node in the graph to all other nodes.
     Returns a dictionary containing the shortest distances of
@@ -54,9 +67,44 @@ def dijkstra_adjacency_matrix(source, graph):
     the predeccesor relationshops during the algorithm's exploration. 
     Assumes the graph is represented as an adjacency list
     """
-    pass
+    predecessors = {source: None}
+    visited = set()
+    distances, node_list = initialize_distances_and_node_list(source, graph)
+
+    while len(visited) != len(graph):
+        node = get_smallest_node_by_distance(visited, distances, node_list)
+        visited.add(node)
+        for neighbor, weight in enumerate(graph[node]):
+            if weight != 0 and neighbor not in visited:
+                new_distance = distances[node] + weight
+                if new_distance < distances[neighbor]:
+                    distances[neighbor] = new_distance
+                    predecessors[neighbor] = node
+    return distances, predecessors
 
 
+def initialize_distances_and_node_list(source, graph):
+    distances = {}
+    node_list = []
+    for node in range(len(graph)):
+        if node == source:
+            initial_distance = 0
+        else:
+            initial_distance = float("inf")
+        distances[node] = initial_distance
+        node_list.append(node)
+    return distances, node_list
+
+
+def get_smallest_node_by_distance(visited, distances, node_list):
+    smallest_node = None
+    for node in node_list:
+        if node not in visited:
+            if smallest_node is None:
+                smallest_node = node
+            elif distances[node] < distances[smallest_node]:
+                smallest_node = node
+    return smallest_node
 
 
 def find_shortest_path(predecessors, source, destination):
@@ -97,11 +145,12 @@ def test_dijkstra_adjacency_list():
         7: [Node(0, 8), Node(1, 11), Node(8, 7), Node(6, 1)],
         8: [Node(2, 2), Node(7, 7), Node(6, 6)]
     }
-    distances, predecessors = dijkstra_adjacency_list(0, graph)
-
-    # print shortest path
     start = 0   
     end = 8
+    distances, predecessors = dijkstra_adjacency_list(start, graph)
+
+    # print shortest path
+   
     shortest_path = find_shortest_path(predecessors, start, end)
     print("Vertex       Distance from Source")
     for node in distances:
@@ -110,4 +159,29 @@ def test_dijkstra_adjacency_list():
     print(f"Shortest path from {start} to {end}: ", shortest_path)
 
 
+def test_dijkstra_adjacency_matrix():
+    # create graph - same as the adjacency list one
+    graph = [
+        [0, 4, 0, 0, 0, 0, 0, 8, 0], 
+        [4, 0, 8, 0, 0, 0, 0, 11, 0], 
+        [0, 8, 0, 7, 0, 4, 0, 0, 2], 
+        [0, 0, 7, 0, 9, 14, 0, 0, 0], 
+        [0, 0, 0, 9, 0, 10, 0, 0, 0], 
+        [0, 0, 4, 14, 10, 0, 2, 0, 0], 
+        [0, 0, 0, 0, 0, 2, 0, 1, 6], 
+        [8, 11, 0, 0, 0, 0, 1, 0, 7], 
+        [0, 0, 2, 0, 0, 0, 6, 7, 0] 
+    ]
+    start = 0
+    end = 8
+    distances, predecessors = dijkstra_adjacency_matrix(start, graph)
+    shortest_path = find_shortest_path(predecessors, start, end)
+    print("Vertex       Distance from Source")
+    for node in distances:
+        print(f"{node}                    {distances[node]}")
+    print()
+    print(f"Shortest path from {start} to {end}: ", shortest_path)
+    
+
 test_dijkstra_adjacency_list()
+test_dijkstra_adjacency_matrix()
