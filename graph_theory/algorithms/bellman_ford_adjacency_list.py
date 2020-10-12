@@ -24,25 +24,58 @@ def bellman_ford_adjacency_list(source, graph):
                     predecessors[neighbor.value] = node
 
     # Final relaxation attempt to identify negative cycles
+    detect_negative_cycles(graph, distances, predecessors)
+
+    return distances, predecessors
+
+
+def detect_negative_cycles(graph, distances, predecessors):
     for node in graph:
         for neighbor in graph[node]:
             new_distance = distances[node] + neighbor.weight
             if new_distance < distances[neighbor.value]:  # negative weight cycle found
                 distances[neighbor.value] = float("-inf")
-                predecessors.pop(neighbor.value)
-    return distances, predecessors
+                predecessors[neighbor.value] = -1
 
 
 def find_shortest_path(predecessors, source, destination):
     """Given a dictionary of predeccesors that was constructed via
-    a shortest paths algorithm, return the vertices in the shortest
+    the Bellman-Ford algorithm, return the vertices in the shortest
     path from source to destination.
     """
     path = []
+    # destination vertex not reachable from source
+    if destination not in predecessors:
+        return path
+
     current_node = destination
     while current_node is not None:
         predecessor = predecessors[current_node]
+        if predecessor == -1:  # vertex is part of a negative weight cycle
+            return None
         path.append(current_node)
         current_node = predecessor
     path.reverse()
     return path
+
+def test_bellman_ford():
+    graph = {
+        0: [],
+        1: [],
+        2: [],
+        3: [],
+        4: []
+    }
+    start = 0
+    end = 3
+    distances, predecessors = bellman_ford_adjacency_matrix(start, graph)
+    shortest_path = find_shortest_path(predecessors, start, end)
+
+    print("Vertex       Distance from Source")
+    for node in distances:
+        print(f"{node}                    {distances[node]}")
+    print()
+    print(f"Shortest path from {start} to {end}: ", shortest_path)
+
+
+test_bellman_ford()
