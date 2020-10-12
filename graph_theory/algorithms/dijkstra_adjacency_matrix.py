@@ -63,6 +63,9 @@ def find_shortest_path(predecessors, source, destination):
     path from source to destination.
     """
     path = []
+    # destination not reachable from source
+    if destination not in predecessors:
+        return path
     current_node = destination
     while current_node is not None:
         predecessor = predecessors[current_node]
@@ -90,9 +93,10 @@ def test_dijkstra_adjacency_matrix():
         [0, 0, 0, 0, 0, 2, 0, 1, 6],
         [8, 11, 0, 0, 0, 0, 1, 0, 7],
         [0, 0, 2, 0, 0, 0, 6, 7, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
     ]
     start = 0
-    end = 8
+    end = 5
     distances, predecessors = dijkstra_adjacency_matrix(start, graph)
     shortest_path = find_shortest_path(predecessors, start, end)
     print("Vertex       Distance from Source")

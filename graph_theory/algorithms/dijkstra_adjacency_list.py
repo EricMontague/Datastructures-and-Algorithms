@@ -60,10 +60,13 @@ def initialize_distances_and_queue(source, graph):
 
 def find_shortest_path(predecessors, source, destination):
     """Given a dictionary of predeccesors that was constructed via
-    a shortest paths algorithm, return the vertices in the shortest
+    Dijkstra's algorithm, return the vertices in the shortest
     path from source to destination.
     """
     path = []
+    # destination vertex is not reachable from source
+    if destination not in predecessors:
+        return path
     current_node = destination
     while current_node is not None:
         predecessor = predecessors[current_node]
