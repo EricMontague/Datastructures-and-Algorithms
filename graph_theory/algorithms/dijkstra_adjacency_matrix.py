@@ -22,7 +22,7 @@ def dijkstra_adjacency_matrix(source, graph):
         node = get_smallest_node_by_distance(visited, distances, node_list)
         visited.add(node)
         for neighbor, weight in enumerate(graph[node]):
-            if weight != 0 and neighbor not in visited:
+            if weight != float("inf") and neighbor not in visited:
                 new_distance = distances[node] + weight
                 if new_distance < distances[neighbor]:
                     distances[neighbor] = new_distance
@@ -84,16 +84,16 @@ def find_shortest_path(predecessors, source, destination):
 def test_dijkstra_adjacency_matrix():
     # create graph - same as the adjacency list one
     graph = [
-        [0, 4, 0, 0, 0, 0, 0, 8, 0],
-        [4, 0, 8, 0, 0, 0, 0, 11, 0],
-        [0, 8, 0, 7, 0, 4, 0, 0, 2],
-        [0, 0, 7, 0, 9, 14, 0, 0, 0],
-        [0, 0, 0, 9, 0, 10, 0, 0, 0],
-        [0, 0, 4, 14, 10, 0, 2, 0, 0],
-        [0, 0, 0, 0, 0, 2, 0, 1, 6],
-        [8, 11, 0, 0, 0, 0, 1, 0, 7],
-        [0, 0, 2, 0, 0, 0, 6, 7, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [float("inf"), 4, float("inf"), float("inf"), float("inf"), float("inf"), float("inf"), 8, float("inf")],
+        [4, float("inf"), 8, float("inf"), float("inf"), float("inf"), float("inf"), 11, float("inf")],
+        [float("inf"), 8, float("inf"), 7, float("inf"), 4, float("inf"), float("inf"), 2],
+        [float("inf"), float("inf"), 7, float("inf"), 9, 14, float("inf"), float("inf"), float("inf")],
+        [float("inf"), float("inf"), float("inf"), 9, float("inf"), 10, float("inf"), float("inf"), float("inf")],
+        [float("inf"), float("inf"), 4, 14, 10, float("inf"), 2, float("inf"), float("inf")],
+        [float("inf"), float("inf"), float("inf"), float("inf"), float("inf"), 2, float("inf"), 1, 6],
+        [8, 11, float("inf"), float("inf"), float("inf"), float("inf"), 1, float("inf"), 7],
+        [float("inf"), float("inf"), 2, float("inf"), float("inf"), float("inf"), 6, 7, float("inf")],
+        [float("inf"), float("inf"), float("inf"), float("inf"), float("inf"), float("inf"), float("inf"), float("inf"), float("inf")],
     ]
     start = 0
     end = 5
