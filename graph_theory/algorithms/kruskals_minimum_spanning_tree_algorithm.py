@@ -44,7 +44,14 @@ from data_structures.union_find.union_find import UnionFind
 Edge = namedtuple("Edge", ["vertex_one", "vertex_two", "weight"])
 
 
-# time complexity: O(ElogE), where 'E' is the number of edges in the graph
+# time complexity (simple): O(ElogE), where 'E' is the number of edges in the graph
+
+# time complexity (tighter bound): O(ElogV), where 'E' is the number of edges and 'V'
+# is the number of vertices
+
+# Explanation: In a dense graph, 'E' can be on the order of V^2, so the first time complexity
+# can be expressed as ElogV^2. logV^2 can further be broken down to be 2logV. Then, after getting
+# rid of the constant, we're left with logV. So finally, the time complexity becomes ElogV
 def kruskals_algorithm(num_vertices, edge_list):
 
     # initialize UnionFind
