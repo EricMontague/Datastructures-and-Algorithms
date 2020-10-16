@@ -58,17 +58,19 @@ def find_shortest_path(predecessors, source, destination):
     path.reverse()
     return path
 
+
+# Graph from here: https://www.geeksforgeeks.org/bellman-ford-algorithm-simple-implementation/
 def test_bellman_ford():
     graph = {
-        0: [],
-        1: [],
+        0: [Node(1, -1), Node(2, 4)],
+        1: [Node(2, 3), Node(3, 2), Node(4, 2)],
         2: [],
-        3: [],
-        4: []
+        3: [Node(2, 5), Node(1, 1)],
+        4: [Node(3, -3)]
     }
     start = 0
     end = 3
-    distances, predecessors = bellman_ford_adjacency_matrix(start, graph)
+    distances, predecessors = bellman_ford_adjacency_list(start, graph)
     shortest_path = find_shortest_path(predecessors, start, end)
 
     print("Vertex       Distance from Source")
