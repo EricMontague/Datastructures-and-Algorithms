@@ -44,6 +44,7 @@ from data_structures.union_find.union_find import UnionFind
 Edge = namedtuple("Edge", ["vertex_one", "vertex_two", "weight"])
 
 
+# time complexity: O(ElogE), where 'E' is the number of edges in the graph
 def kruskals_algorithm(num_vertices, edge_list):
 
     # initialize UnionFind
