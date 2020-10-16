@@ -14,7 +14,7 @@ def bellman_ford_adjacency_matrix(source, graph):
     for i in range(len(graph) - 1):
         for node in range(len(graph)):
             for neighbor, weight in enumerate(graph[node]):
-                if weight != 0:
+                if weight != float("inf"):
                     new_distance = distances[node] + weight
                     if new_distance < distances[neighbor]:
                         distances[neighbor] = new_distance
@@ -28,7 +28,7 @@ def bellman_ford_adjacency_matrix(source, graph):
 def detect_negative_cycles(graph, distances, predecessors):
     for node in range(len(graph)):
         for neighbor, weight in enumerate(graph[node]):
-            if weight != 0:
+            if weight != float("inf"):
                 new_distance = distances[node] + weight
                 if new_distance < distances[neighbor]:  # negative weight cycle found
                     distances[neighbor] = float("-inf")
@@ -60,11 +60,11 @@ def find_shortest_path(predecessors, source, destination):
 # https://www.geeksforgeeks.org/bellman-ford-algorithm-simple-implementation/
 def test_bellman_ford():
     graph = [
-        [0, -1, 4, float("inf"), float("inf")],
-        [float("inf"), 0, 3, 2, 2],
-        [float("inf"), float("inf"), 0, float("inf"), float("inf")],
-        [float("inf"), 1, 5, 0, float("inf")],
-        [float("inf"), float("inf"), float("inf"), -3, 0]
+        [float("inf"), -1, 4, float("inf"), float("inf")],
+        [float("inf"), float("inf"), 3, 2, 2],
+        [float("inf"), float("inf"), float("inf"), float("inf"), float("inf")],
+        [float("inf"), 1, 5, float("inf"), float("inf")],
+        [float("inf"), float("inf"), float("inf"), -3, float("inf")]
     ]
     start = 0
     end = 3
