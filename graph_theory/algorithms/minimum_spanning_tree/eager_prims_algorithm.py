@@ -48,7 +48,7 @@ def eager_prims_algorithm(source, graph):
 
     # process nodes
     while priority_queue and len(minimum_spanning_tree) != num_edges:
-        destination_node, edge_cost = heapq.heappop(priority_queue)
+        edge_cost, destination_node = heapq.heappop(priority_queue)
 
         # Need this extra check since python doesn't have a built-in Indexed Priority Queue
         # The workaround is to simply insert duplicate nodes into the priority queue and then check
@@ -85,13 +85,13 @@ def relax_edges(graph, source, visited, priority_queue, node_edge_mapping):
                 node_edge_mapping[neighbor.value] = Edge(
                     source, neighbor.value, neighbor.cost
                 )
-                heapq.heappush(priority_queue, (neighbor.value, neighbor.cost))
+                heapq.heappush(priority_queue, (neighbor.cost, neighbor.value))
             # Attempt to relax the incoming edge since another incoming edge is already in the PQ
             elif neighbor.cost < node_edge_mapping[neighbor.value]:
                 node_edge_mapping[neighbor.value] = Edge(
                     source, neighbor.value, neighbor.cost
                 )
-                heapq.heappush(priority_queue, (neighbor.value, neighbor.cost))
+                heapq.heappush(priority_queue, (neighbor.cost, neighbor.value))
 
 
 def test_eager_prims_algorithm():
