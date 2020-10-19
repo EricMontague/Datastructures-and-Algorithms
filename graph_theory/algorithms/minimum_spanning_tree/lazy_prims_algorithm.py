@@ -12,6 +12,7 @@ the cheapest possible connection from the tree to another vertex
 """
 
 import heapq
+from pprint import pprint
 from collections import namedtuple
 
 
@@ -23,8 +24,15 @@ class Edge:
         self.destination = destination
         self.cost = cost
 
+    def __repr__(self):
+        return "Edge(source=%r, desintation=%r, cost=%r)" % (
+            self.source,
+            self.destination,
+            self.cost,
+        )
+
     def __lt__(self, other_edge):
-        return self.cost < other_edge
+        return self.cost < other_edge.cost
 
 
 # Edge = namedtuple("Edge", ["source", "destination", "cost"])
@@ -87,6 +95,28 @@ def add_edges(source, graph, priority_queue, visited):
             heapq.heappush(priority_queue, Edge(source, neighbor.value, neighbor.cost))
 
 
+# Informal test
+# graph taken from here: https://www.youtube.com/watch?v=JZBQLXgSGfs
+# Vertex 0 is A, vertex 1 is B, vertex 2 is C and so on
 def test_lazy_prims_algorithm():
-    pass
+    source = 7
+    graph = {
+        0: [Node(1, 5), Node(4, 1)],
+        1: [Node(0, 5), Node(3, 4), Node(2, 4), Node(3, 2),],
+        3: [Node(1, 4), Node(1, 2), Node(4, 2), Node(7, 2), Node(5, 5), Node(6, 11),],
+        4: [Node(0, 1), Node(3, 2), Node(5, 1)],
+        2: [Node(1, 4), Node(7, 4), Node(9, 2), Node(8, 1),],
+        7: [Node(2, 4), Node(3, 2), Node(6, 1), Node(8, 6),],
+        9: [Node(2, 2), Node(8, 0)],
+        8: [Node(2, 1), Node(6, 4), Node(7, 6), Node(9, 0),],
+        5: [Node(3, 5), Node(4, 1), Node(6, 7)],
+        6: [Node(3, 11), Node(5, 7), Node(7, 1), Node(8, 4),],
+    }
+
+    minimum_spanning_tree, total_tree_cost = lazy_prims_algorithm(source, graph)
+    print(f"Minimum Spanning Tree Cost: {total_tree_cost}\n")
+    pprint(minimum_spanning_tree)
+
+
+test_lazy_prims_algorithm()
 
