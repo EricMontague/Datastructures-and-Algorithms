@@ -34,6 +34,10 @@ connected component if it's id equals its low link value
 
 _UNVISITED = -1
 
+
+# time complexity: O(V + E), where 'V' is the number of vertices and 'E' is the number of edges
+# space complexity: O(V)
+
 # the graph is assumed to be an adjacency list
 def tarjans_algorithm(source, graph):
 
