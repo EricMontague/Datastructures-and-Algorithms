@@ -85,6 +85,7 @@ def kruskals_algorithm(num_vertices, edge_list):
 # Vertex 0 is A, vertex 1 is B, vertex 2 is C and so on
 def test_kruskals_algorithm():
     num_vertices = 10
+    # An edge from 0 -> 1 also means that there is an edge from 1 -> 0
     edge_list = [
         Edge(0, 1, 5),
         Edge(1, 3, 4),
@@ -108,7 +109,7 @@ def test_kruskals_algorithm():
     minimum_spanning_tree, total_tree_weight = kruskals_algorithm(
         num_vertices, edge_list
     )
-    print(f"Total Weight: {total_tree_weight}\n")
+    print(f"Total Minimum Spanning Tree Weight: {total_tree_weight}\n")
     pprint(minimum_spanning_tree)
 
 
