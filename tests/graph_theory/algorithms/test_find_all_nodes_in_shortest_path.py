@@ -4,7 +4,7 @@ UNWEIGHTED graph.
 """
 
 import unittest
-from graph_theory.algorithms.find_all_nodes_in_shortest_path_unweighted_graph import (
+from graph_theory.algorithms.shortest_path.find_all_nodes_in_shortest_path_unweighted_graph import (
     find_shortest_path_adj_list,
     find_shortest_path_adj_matrix,
 )

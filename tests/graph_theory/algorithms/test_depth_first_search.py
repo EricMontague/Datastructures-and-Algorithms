@@ -2,8 +2,12 @@
 
 
 import unittest
-from graph_theory.algorithms.dfs_adjacency_list import dfs as dfs_adjacency_list
-from graph_theory.algorithms.dfs_adjacency_matrix import dfs as dfs_adjacency_matrix
+from graph_theory.algorithms.traversals.dfs_adjacency_list import (
+    dfs as dfs_adjacency_list,
+)
+from graph_theory.algorithms.traversals.dfs_adjacency_matrix import (
+    dfs as dfs_adjacency_matrix,
+)
 
 # The iterative version of dfs_visit is not tested here, but given the inputs below,
 # it will produce an ordering of [0, 3, 5, 1, 2, 4], which is another correct dfs order

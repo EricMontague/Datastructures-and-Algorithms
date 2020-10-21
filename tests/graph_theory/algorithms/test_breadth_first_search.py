@@ -2,8 +2,12 @@
 
 
 import unittest
-from graph_theory.algorithms.bfs_adjacency_list import bfs as bfs_adjacency_list
-from graph_theory.algorithms.bfs_adjacency_matrix import bfs as bfs_adjacency_matrix
+from graph_theory.algorithms.traversals.bfs_adjacency_list import (
+    bfs as bfs_adjacency_list,
+)
+from graph_theory.algorithms.traversals.bfs_adjacency_matrix import (
+    bfs as bfs_adjacency_matrix,
+)
 
 
 class BFSTestCase(unittest.TestCase):
