@@ -39,7 +39,7 @@ _UNVISITED = -1
 # space complexity: O(V)
 
 # the graph is assumed to be an adjacency list
-def tarjans_algorithm(source, graph):
+def tarjans_algorithm(graph):
 
     # Used to assign ids and intial low link values to nodes
     node_id = 0
@@ -131,8 +131,8 @@ def test_tarjans_algorithm():
         9: [10],
         10: [8],
     }
-    source = 4
-    strongly_connected_components = tarjans_algorithm(source, graph)
+
+    strongly_connected_components = tarjans_algorithm(graph)
     for node in range(len(strongly_connected_components)):
         print(f"Node: {node} in component {strongly_connected_components[node]}")
 
