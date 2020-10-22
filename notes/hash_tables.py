@@ -3,6 +3,7 @@
 Sources
 ---------
 https://algs4.cs.princeton.edu/34hash/
+https://stackoverflow.com/questions/1145217/why-should-hash-functions-use-a-prime-number-modulus
 
 
 
@@ -24,6 +25,23 @@ a given data type:
     - The function should be deterministic: Equals keys must produce the same hash value
     - The function should be efficient to compute
     - It should uniformly distribute the keys
+
+- When creating a hash function that uses modular hashing (N % M = hash) it is advisable to choose
+'M' to be a prime number. This is to reduce the number of common factors between 'N' and 'M'.
+
+- The result of N % M will always be one of the factors they have in common or a multiple of one
+of those factors. The more factors 'M' has, the greater the chance for collisions as you are
+opening the door for more numbers with some common factor to be passed into your hash function
+
+- Example: Let's say that 'M' is 20. The factors of 20 are 1, 2, 4, 5, 10, and 20. The keys
+30, 50, 70, and 90 (which share the common factors of 2, 5, and 10), when modded by 20, 
+all produce a hash value of 10, thus creating collisions for all of these keys. 
+
+- Choosing a prime number for 'M' makes it so that the only integers that can share a common factor
+with 'M' is a multiple of 'M'. For all of these multiples of 'M', N % M will equal 0. To further 
+mitigate collisions in this case, you can choose 'M' to be a very large prime number so as to
+limit the number of integers that are a multiple of 'M'
+
 
 Hash Tables
 ---------
