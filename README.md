@@ -24,6 +24,8 @@ On my journey of prepping for technical interviews, I decided to make this repo 
 20. [Radix Sort](../master/sorting/radix_sort.py)
 21. [Counting Sort](../master/sorting/counting_sort.py)
 22. [Quickselect](../master/search)
+23. [Knuth-Morris-Pratt Algorithm](../master/strings/kmp_algorithm.py)
+24. [Rabin-Karp Algorithm](../master/strings/rabin_karp.py)
 
 
 ## Data Structures
