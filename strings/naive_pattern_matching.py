@@ -1,6 +1,14 @@
 """This module contains an implementation of a naive pattern
 matching algorithm. It will return the starting index of the
 first occurence of a pattern within a larger string.
+
+source: https://www.cs.princeton.edu/courses/archive/spring04/cos226/lectures/string.4up.pdf
+
+- The runtime for this algorithm depends on the pattern and text
+- In the worst case it makes M * N comparisons, where 'M' is the length of 
+the pattern and 'N' is the length of the large string
+- In the Average case it makes 1.1 * N comparisons
+- Slow if 'M' and 'N' are large and have lots of repetition
 """
 
 
@@ -51,4 +59,5 @@ def search(pattern, string):
 
     # pattern was not found in string
     return -1
+
 
