@@ -110,18 +110,16 @@ class AVLTree:
 
     def _rotate_left(self, node):
         right_child = node.right
-        right_child_left_subtree = right_child.left
+        node.right = right_child.left
         right_child.left = node
-        node.right = right_child_left_subtree
         self._update_balance_factor_and_height(right_child)
         self._update_balance_factor_and_height(node)
         return right_child
 
     def _rotate_right(self, node):
         left_child = node.left
-        left_child_right_subtree = left_child.right
+        node.left = left_child.right
         left_child.right = node
-        node.left = left_child_right_subtree
         self._update_balance_factor_and_height(left_child)
         self._update_balance_factor_and_height(node)
         return left_child
