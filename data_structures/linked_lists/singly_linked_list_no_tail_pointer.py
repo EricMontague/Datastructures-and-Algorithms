@@ -203,19 +203,23 @@ class SinglyLinkedList:
             previous = previous.next
             current = current.next
         raise ValueError("Data not in linked list.")
-    
-    def _search(self, data):
-        """Return the value of the first node in the linked list with the given data."""
+
+    def deep_copy(self):
+        """Return a deep copy of the linked list."""
         if self.is_empty():
-            return self.head
-        current = self.head
-        while current is not None:
-            if current.data == data:
-                return current.data
-            current = current.next
-        if current is None:
-            return current
-        return current.data
+            return None
+        copy_head = SinglyLinkedListNode(self.head.data)
+        current_original = self.head.next
+        current_copy = copy_head
+        while current_original is not None:
+            copy_head.next = SinglyLinkedListNode(current_copy.data)
+            current_original = current_original.next
+            current_copy = current_copy.next
+        return copy_head
+    
+    def has_node(self, data):
+        """Return True if a node with the given value exists in the linked list."""
+        return self.count(data) > 0
     
     def __len__(self):
         """Return the number of nodes in the linked list."""
@@ -223,7 +227,7 @@ class SinglyLinkedList:
 
     def __contains__(self, data):
         """Return True if the given data is in the linked list."""
-        return self._search(data) is not None
+        return self.count(data) > 0
 
     def __iter__(self):
         """Return an generator of nodes' values in the list."""
