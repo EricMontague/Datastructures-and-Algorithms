@@ -25,7 +25,7 @@ def dijkstra_adjacency_list(source, graph):
     visited = set()
     distances, priority_queue = initialize_distances_and_queue(source, graph)
 
-    while priority_queue:
+    while priority_queue and len(visited) != len(graph):
         distance, node = heapq.heappop(priority_queue)
         if node in visited:
             continue
