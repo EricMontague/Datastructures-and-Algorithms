@@ -1,4 +1,4 @@
-"""This module contains an implementation of Quick Select using Lomuto's
+"""This module contains an implementation of Quick Select using Hoare's
 partioning scheme to find the Kth smallest element in an array.
 """
 
