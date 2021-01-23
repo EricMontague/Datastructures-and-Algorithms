@@ -112,16 +112,16 @@ class AVLTree:
         right_child = node.right
         node.right = right_child.left
         right_child.left = node
-        self._update_balance_factor_and_height(right_child)
         self._update_balance_factor_and_height(node)
+        self._update_balance_factor_and_height(right_child)
         return right_child
 
     def _rotate_right(self, node):
         left_child = node.left
         node.left = left_child.right
         left_child.right = node
-        self._update_balance_factor_and_height(left_child)
         self._update_balance_factor_and_height(node)
+        self._update_balance_factor_and_height(left_child)
         return left_child
 
     def __str__(self):
