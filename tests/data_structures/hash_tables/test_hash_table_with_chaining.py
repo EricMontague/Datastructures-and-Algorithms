@@ -66,13 +66,6 @@ class HashTableTestCase(unittest.TestCase):
         self.assertEqual(0, self.non_empty_table["Apple"])
         self.assertEqual(3, self.non_empty_table["Avocado"])
 
-    def test_get_null_key(self):
-        """Test that if the get method is called with a key that is
-        None, that None is returned
-        """
-        self.assertIsNone(self.non_empty_table.get(None))
-        self.assertIsNone(self.non_empty_table[None])
-
     def test_insert_new_item_into_table(self):
         """Test that if you are inserting a new key-value pair into the hash
         table, that the insertion is successful.

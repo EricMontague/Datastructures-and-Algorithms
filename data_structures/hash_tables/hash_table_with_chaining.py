@@ -3,7 +3,12 @@ handle key collisions.
 """
 
 
-class HashItem:
+from data_structures.linked_lists.singly_linked_list_no_tail_pointer import (
+    SinglyLinkedList,
+)
+
+
+class HashTableItem:
     """Class to represent a key-value pair in a hash table that uses
     chaining to handle key collisions.
     """
@@ -11,11 +16,9 @@ class HashItem:
     def __init__(self, key, value):
         self.key = key
         self.value = value
-        self.next = None
 
-    def __repr__(self):
-        """Return a string representation of a HashItem."""
-        return "HashItem(%r, %r)" % (self.key, self.value)
+    def __eq__(self, other):
+        return self.key == other.key
 
 
 class HashTable:
@@ -40,23 +43,17 @@ class HashTable:
 
     def get(self, key):
         """Return the item associated with the given key."""
-        if key is not None:
-            bucket_index = self._hash(key)
-            head = self._table[bucket_index]
-            item = self._find_item(key, head)
-            if item is None:
-                return item
-            return item.value
-
-    def _find_item(self, key, head):
-        """Traverse the linked list of HashItems and return an item
-        with the given key.
-        """
-        while head:
-            if head.key == key:
-                return head
-            head = head.next
-        return None
+        if key is None:
+            raise KeyError("None is not a valid key")
+        bucket_index = self._hash_key(key)
+        linked_list = self._table[bucket_index]
+        if not linked_list:
+            return None
+        hash_table_item = HashTableItem(key, None)
+        returned_item = linked_list.find_value(hash_table_item)
+        if not returned_item:
+            return None
+        return returned_item.value
 
     def put(self, key, value):
         """Insert the given value into the hash table. If there is
@@ -65,54 +62,36 @@ class HashTable:
         """
         if key is None:
             raise KeyError("None is not a valid key")
-        # check whether key exists in hash table already
-
-        bucket_index = self._hash(key)
-        head = self._table[bucket_index]
-        existing_item = self._find_item(key, head)
-        if existing_item is None:
-            new_item = HashItem(key, value)
-            self._insert_item(new_item, bucket_index, head)
+        bucket_index = self._hash_key(key)
+        hash_table_item = HashTableItem(key, value)
+        if not self._table[bucket_index]:
+            self._table[bucket_index] = SinglyLinkedList()
+        linked_list = self._table[bucket_index]
+        returned_item = linked_list.find_value(hash_table_item)
+        if not returned_item:
+            linked_list.push_front(hash_table_item)
             self._num_items += 1
             if self._should_double():
                 self._resize_table(2)
         else:
-            existing_item.value = value
-
-    def _insert_item(self, new_item, bucket_index, head):
-        """Insert a new HashItem at the given index in the hash table."""
-        if head is not None:
-            new_item.next = head
-        self._table[bucket_index] = new_item
+            returned_item.value = value
 
     def delete(self, key):
         """Delete an item in the hash table with the given key."""
         if key is None:
             raise KeyError("None is not a valid key")
-        bucket_index = self._hash(key)
-        head = self._table[bucket_index]
-        if head is None:
+        bucket_index = self._hash_key(key)
+        hash_table_item = HashTableItem(key, None)
+        linked_list = self._table[bucket_index]
+        if linked_list is None:
             raise KeyError("Key not in hash table.")
-        self._delete_item(key, head, bucket_index)
+        node = linked_list.find_value(hash_table_item)
+        if not node:
+            raise KeyError("Key not in hash table")
+        linked_list.remove_node(hash_table_item)
         self._num_items -= 1
         if self._should_halve():
             self._resize_table(0.5)
-
-    def _delete_item(self, key, item, bucket_index):
-        """Delete the given item from its linked list in the hash table."""
-        # Remove from head of linked list
-        if item.key == key:
-            self._table[bucket_index] = self._table[bucket_index].next
-        else:  # Remove from middle or end
-            target = item.next
-            while True:
-                if target is None:
-                    raise KeyError("Key not in hash table.")
-                if target.key == key:
-                    item.next = target.next
-                    break
-                target = target.next
-                item = item.next
 
     def exists(self, key):
         """Return True if there is a value associated with the given key 
@@ -127,19 +106,19 @@ class HashTable:
     def keys(self):
         """Return a list of keys found in the hash table."""
         keys = []
-        for item in self._table:
-            while item:
-                keys.append(item.key)
-                item = item.next
+        for linked_list in self._table:
+            if linked_list:
+                for hash_table_item in linked_list:
+                    keys.append(hash_table_item.key)
         return keys
 
     def values(self):
         """Return a list of values found in the hash table."""
         values = []
-        for item in self._table:
-            while item:
-                values.append(item.value)
-                item = item.next
+        for linked_list in self._table:
+            if linked_list:
+                for hash_table_item in linked_list:
+                    values.append(hash_table_item.value)
         return values
 
     def items(self):
@@ -147,10 +126,10 @@ class HashTable:
         pairs found in the hash table.
         """
         pairs = []
-        for item in self._table:
-            while item:
-                pairs.append((item.key, item.value))
-                item = item.next
+        for linked_list in self._table:
+            if linked_list:
+                for hash_table_item in linked_list:
+                    pairs.append((hash_table_item.key, hash_table_item.value))
         return pairs
 
     def clear(self):
@@ -163,7 +142,7 @@ class HashTable:
         """Returns the number of items currently in the hash table."""
         return self._num_items
 
-    def _hash(self, key):
+    def _hash_key(self, key):
         """Map the given key to a value from 0 to num_buckets - 1."""
         return hash(key) % self._capacity
 
@@ -184,10 +163,10 @@ class HashTable:
         self._num_items = 0
         self._capacity = int(self._capacity * multiple)
         self._table = [None] * self._capacity
-        for item in old_table:
-            while item:
-                self.put(item.key, item.value)
-                item = item.next
+        for linked_list in old_table:
+            if linked_list:
+                for hash_table_item in linked_list:
+                    self.put(hash_table_item.key, hash_table_item.value)
 
     def __getitem__(self, key):
         """"Return the item associated with the given key."""
