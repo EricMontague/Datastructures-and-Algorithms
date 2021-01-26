@@ -377,7 +377,7 @@ class SinglyLinkedListTestCase(unittest.TestCase):
         list raises a ValueError.
         """
         with self.assertRaises(ValueError):
-            self.empty_list.remove_value(9)
+            self.empty_list.remove_node(9)
 
     def test_remove_value_not_in_list_raises_error(self):
         """Test the trying to remove a value that doesn't exist
@@ -385,7 +385,7 @@ class SinglyLinkedListTestCase(unittest.TestCase):
         """
         #fixture contains values from 0 to 6
         with self.assertRaises(ValueError):
-            self.non_empty_list.remove_value(100)
+            self.non_empty_list.remove_node(100)
 
     def test_remove_value_from_head_of_list(self):
         """Test that when the value to be removed exists at the head
@@ -397,7 +397,7 @@ class SinglyLinkedListTestCase(unittest.TestCase):
         self.assertEqual(7, self.non_empty_list.size)
         
         #remove value
-        self.non_empty_list.remove_value(0)
+        self.non_empty_list.remove_node(0)
         self.assertEqual(6, self.non_empty_list.size)
 
         #head should now be 1
@@ -415,7 +415,7 @@ class SinglyLinkedListTestCase(unittest.TestCase):
         self.assertEqual(7, self.non_empty_list.size)
 
         #remove value
-        self.non_empty_list.remove_value(5)
+        self.non_empty_list.remove_node(5)
         self.assertEqual(6, self.non_empty_list.size)
 
         #confirm that 5 is not in the list anymore
@@ -439,7 +439,7 @@ class SinglyLinkedListTestCase(unittest.TestCase):
 
         #remove value
         #the value at index 2 should be the one to be removed
-        self.non_empty_list.remove_value(4)
+        self.non_empty_list.remove_node(4)
         self.assertEqual(7, self.non_empty_list.size)
 
         #confirm that at least one 4 still exists in the list

@@ -10,7 +10,7 @@ class SinglyLinkedListNode:
 
     def __repr__(self):
         """Return a representation of the singly linked list node."""
-        return "<SinglyLinkedListNode(%r)>" %self.data
+        return "<SinglyLinkedListNode(%r)>" % self.data
 
 
 class SinglyLinkedList:
@@ -78,6 +78,15 @@ class SinglyLinkedList:
         self.size -= 1
         return second.data
 
+    def find_value(self, data):
+        """Find the first node with the given value and return said value."""
+        current = self.head
+        while current:
+            if current.data == data:
+                return current.data
+            current = current.next
+        return None
+
     def count(self, data):
         """Return the number of nodes in the linked list that contains the given data."""
         count = 0
@@ -98,11 +107,11 @@ class SinglyLinkedList:
         for num in range(index):
             current = current.next
         return current.data
-    
+
     def is_empty(self):
         """Return True if the linked list is empty."""
         return self.size == 0
-    
+
     def reverse(self):
         """Reverse the linked list."""
         self.head = self._reverse(self.head)
@@ -119,7 +128,7 @@ class SinglyLinkedList:
         head = previous
         return head
 
-    #Alternate iterative way to reverse a linked list
+    # Alternate iterative way to reverse a linked list
     def _reverse2(self, head):
         """Iterative helper method to reverse the linked list."""
         if head is None:
@@ -138,7 +147,7 @@ class SinglyLinkedList:
             current = node
         return head
 
-    #a recursive way to reverse a linked list
+    # a recursive way to reverse a linked list
     def _reverse3(self, head):
         """Recursive helper method to reverse a linked list."""
         if head is None or head.next is None:
@@ -162,11 +171,11 @@ class SinglyLinkedList:
             current = self.head.next
             for num in range(index - 1):
                 previous = previous.next
-                current = current.next 
+                current = current.next
             node.next = current
             previous.next = node
             self.size += 1
-    
+
     def remove_at_index(self, index):
         """Remove the node from the linked list at the given index."""
         if self.is_empty():
@@ -184,7 +193,7 @@ class SinglyLinkedList:
             previous.next = current.next
             self.size -= 1
 
-    def remove_value(self, data):
+    def remove_node(self, data):
         """Remove the first node in the linked list with the given data."""
         if self.is_empty():
             raise ValueError("Linked list is empty.")
@@ -194,9 +203,9 @@ class SinglyLinkedList:
         current = self.head
         while current is not None:
             if current.data == data:
-                if current.data == self.head.data: #at head of list
+                if current.data == self.head.data:  # at head of list
                     self.head = self.head.next
-                else: #at tail or middle of list
+                else:  # at tail or middle of list
                     previous.next = current.next
                 self.size -= 1
                 return
@@ -216,11 +225,11 @@ class SinglyLinkedList:
             current_original = current_original.next
             current_copy = current_copy.next
         return copy_head
-    
+
     def has_node(self, data):
         """Return True if a node with the given value exists in the linked list."""
         return self.count(data) > 0
-    
+
     def __len__(self):
         """Return the number of nodes in the linked list."""
         return self.size
